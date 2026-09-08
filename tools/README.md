@@ -5,9 +5,19 @@ and copies it to your clipboard — one click, one paste, one save.
 
 ## Files
 
-- `bookmarklet-src.js` — Readable source of the bookmarklet (edit this).
+- `bookmarklet-src.template.js` — Checked-in template with `TOKEN = ''`.
+- `bookmarklet-src.js` — **Local-only** (gitignored). Copy of the template
+  with your PAT filled in. Auto-created on first build.
 - `build-bookmarklet.py` — Minifies + URL-encodes → `bookmarklet.txt`.
-- `bookmarklet.txt` — The `javascript:` URL to paste into a Chrome bookmark.
+- `bookmarklet.txt` — **Local-only** (gitignored). Ready-to-paste
+  `javascript:` URL. May contain your PAT — never commit.
+
+## Why the split?
+
+If the repo is private, the bookmarklet needs a PAT baked in to reach the
+raw file URL. That PAT belongs only in your local checkout, not in git
+history — so `bookmarklet-src.js` and `bookmarklet.txt` are gitignored
+and the template stays under version control.
 
 ## Setup (one time)
 

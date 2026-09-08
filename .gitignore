@@ -2,3 +2,7 @@
 *.log
 node_modules/
 .claude/
+
+# Local bookmarklet files (may contain a PAT — never commit)
+tools/bookmarklet-src.js
+tools/bookmarklet.txt

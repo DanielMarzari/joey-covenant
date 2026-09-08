@@ -13,7 +13,20 @@ from urllib.parse import quote
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, 'bookmarklet-src.js')
+TEMPLATE = os.path.join(HERE, 'bookmarklet-src.template.js')
 OUT = os.path.join(HERE, 'bookmarklet.txt')
+
+# Prefer local bookmarklet-src.js (which may hold a PAT and is gitignored).
+# Fall back to the checked-in template on a fresh clone.
+if not os.path.exists(SRC):
+    if os.path.exists(TEMPLATE):
+        print(f"note: {SRC} not found — bootstrapping from template")
+        with open(TEMPLATE) as f:
+            js_template = f.read()
+        with open(SRC, 'w') as f:
+            f.write(js_template)
+    else:
+        raise SystemExit(f"error: neither {SRC} nor {TEMPLATE} exists")
 
 with open(SRC, 'r') as f:
     js = f.read()
