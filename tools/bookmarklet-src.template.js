@@ -1,11 +1,13 @@
 /*
  * CSB → GHL Sync bookmarklet — popup edition
  * -------------------------------------------
- * The GHL builder page enforces a Content Security Policy that blocks any
- * cross-origin fetch from a bookmarklet running in its context (Chrome
- * shows "Failed to fetch"). To work around that we open a tiny popup
- * window (about:blank) which has its own permissive CSP, and run all
- * fetch + clipboard operations there. The parent GHL tab is untouched.
+ * Uses the GitHub API (api.github.com/repos/.../contents/...) with the
+ * Accept: application/vnd.github.raw header to fetch file contents. The
+ * REST API has proper CORS support (raw.githubusercontent.com does not
+ * — it 404s the preflight OPTIONS when an Authorization header is sent).
+ *
+ * Opens the file picker in a small popup so the panel stays visible
+ * while you paste into the GHL editor.
  *
  * Click the bookmarklet while a GHL custom-code editor is open:
  *   1. A small popup opens listing every ghl-ready/*.html file.
@@ -31,7 +33,7 @@
   var BRANCH = 'main';
   var TOKEN = ''; // Fill in if repo is private (fine-grained PAT, contents:read)
 
-  var BASE = 'https://raw.githubusercontent.com/' + OWNER + '/' + REPO + '/' + BRANCH + '/ghl-ready/';
+  var BASE = 'https://api.github.com/repos/' + OWNER + '/' + REPO + '/contents/ghl-ready/';
 
   var FILES = [
     ['Core pages', ['home.html', 'products.html', 'education.html']],
@@ -88,11 +90,12 @@
         toast.style.background = '#f8f6f2'; toast.style.color = '#666';
         toast.textContent = 'Fetching ' + f + '…';
 
-        var opts = { cache: 'no-store' };
-        if (TOKEN) opts.headers = { Authorization: 'token ' + TOKEN };
+        // GitHub REST API with Accept: raw returns file bytes directly (no base64).
+        // Authorization uses Bearer per GitHub's current recommendation.
+        var opts = { cache: 'no-store', headers: { Accept: 'application/vnd.github.raw' } };
+        if (TOKEN) opts.headers.Authorization = 'Bearer ' + TOKEN;
 
-        // Use the POPUP's fetch + clipboard so the parent GHL CSP doesn't apply
-        w.fetch(BASE + f + '?t=' + Date.now(), opts)
+        w.fetch(BASE + f + '?ref=' + BRANCH + '&t=' + Date.now(), opts)
           .then(function (r) {
             if (!r.ok) {
               var hint = (r.status === 401 || r.status === 403 || r.status === 404)
