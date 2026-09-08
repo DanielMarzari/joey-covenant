@@ -1,0 +1,1169 @@
+<!--
+  ============================================================
+  GoHighLevel Custom-Code block — PRODUCTS page
+  Paste into a single GHL custom-code element on /products.
+  Self-contained. Scoped under .csb-page. Full-bleed.
+  ============================================================
+-->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+
+.skip-content { display: none; }
+
+/* GHL parent-container override */
+.hl_page-preview--content .c-section:has(.csb-page),
+.hl_page-preview--content .c-row:has(.csb-page),
+.hl_page-preview--content .c-column:has(.csb-page),
+.hl_page-preview--content .c-custom-code:has(.csb-page),
+.c-section:has(.csb-page),
+.c-row:has(.csb-page),
+.c-column:has(.csb-page),
+.c-custom-code:has(.csb-page) {
+  max-width: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+}
+.hl_page-preview--content .c-section:has(.csb-page) > .inner,
+.hl_page-preview--content .c-row:has(.csb-page) > .inner,
+.hl_page-preview--content .c-column:has(.csb-page) > .inner,
+.c-section:has(.csb-page) > .inner,
+.c-row:has(.csb-page) > .inner,
+.c-column:has(.csb-page) > .inner {
+  max-width: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Scoped root */
+.csb-page {
+  --csb-navy: #395a86;
+  --csb-navy-dark: #2a4465;
+  --csb-navy-deep: #1e3252;
+  --csb-red: #c7494d;
+  --csb-red-dark: #a73a3e;
+  --csb-white: #ffffff;
+  --csb-cream: #f8f6f2;
+  --csb-cream-warm: #eee8db;
+  --csb-ink: #1a1a1a;
+  --csb-ink-soft: #3d3d3d;
+  --csb-border: #d9d3c4;
+  --csb-success: #2d6e3e;
+
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 20px;
+  line-height: 1.6;
+  color: var(--csb-ink);
+  background: var(--csb-white);
+  -webkit-font-smoothing: antialiased;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.csb-page *, .csb-page *::before, .csb-page *::after { box-sizing: border-box; }
+
+.csb-page h1, .csb-page h2, .csb-page h3, .csb-page h4 {
+  font-family: 'Merriweather', Georgia, 'Times New Roman', serif;
+  color: var(--csb-navy); line-height: 1.25;
+  font-weight: 700; margin: 0 0 1rem;
+}
+.csb-page h1 { font-size: 3rem; }
+.csb-page h2 { font-size: 2.25rem; margin-bottom: 1.25rem; }
+.csb-page h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+.csb-page p { margin: 0 0 1rem; font-size: 1.125rem; color: var(--csb-ink-soft); }
+.csb-page ul { margin: 0; padding: 0; }
+.csb-page a { color: var(--csb-navy); text-decoration: underline; text-underline-offset: 3px; }
+.csb-page a:hover, .csb-page a:focus { color: var(--csb-red-dark); }
+
+/* Header */
+.csb-page .csb-header {
+  background: #fff;
+  border-bottom: 4px solid var(--csb-red);
+  padding: 1rem 2rem;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+.csb-page .csb-header-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center; gap: 2rem;
+}
+.csb-page .csb-logo { display: flex; align-items: center; gap: 0.9rem; text-decoration: none; }
+.csb-page .csb-logo img { width: 76px; height: auto; display: block; }
+.csb-page .csb-logo-text { display: flex; flex-direction: column; line-height: 1.15; }
+.csb-page .csb-logo-text strong {
+  font-family: 'Merriweather', serif; font-size: 1.55rem; color: var(--csb-navy);
+}
+.csb-page .csb-logo-text span { font-size: 1.05rem; color: var(--csb-ink-soft); }
+.csb-page .csb-nav > ul { list-style: none; display: flex; gap: 2rem; align-items: center; padding: 0; margin: 0; }
+.csb-page .csb-nav a:not(.btn) {
+  text-decoration: none; color: var(--csb-ink); font-weight: 600;
+  font-size: 1.25rem; padding: 0.5rem 0;
+  border-bottom: 3px solid transparent;
+}
+.csb-page .csb-nav a:not(.btn):hover, .csb-page .csb-nav a:not(.btn):focus,
+.csb-page .csb-nav a:not(.btn).active { border-bottom-color: var(--csb-red); color: var(--csb-navy); }
+
+
+/* Dropdown nav */
+.csb-page .csb-nav .has-dropdown { position: relative; }
+.csb-page .csb-nav .has-dropdown > a::after {
+  content: ' \25BE'; font-size: 0.7em; margin-left: 0.25em;
+  color: var(--csb-ink-soft); display: inline-block;
+  transition: transform 0.15s, color 0.15s;
+}
+.csb-page .csb-nav .has-dropdown:hover > a::after,
+.csb-page .csb-nav .has-dropdown:focus-within > a::after {
+  transform: rotate(180deg); color: var(--csb-red);
+}
+.csb-page .csb-nav-dropdown {
+  position: absolute; top: 100%; left: -1rem;
+  background: #fff;
+  border: 2px solid var(--csb-border);
+  border-top: 4px solid var(--csb-red);
+  border-radius: 0 0 12px 12px;
+  list-style: none;
+  padding: 0.5rem 0;
+  min-width: 260px;
+  margin: 0;
+  box-shadow: 0 12px 32px rgba(30, 50, 82, 0.18);
+  display: none;
+  z-index: 200;
+}
+.csb-page .csb-nav .has-dropdown:hover > .csb-nav-dropdown,
+.csb-page .csb-nav .has-dropdown:focus-within > .csb-nav-dropdown {
+  display: block;
+}
+.csb-page .csb-nav-dropdown li { margin: 0; list-style: none; }
+.csb-page .csb-nav-dropdown a {
+  display: block !important;
+  padding: 0.55rem 1.25rem !important;
+  border-bottom: none !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  text-decoration: none;
+  color: var(--csb-ink) !important;
+}
+.csb-page .csb-nav-dropdown a:hover,
+.csb-page .csb-nav-dropdown a:focus,
+.csb-page .csb-nav-dropdown a.active {
+  background: var(--csb-cream);
+  color: var(--csb-red-dark) !important;
+  border-bottom: none !important;
+}
+.csb-page .csb-nav-dropdown .dropdown-section {
+  padding: 0.65rem 1.25rem 0.2rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--csb-ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.csb-page .csb-nav-dropdown .dropdown-divider {
+  height: 1px; background: var(--csb-border);
+  margin: 0.4rem 0.75rem;
+}
+.csb-page .csb-nav-dropdown a.overview-link {
+  font-weight: 700 !important;
+  color: var(--csb-navy) !important;
+}
+
+/* Buttons */
+.csb-page .btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 0.6rem; min-height: 64px;
+  padding: 1rem 2.25rem; font-size: 1.25rem; font-weight: 700;
+  border-radius: 10px; text-decoration: none;
+  border: 3px solid transparent; cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.15s, background 0.15s;
+  line-height: 1.2; font-family: 'Inter', sans-serif;
+}
+.csb-page .btn-primary {
+  background: var(--csb-red); color: #fff;
+  border-color: var(--csb-red-dark);
+  box-shadow: 0 4px 0 var(--csb-red-dark);
+}
+.csb-page .btn-primary:hover, .csb-page .btn-primary:focus {
+  background: var(--csb-red-dark); color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--csb-red-dark);
+}
+.csb-page .btn-large { min-height: 72px; font-size: 1.35rem; padding: 1.15rem 2.75rem; }
+.csb-page .btn-small { min-height: 52px; font-size: 1.05rem; padding: 0.7rem 1.4rem; }
+
+/* Section base */
+.csb-page section { padding: 5rem 2rem; }
+.csb-page .section-inner { max-width: 1200px; margin: 0 auto; }
+.csb-page .section-head { text-align: center; max-width: 780px; margin: 0 auto 3rem; }
+.csb-page .section-head .eyebrow {
+  display: inline-block; background: var(--csb-red); color: #fff;
+  padding: 0.4rem 1.1rem; border-radius: 20px;
+  font-size: 0.95rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+.csb-page .section-head p { font-size: 1.2rem; }
+
+/* Page intro */
+.csb-page .products-intro {
+  background: linear-gradient(135deg, var(--csb-navy) 0%, var(--csb-navy-deep) 100%);
+  color: #fff;
+  padding: 4.5rem 2rem 3.5rem;
+  text-align: center;
+}
+.csb-page .products-intro h1 {
+  color: #fff; font-size: 3rem; margin-bottom: 1rem;
+}
+.csb-page .products-intro h1 .accent {
+  color: #fff; border-bottom: 4px solid var(--csb-red); padding-bottom: 4px;
+}
+.csb-page .products-intro p {
+  color: rgba(255,255,255,0.92);
+  font-size: 1.25rem;
+  max-width: 760px; margin: 0 auto;
+}
+
+/* Products section backgrounds */
+.csb-page .products-section { background: #fff; }
+.csb-page .products-section.alt { background: var(--csb-cream); }
+
+/* Product grid + cards */
+.csb-page .product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+.csb-page .product-card {
+  background: #fff;
+  border: 2px solid var(--csb-border);
+  border-radius: 14px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+.csb-page .products-section.alt .product-card {
+  /* keep the cards white even on cream — they stand out more */
+  border-color: #e5ddc8;
+}
+.csb-page .product-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--csb-red);
+  box-shadow: 0 16px 32px rgba(30, 50, 82, 0.1);
+}
+.csb-page .product-badge {
+  width: 72px; height: 72px;
+  border-radius: 14px;
+  background: var(--csb-navy); color: #fff;
+  border: 3px solid var(--csb-red);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Merriweather', serif;
+  font-size: 2rem; font-weight: 700;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+}
+.csb-page .product-badge.badge-sm {
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+}
+.csb-page .product-card h3 {
+  font-size: 1.5rem; margin-bottom: 0.5rem;
+}
+.csb-page .product-card .product-sub {
+  font-size: 0.95rem;
+  color: var(--csb-ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+.csb-page .product-card > p {
+  font-size: 1.05rem;
+  color: var(--csb-ink);
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+}
+.csb-page .product-features {
+  list-style: none; padding: 0; margin: 0 0 1.5rem;
+  display: flex; flex-direction: column; gap: 0.4rem;
+}
+.csb-page .product-features li {
+  padding: 0.25rem 0 0.25rem 1.6rem;
+  position: relative;
+  font-size: 1rem;
+  color: var(--csb-ink);
+  line-height: 1.45;
+}
+.csb-page .product-features li::before {
+  content: '\2713';
+  position: absolute; left: 0; top: 0.25rem;
+  color: var(--csb-red);
+  font-weight: 700;
+  font-size: 1rem;
+}
+.csb-page .product-cta {
+  margin-top: auto;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--csb-border);
+}
+.csb-page .product-cta a {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  color: var(--csb-navy); font-weight: 700;
+  text-decoration: none;
+  font-size: 1rem;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.csb-page .product-cta a:hover,
+.csb-page .product-cta a:focus {
+  color: var(--csb-red-dark);
+  border-bottom-color: var(--csb-red);
+}
+.csb-page .product-cta a .arrow { transition: transform 0.15s; }
+.csb-page .product-cta a:hover .arrow { transform: translateX(3px); }
+
+/* Final CTA */
+.csb-page .cta-final {
+  background: linear-gradient(135deg, var(--csb-navy) 0%, var(--csb-navy-deep) 100%);
+  color: #fff; text-align: center;
+}
+.csb-page .cta-final h2 { color: #fff; font-size: 2.5rem; }
+.csb-page .cta-final p {
+  color: rgba(255,255,255,0.92); font-size: 1.25rem;
+  max-width: 640px; margin: 0 auto 2rem;
+}
+
+/* Footer */
+.csb-page .csb-footer {
+  background: var(--csb-navy-deep); color: rgba(255,255,255,0.85);
+  padding: 3.5rem 2rem 1.5rem;
+}
+.csb-page .csb-footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 2.5rem;
+}
+.csb-page .csb-footer h4 {
+  color: #fff; font-size: 1.1rem; margin-bottom: 1rem;
+  font-family: 'Merriweather', serif;
+}
+.csb-page .csb-footer ul { list-style: none; padding: 0; margin: 0; }
+.csb-page .csb-footer li { margin-bottom: 0.6rem; }
+.csb-page .csb-footer a {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none; font-size: 1.05rem;
+}
+.csb-page .csb-footer a:hover { color: #fff; text-decoration: underline; }
+.csb-page .footer-brand .csb-logo img { width: 56px; height: auto; display: block; }
+.csb-page .footer-brand .csb-logo-text strong { color: #fff; font-family: 'Merriweather', serif; font-size: 1.25rem; }
+.csb-page .footer-brand .csb-logo-text span { color: rgba(255,255,255,0.75); font-size: 0.95rem; }
+.csb-page .footer-brand p { color: rgba(255,255,255,0.75); font-size: 1rem; margin-top: 1rem; }
+.csb-page .social-row { display: flex; gap: 0.75rem; margin-top: 1rem; }
+.csb-page .social-row a {
+  width: 48px; height: 48px;
+  background: rgba(255,255,255,0.1); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; transition: background 0.15s, transform 0.1s;
+}
+.csb-page .social-row a svg { width: 22px; height: 22px; display: block; }
+.csb-page .social-row a:hover { background: var(--csb-red); color: #fff; transform: translateY(-2px); }
+.csb-page .footer-bottom {
+  max-width: 1200px; margin: 2.5rem auto 0;
+  padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.15);
+  font-size: 0.95rem; color: rgba(255,255,255,0.65); text-align: center;
+}
+.csb-page .disclaimer {
+  font-size: 0.88rem; color: rgba(255,255,255,0.55);
+  margin: 0.6rem auto 0; max-width: 900px; line-height: 1.55;
+  text-align: left;
+}
+.csb-page .disclaimer strong { color: rgba(255,255,255,0.8); }
+.csb-page .footer-legal-links {
+  text-align: center; margin-top: 1rem;
+  font-size: 0.95rem; color: rgba(255,255,255,0.7);
+}
+.csb-page .footer-legal-links a {
+  color: rgba(255,255,255,0.85); text-decoration: underline;
+  text-underline-offset: 3px; cursor: pointer;
+  background: none; border: none; font: inherit; padding: 0;
+}
+.csb-page .footer-legal-links a:hover { color: #fff; }
+.csb-page .footer-legal-links .sep { margin: 0 0.6rem; color: rgba(255,255,255,0.4); }
+
+/* Modal */
+.csb-modal {
+  padding: 0;
+  border: 3px solid var(--csb-navy);
+  border-radius: 16px;
+  max-width: 760px; width: 92vw; max-height: 88vh;
+  background: #fff; color: var(--csb-ink);
+  box-shadow: 0 16px 48px rgba(30,50,82,0.3);
+  font-family: 'Inter', sans-serif;
+}
+.csb-modal::backdrop { background: rgba(0,0,0,0.55); backdrop-filter: blur(2px); }
+.csb-modal-inner { display: flex; flex-direction: column; max-height: 88vh; }
+.csb-modal-head {
+  position: relative; padding: 1.5rem 4rem 1.25rem 2rem;
+  background: var(--csb-cream);
+  border-bottom: 2px solid var(--csb-border);
+  flex-shrink: 0;
+}
+.csb-modal-head h2 {
+  font-family: 'Merriweather', serif;
+  font-size: 1.6rem; color: var(--csb-navy);
+  margin: 0; line-height: 1.2;
+}
+.csb-modal-head .subtitle {
+  font-size: 0.95rem; color: var(--csb-ink-soft);
+  margin-top: 0.3rem; display: block;
+}
+.csb-modal-close {
+  position: absolute; top: 0.9rem; right: 0.9rem;
+  width: 44px; height: 44px;
+  background: transparent; border: 2px solid transparent;
+  font-size: 1.9rem; color: var(--csb-ink-soft);
+  cursor: pointer; border-radius: 50%; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0;
+}
+.csb-modal-close:hover {
+  background: #fff; color: var(--csb-red-dark); border-color: var(--csb-red);
+}
+.csb-modal-body {
+  overflow-y: auto; padding: 1.5rem 2rem 2rem;
+  font-size: 1rem; line-height: 1.6; color: var(--csb-ink);
+}
+.csb-modal-body h3 {
+  font-family: 'Merriweather', serif;
+  font-size: 1.2rem; color: var(--csb-navy);
+  margin: 1.5rem 0 0.5rem;
+}
+.csb-modal-body h3:first-child { margin-top: 0; }
+.csb-modal-body h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem; font-weight: 700; color: var(--csb-navy);
+  margin: 0.9rem 0 0.3rem;
+  text-transform: uppercase; letter-spacing: 0.03em;
+}
+.csb-modal-body p { margin: 0 0 0.8rem; font-size: 1rem; color: var(--csb-ink); }
+.csb-modal-body ul { margin: 0 0 0.8rem; padding-left: 1.5rem; list-style: disc; }
+.csb-modal-body li { margin-bottom: 0.25rem; font-size: 1rem; }
+.csb-modal-body strong { color: var(--csb-navy); }
+
+/* Responsive */
+/* Mobile nav toggle (hamburger) — hidden on desktop, shown on mobile */
+.csb-page .csb-nav-toggle {
+  display: none;
+  width: 48px; height: 48px;
+  border: 2px solid var(--csb-border);
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s, background 0.15s;
+}
+.csb-page .csb-nav-toggle:hover,
+.csb-page .csb-nav-toggle:focus-visible { border-color: var(--csb-red); outline: none; }
+.csb-page .csb-nav-toggle .bars {
+  position: relative;
+  display: block;
+  width: 22px; height: 2px;
+  background: var(--csb-navy);
+  transition: background 0.2s;
+}
+.csb-page .csb-nav-toggle .bars::before,
+.csb-page .csb-nav-toggle .bars::after {
+  content: '';
+  position: absolute; left: 0;
+  width: 22px; height: 2px;
+  background: var(--csb-navy);
+  transition: transform 0.2s, top 0.2s;
+}
+.csb-page .csb-nav-toggle .bars::before { top: -7px; }
+.csb-page .csb-nav-toggle .bars::after  { top:  7px; }
+.csb-page.nav-open .csb-nav-toggle .bars { background: transparent; }
+.csb-page.nav-open .csb-nav-toggle .bars::before { top: 0; transform: rotate(45deg); }
+.csb-page.nav-open .csb-nav-toggle .bars::after  { top: 0; transform: rotate(-45deg); }
+
+@media (max-width: 900px) {
+  .csb-page h1 { font-size: 2.25rem; }
+  .csb-page h2 { font-size: 1.75rem; }
+
+  .csb-page section { padding: 3.5rem 1.25rem; }
+  .csb-page .products-intro h1 { font-size: 2.25rem; }
+  .csb-page .csb-footer-inner { grid-template-columns: 1fr 1fr; }
+}
+
+
+@media (max-width: 900px) {
+  /* Show the hamburger; hide the desktop CTA button (still in drawer) */
+  .csb-page .csb-nav-toggle { display: inline-flex; }
+  .csb-page .csb-header { padding: 0.75rem 1.25rem; }
+  .csb-page .csb-logo img { width: 56px; }
+  .csb-page .csb-logo-text strong { font-size: 1.15rem; }
+  .csb-page .csb-logo-text span { font-size: 0.9rem; }
+
+  /* Drawer: slide down from below the sticky header */
+  .csb-page .csb-nav { position: static; }
+  .csb-page .csb-nav > ul {
+    display: none;
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    width: 100%;
+    background: #fff;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.5rem 0 1.5rem;
+    margin: 0;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    z-index: 99;
+    border-top: 1px solid var(--csb-border);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+  }
+  .csb-page.nav-open .csb-nav > ul { display: flex; }
+  .csb-page.nav-open { overflow: hidden; }
+
+  .csb-page .csb-nav > ul > li {
+    border-bottom: 1px solid var(--csb-border);
+  }
+  .csb-page .csb-nav > ul > li:last-child {
+    border-bottom: none;
+    padding: 1rem 1.25rem 0;
+  }
+
+  /* Big-touch nav links — 56px tall, full-width */
+  .csb-page .csb-nav a:not(.btn) {
+    display: flex !important;
+    align-items: center;
+    padding: 0 1.25rem !important;
+    min-height: 56px;
+    font-size: 1.1rem;
+    border-bottom: none;
+  }
+  .csb-page .csb-nav a:not(.btn).active {
+    background: var(--csb-cream);
+    color: var(--csb-navy) !important;
+    border-bottom: none;
+    border-left: 4px solid var(--csb-red);
+    padding-left: calc(1.25rem - 4px) !important;
+  }
+
+  /* CTA button inside drawer = full width */
+  .csb-page .csb-nav .btn {
+    display: flex;
+    width: 100%;
+    min-height: 56px;
+    font-size: 1.1rem;
+  }
+
+  /* Mobile dropdown = inline accordion (no hover, no fixed positioning) */
+  .csb-page .csb-nav .has-dropdown > a {
+    justify-content: flex-start;
+  }
+  .csb-page .csb-nav .has-dropdown > a::after {
+    margin-left: auto;
+    font-size: 1em;
+    transition: transform 0.2s;
+  }
+  .csb-page .csb-nav .has-dropdown.expanded > a::after {
+    transform: rotate(180deg); color: var(--csb-red);
+  }
+  .csb-page .csb-nav-dropdown {
+    position: static !important;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    background: var(--csb-cream);
+    border: none !important;
+    border-top: 1px solid var(--csb-border) !important;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .csb-page .csb-nav .has-dropdown:hover > .csb-nav-dropdown,
+  .csb-page .csb-nav .has-dropdown:focus-within > .csb-nav-dropdown { display: none; }
+  .csb-page .csb-nav .has-dropdown.expanded > .csb-nav-dropdown { display: block; }
+  .csb-page .csb-nav-dropdown a {
+    padding: 0 2.5rem !important;
+    min-height: 48px;
+  }
+  .csb-page .csb-nav-dropdown .dropdown-section {
+    padding: 0.6rem 2.5rem 0.2rem;
+    background: var(--csb-cream-warm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .csb-page *, .csb-page *::before, .csb-page *::after {
+    transition: none !important; animation: none !important;
+  }
+}
+
+.csb-page a:focus-visible,
+.csb-page button:focus-visible,
+.csb-page .btn:focus-visible {
+  outline: 3px solid var(--csb-red);
+  outline-offset: 3px;
+}
+
+</style>
+
+<div class="csb-page">
+
+<a href="#main" class="skip-content">Skip to main content</a>
+
+<!-- Header -->
+<header class="csb-header">
+  <div class="csb-header-inner">
+    <a href="/home" class="csb-logo" aria-label="Covenant Senior Benefits home">
+      <img src="https://assets.cdn.filesafe.space/syjFFgbiNmGuYL7SwVMH/media/69e644decc4d90735ee45f57.png" alt="">
+        <div class="csb-logo-text">
+        <strong>Covenant Senior Benefits</strong>
+        <span>Medicare Made Simple</span>
+      </div>
+    </a>
+    <button type="button" class="csb-nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="csb-main-nav-list">
+      <span class="bars" aria-hidden="true"></span>
+    </button>
+    <nav class="csb-nav" aria-label="Main">
+      <ul id="csb-main-nav-list">
+        <li><a href="/home">Home</a></li>
+        <li class="has-dropdown">
+          <a href="/products" class="active">Products</a>
+          <ul class="csb-nav-dropdown">
+            <li><a href="/products" class="overview-link">Product Overview</a></li>
+            <li class="dropdown-divider"></li>
+            <li class="dropdown-section">Core Medicare</li>
+            <li><a href="/medicare-part-a">Medicare Part A</a></li>
+            <li><a href="/medicare-part-b">Medicare Part B</a></li>
+            <li><a href="/medicare-advantage">Medicare Advantage</a></li>
+            <li><a href="/medicare-part-d">Medicare Part D</a></li>
+            <li><a href="/medicare-supplement">Medicare Supplement</a></li>
+            <li class="dropdown-section">Added Protection</li>
+            <li><a href="/dental-vision-hearing">Dental, Vision &amp; Hearing</a></li>
+            <li><a href="/hospital-indemnity">Hospital Indemnity</a></li>
+            <li><a href="/critical-illness">Cancer, Heart &amp; Stroke</a></li>
+            <li><a href="/final-expense">Final Expense</a></li>
+            <li><a href="/recovery-care">Recovery Care</a></li>
+          </ul>
+        </li>
+        <li><a href="/education-page">Education</a></li>
+        <li><a href="/book-a-call">Book a Call</a></li>
+        <li><a href="/book-a-call" class="btn btn-primary btn-small">Book My Free Call</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- Intro banner -->
+<section class="products-intro">
+  <h1>Medicare, <span class="accent">Explained Simply</span></h1>
+  <p>Every senior's situation is different. Here are the plans and products we help our clients make sense of &mdash; in plain English, with no pressure to pick one today.</p>
+</section>
+
+<!-- CORE MEDICARE PLANS -->
+<section class="products-section">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">Core Medicare Plans</span>
+      <h2>The building blocks of your coverage</h2>
+      <p>Original Medicare is split into four parts, and most people pair it with a supplement or choose an all-in-one Advantage plan. We'll walk you through what fits.</p>
+    </div>
+
+    <div class="product-grid">
+
+      <!-- Part A -->
+      <article class="product-card">
+        <div class="product-badge" aria-hidden="true">A</div>
+        <span class="product-sub">Original Medicare</span>
+        <h3>Medicare Part A</h3>
+        <p>Hospital coverage. Pays for inpatient care when you're admitted. Most people pay no monthly premium thanks to their (or a spouse's) work history.</p>
+        <ul class="product-features">
+          <li>Inpatient hospital stays</li>
+          <li>Skilled nursing facility care</li>
+          <li>Hospice and end-of-life care</li>
+          <li>Limited home health services</li>
+        </ul>
+        <div class="product-cta">
+          <a href="/medicare-part-a">Ask us about Medicare Part A <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+      <!-- Part B -->
+      <article class="product-card">
+        <div class="product-badge" aria-hidden="true">B</div>
+        <span class="product-sub">Original Medicare</span>
+        <h3>Medicare Part B</h3>
+        <p>Doctor and outpatient coverage. Pays for the care you get outside the hospital. Comes with a monthly premium and annual deductible set by Medicare.</p>
+        <ul class="product-features">
+          <li>Doctor visits and specialist care</li>
+          <li>Preventive screenings and vaccines</li>
+          <li>Outpatient procedures and labs</li>
+          <li>Durable medical equipment</li>
+        </ul>
+        <div class="product-cta">
+          <a href="/medicare-part-b">Ask us about Medicare Part B <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+      <!-- Part C / Advantage -->
+      <article class="product-card">
+        <div class="product-badge" aria-hidden="true">C</div>
+        <span class="product-sub">Medicare Advantage</span>
+        <h3>Medicare Part C</h3>
+        <p>The all-in-one alternative to Original Medicare, sold by private insurers. Bundles Parts A and B (usually D too), often with extras like dental, vision, and a fitness benefit.</p>
+        <ul class="product-features">
+          <li>Combines Parts A, B, and often D</li>
+          <li>Extras: dental, vision, hearing, gym</li>
+          <li>Network-based (HMO or PPO)</li>
+          <li>Annual out-of-pocket maximum</li>
+        </ul>
+        <div class="product-cta">
+          <a href="/medicare-advantage">Compare Advantage plans <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+      <!-- Part D -->
+      <article class="product-card">
+        <div class="product-badge" aria-hidden="true">D</div>
+        <span class="product-sub">Prescription Drugs</span>
+        <h3>Medicare Part D</h3>
+        <p>Prescription drug coverage. Sold as a standalone plan alongside Original Medicare, or built into most Medicare Advantage plans.</p>
+        <ul class="product-features">
+          <li>Tiered pricing on common medications</li>
+          <li>Pairs with Original Medicare or bundled in Advantage</li>
+          <li>Annual formulary review recommended</li>
+          <li>Helps avoid the late-enrollment penalty</li>
+        </ul>
+        <div class="product-cta">
+          <a href="/medicare-part-d">Review Your Prescription Coverage <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+      <!-- Supplement -->
+      <article class="product-card">
+        <div class="product-badge" aria-hidden="true">S</div>
+        <span class="product-sub">Medigap</span>
+        <h3>Medicare Supplement</h3>
+        <p>Pays the out-of-pocket costs Original Medicare leaves behind &mdash; deductibles, coinsurance, and copays. Pairs with Parts A &amp; B.</p>
+        <ul class="product-features">
+          <li>Covers most Medicare cost-sharing</li>
+          <li>Use any doctor that accepts Medicare</li>
+          <li>No network restrictions</li>
+          <li>Predictable monthly costs</li>
+        </ul>
+        <div class="product-cta">
+          <a href="/medicare-supplement">Find the right Medigap plan <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ADDED PROTECTION -->
+<section class="products-section alt">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">Added Protection</span>
+      <h2>Fill the gaps Medicare leaves behind</h2>
+      <p>Medicare doesn't cover everything. These optional products help protect your savings from the costs Original Medicare and Advantage plans don't fully cover.</p>
+    </div>
+
+    <div class="product-grid">
+
+      <!-- Dental / Vision / Hearing -->
+      <article class="product-card">
+        <div class="product-badge badge-sm" aria-hidden="true">DVH</div>
+        <span class="product-sub">Everyday Care</span>
+        <h3>Dental, Vision &amp; Hearing</h3>
+        <p>Original Medicare doesn't cover routine dental, vision, or hearing care. A DVH policy fills those gaps with predictable copays and allowances.</p>
+        <ul class="product-features">
+          <li>Cleanings, fillings, and major dental work</li>
+          <li>Eye exams, glasses, and contacts</li>
+          <li>Hearing exams and hearing aid allowances</li>
+          <li>Use with any Medicare plan</li>
+        </ul>
+        <div class="product-cta">
+          <a href="/dental-vision-hearing">Add DVH coverage <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+      <!-- Hospital Indemnity -->
+      <article class="product-card">
+        <div class="product-badge" aria-hidden="true">$</div>
+        <span class="product-sub">Cash Benefit</span>
+        <h3>Hospital Indemnity</h3>
+        <p>Pays you cash directly for every day you're admitted to the hospital. Use it for deductibles, groceries, travel for a family member &mdash; whatever you need.</p>
+        <ul class="product-features">
+          <li>Fixed daily cash benefit</li>
+          <li>Pays on top of Medicare</li>
+          <li>Spend the money however you want</li>
+          <li>Great pair with a Medicare Advantage plan</li>
+        </ul>
+        <div class="product-cta">
+          <a href="/hospital-indemnity">Protect against hospital stays <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+      <!-- Cancer / Heart / Stroke -->
+      <article class="product-card">
+        <div class="product-badge" aria-hidden="true">+</div>
+        <span class="product-sub">Critical Illness</span>
+        <h3>Cancer, Heart Attack &amp; Stroke</h3>
+        <p>A lump-sum cash payout when you're diagnosed with cancer, a heart attack, or a stroke. Helps cover treatment costs, travel, or time away from work.</p>
+        <ul class="product-features">
+          <li>Lump-sum payment at diagnosis</li>
+          <li>Covers the most common major illnesses</li>
+          <li>Use the money for any expense</li>
+          <li>Works alongside any Medicare plan</li>
+        </ul>
+        <div class="product-cta">
+          <a href="/critical-illness">Learn about critical-illness <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+      <!-- Final Expense -->
+      <article class="product-card">
+        <div class="product-badge" aria-hidden="true">FE</div>
+        <span class="product-sub">Whole Life</span>
+        <h3>Final Expense Insurance</h3>
+        <p>A small whole-life policy designed to cover funeral, burial, and end-of-life costs, so your family isn't left with the bill.</p>
+        <ul class="product-features">
+          <li>Typically $10,000 to $30,000 in coverage</li>
+          <li>Locked-in premium for life</li>
+          <li>Usually no medical exam required</li>
+          <li>Peace of mind for loved ones</li>
+        </ul>
+        <div class="product-cta">
+          <a href="/final-expense">Plan for final expenses <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+      <!-- Recovery Care -->
+      <article class="product-card">
+        <div class="product-badge badge-sm" aria-hidden="true">RC</div>
+        <span class="product-sub">Extended Care</span>
+        <h3>Recovery Care</h3>
+        <p>Covers extended recovery at home, in assisted living, or in a nursing facility &mdash; including the costs Medicare stops paying for after Day 100. Protects your savings if you ever need ongoing care.</p>
+        <ul class="product-features">
+          <li>Skilled nursing after Medicare's Day 100 cutoff</li>
+          <li>In-home aides and nursing care</li>
+          <li>Assisted living and custodial care</li>
+          <li>Shields savings from catastrophic costs</li>
+        </ul>
+        <div class="product-cta">
+          <a href="/recovery-care">Explore Recovery Care <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="cta-final">
+  <div class="section-inner">
+    <h2>Not sure which plan is right for you?</h2>
+    <p>Book a free 45-minute call with a licensed Medicare specialist. We'll walk through your situation, compare plans side-by-side, and help you choose &mdash; with zero pressure.</p>
+    <a href="/book-a-call" class="btn btn-primary btn-large">Book a Free Consultation &rarr;</a>
+  </div>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer class="csb-footer">
+  <div class="csb-footer-inner">
+    <div class="footer-brand">
+      <a href="/home" class="csb-logo" aria-label="Covenant Senior Benefits home">
+        <img src="https://assets.cdn.filesafe.space/syjFFgbiNmGuYL7SwVMH/media/69e644decc4d90735ee45f57.png" alt="">
+        <div class="csb-logo-text">
+          <strong>Covenant Senior Benefits</strong>
+          <span>Medicare Made Simple</span>
+        </div>
+      </a>
+      <p>To glorify God by helping seniors get the best healthcare &mdash; with honesty, patience, and lifelong support.</p>
+      <div class="social-row">
+        <a href="https://www.facebook.com/people/65iscomingfast/61572078636697/" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/covenantseniorbenefits/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <h4>Pages</h4>
+      <ul>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/products">Products</a></li>
+        <li><a href="/education-page">Education</a></li>
+        <li><a href="/book-a-call">Book a Call</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Core Plans</h4>
+      <ul>
+        <li><a href="/medicare-part-a">Medicare Part A</a></li>
+        <li><a href="/medicare-part-b">Medicare Part B</a></li>
+        <li><a href="/medicare-advantage">Medicare Advantage</a></li>
+        <li><a href="/medicare-part-d">Medicare Part D</a></li>
+        <li><a href="/medicare-supplement">Medigap / Supplement</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+14848598428">(484) 859-8428</a></li>
+        <li><a href="mailto:joey@covenantseniorbenefits.com">joey@covenantsenior<wbr>benefits.com</a></li>
+        <li>Mon &ndash; Fri, 8am &ndash; 6pm</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="disclaimer">
+      <strong>Disclaimer:</strong> This is a solicitation for insurance. Submitting information or calling numbers listed on this website will direct you to a licensed Agent/Broker. Important disclosures about Medicare Plans: Medicare has neither endorsed nor reviewed this information. Not connected or affiliated with any United States Government or State agency. We do not offer every plan available in your area. Any information we provide is limited to those plans we do offer in your area. Please contact Medicare.gov or 1-800-MEDICARE to get information on all of your options. Copyright 2026 &mdash; Covenant Senior Benefits
+    </p>
+    <p class="footer-legal-links">
+      <a data-csb-modal="csb-privacy" href="#privacy">Privacy Policy</a>
+      <span class="sep" aria-hidden="true">&middot;</span>
+      <a data-csb-modal="csb-terms" href="#terms">Terms of Service</a>
+    </p>
+  </div>
+</footer>
+
+<!-- ==========  PRIVACY POLICY MODAL  ========== -->
+<dialog id="csb-privacy" class="csb-modal" aria-labelledby="csb-privacy-title">
+  <div class="csb-modal-inner">
+    <div class="csb-modal-head">
+      <h2 id="csb-privacy-title">Privacy Policy</h2>
+      <span class="subtitle">Last updated: April 20, 2026</span>
+      <button type="button" class="csb-modal-close" aria-label="Close Privacy Policy">&times;</button>
+    </div>
+    <div class="csb-modal-body">
+      <p>Covenant Senior Benefits ("we," "our," or "us") is committed to protecting the privacy and security of your personal information. This Privacy Policy explains how we collect, use, disclose, and protect your personal information when you interact with our agency.</p>
+      <p>We take your privacy seriously and strive to comply with all applicable laws and regulations concerning the protection of personal information, including the Health Insurance Portability and Accountability Act (HIPAA) and other relevant healthcare privacy laws. Please read this Privacy Policy carefully to understand how we handle your personal information. By accessing or using our services, you consent to the practices described in this Privacy Policy.</p>
+
+      <h3>1. Information We Collect</h3>
+      <p>We may collect and maintain the following types of personal information when you engage with our Medicare agency:</p>
+      <h4>Personal Identifiable Information (PII)</h4>
+      <ul>
+        <li>Name</li>
+        <li>Address</li>
+        <li>Date of birth</li>
+        <li>Social Security Number</li>
+        <li>Medicare and health insurance information</li>
+      </ul>
+      <h4>Health Information</h4>
+      <ul>
+        <li>Medical history</li>
+        <li>Health conditions</li>
+        <li>Prescription and treatment information</li>
+      </ul>
+      <h4>Contact Information</h4>
+      <ul>
+        <li>Email address</li>
+        <li>Phone number</li>
+      </ul>
+      <h4>Technology &amp; AI-Related Information</h4>
+      <ul>
+        <li>Interactions with our digital tools, including AI-assisted chat or communication platforms used to provide customer service and appointment scheduling</li>
+        <li>Device and usage data (e.g., IP address, browser type, interaction logs) collected for security, fraud prevention, and service improvement</li>
+      </ul>
+
+      <h3>2. How We Use Your Information</h3>
+      <p>We may use your personal information for the following purposes:</p>
+      <ul>
+        <li><strong>Provide Services:</strong> To facilitate your enrollment in Medicare and provide you with related healthcare services.</li>
+        <li><strong>Verify Eligibility:</strong> To determine your eligibility for Medicare and related benefits.</li>
+        <li><strong>Billing and Payment:</strong> To process payments for Medicare plans and services.</li>
+        <li><strong>Communication:</strong> To send you important information about your Medicare coverage, updates, and other relevant communications.</li>
+        <li><strong>Customer Support:</strong> To respond to your inquiries and provide customer support.</li>
+        <li><strong>Improve Services &amp; AI Tools:</strong> To analyze and improve our services, including the development of new programs, digital tools, and AI-assisted solutions that help us provide faster, more accurate support.</li>
+        <li><strong>Legal Compliance:</strong> To comply with legal and regulatory requirements, including reporting obligations to government agencies.</li>
+      </ul>
+
+      <h3>3. How We Protect Your Information</h3>
+      <p>We take the security of your personal information seriously and employ reasonable administrative, technical, and physical safeguards to protect it from unauthorized access, disclosure, alteration, or destruction.</p>
+      <p>When AI-powered systems are used, we implement strict controls to:</p>
+      <ul>
+        <li>Limit exposure of sensitive data (such as Medicare or health information)</li>
+        <li>Ensure data is processed securely and ethically</li>
+        <li>Restrict access to authorized employees and trusted service providers</li>
+      </ul>
+
+      <h3>4. Sharing Your Information</h3>
+      <p>We may share your personal information with third parties in the following circumstances:</p>
+      <ul>
+        <li><strong>Service Providers:</strong> We may share your information with third-party service providers (including secure AI-assisted platforms) who assist in carrying out our services, subject to appropriate contractual safeguards.</li>
+        <li><strong>Legal Requirements:</strong> We may disclose your information as required by law, regulation, or legal process.</li>
+        <li><strong>Business Transfers:</strong> In the event of a merger, acquisition, or sale of all or part of our agency, your personal information may be transferred to the acquiring entity.</li>
+        <li><strong>Mobile Data Disclosure:</strong> No mobile information will be shared with third parties/affiliates for marketing or promotional purposes. Information sharing to subcontractors in support services, such as customer service, is permitted. All other use case categories exclude text messaging originator opt-in data and consent; this information will not be shared with any third parties.</li>
+      </ul>
+
+      <h3>5. Your Rights</h3>
+      <p>You have certain rights regarding your personal information, including the right to access, correct, and delete your information, as well as the right to opt-out of certain communications.</p>
+      <p>To exercise these rights, please contact us at:</p>
+      <p><strong>Covenant Senior Benefits</strong><br>
+      Phone: <a href="tel:+14848598428">(484) 859-8428</a><br>
+      Website: <a href="https://covenantseniorbenefits.com">Covenantseniorbenefits.com</a></p>
+
+      <h3>6. Use of Artificial Intelligence (AI)</h3>
+      <p>We may use secure, HIPAA-conscious AI tools to assist with customer service, appointment scheduling, and internal process improvement. AI may be used to:</p>
+      <ul>
+        <li>Generate faster responses to inquiries</li>
+        <li>Provide reminders or confirmations of appointments</li>
+        <li>Support administrative functions</li>
+      </ul>
+      <p>We do not use AI to make decisions about your Medicare eligibility, coverage, or benefits. All final determinations are made by licensed insurance professionals.</p>
+      <p>You can request more information about our use of AI or opt out of AI-assisted communications by contacting us directly.</p>
+
+      <h3>7. Changes to This Privacy Policy</h3>
+      <p>We may update this Privacy Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. We will post the updated Privacy Policy on our website and notify you of any significant changes.</p>
+
+      <p style="margin-top:2rem;font-size:0.9rem;color:var(--csb-ink-soft);">&copy; 2026 Covenant Senior Benefits</p>
+    </div>
+  </div>
+</dialog>
+
+<!-- ==========  TERMS OF SERVICE MODAL  ========== -->
+<dialog id="csb-terms" class="csb-modal" aria-labelledby="csb-terms-title">
+  <div class="csb-modal-inner">
+    <div class="csb-modal-head">
+      <h2 id="csb-terms-title">Terms of Service</h2>
+      <span class="subtitle">Last updated: April 20, 2026</span>
+      <button type="button" class="csb-modal-close" aria-label="Close Terms of Service">&times;</button>
+    </div>
+    <div class="csb-modal-body">
+
+      <h3>1. Introduction</h3>
+      <p>Welcome to Covenant Senior Benefits LLC ("Website"). These Terms of Service ("Terms") govern your use of our website located at covenantseniorbenefits.com (together or individually, the "Service"), operated by Covenant Senior Benefits LLC ("Company", "we", "our", or "us").</p>
+      <p>By accessing or using our Service, you agree to be bound by these Terms. If you do not agree with any part of the Terms, you may not access the Service.</p>
+
+      <h3>2. Accounts</h3>
+      <p>When you create an account with us, you must provide accurate, complete, and up-to-date information at all times. Failure to do so constitutes a breach of these Terms and may result in immediate termination of your account.</p>
+      <p>You are responsible for safeguarding your password and for any activities or actions performed under your account credentials. You agree not to disclose your password to any third party and to notify us immediately upon becoming aware of any unauthorized access or use of your account.</p>
+
+      <h3>3. Content</h3>
+      <p>Our Service may allow you to post, link, store, share, and otherwise make available certain information, text, graphics, videos, or other materials ("Content").</p>
+      <p>You are responsible for the Content you post or share through the Service, including its legality, reliability, and appropriateness. By posting Content, you grant Covenant Senior Benefits LLC a non-exclusive, royalty-free, worldwide license to use, modify, publicly display, and distribute such Content in connection with operating and improving the Service.</p>
+
+      <h3>4. Intellectual Property</h3>
+      <p>The Service and its original content (excluding Content provided by users), features, design, and functionality are and will remain the exclusive property of Covenant Senior Benefits LLC and its licensors.</p>
+      <p>Our trademarks and trade dress may not be used in connection with any product or service without the prior written consent of Covenant Senior Benefits LLC.</p>
+
+      <h3>5. Termination</h3>
+      <p>We may suspend or terminate your access to the Service immediately, without prior notice or liability, for any reason whatsoever, including, without limitation, if you breach these Terms.</p>
+      <p>Upon termination, your right to use the Service will immediately cease. If you wish to terminate your account, you may simply discontinue using the Service.</p>
+
+      <h3>6. Limitation of Liability</h3>
+      <p>In no event shall Covenant Senior Benefits LLC, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages&mdash;including, without limitation, loss of profits, data, use, goodwill, or other intangible losses&mdash;resulting from:</p>
+      <ul>
+        <li>Your access to or use of (or inability to access or use) the Service;</li>
+        <li>Any unauthorized access to or use of our servers or any personal information stored therein; or</li>
+        <li>Any interruption, error, or omission in the Service.</li>
+      </ul>
+
+      <h3>7. Governing Law</h3>
+      <p>These Terms shall be governed and construed in accordance with the laws of the [Your State/Country], without regard to its conflict of law provisions.</p>
+
+      <h3>8. Changes to Service</h3>
+      <p>We reserve the right to modify, suspend, or discontinue any part of the Service, or any content or materials provided through it, at our sole discretion without notice. We will not be liable if any part of the Service becomes unavailable at any time or for any period.</p>
+
+      <h3>9. Amendments to Terms</h3>
+      <p>We may revise these Terms at any time by posting the updated version on our website. Your continued use of the Service after such modifications constitutes your acceptance of the new Terms. We encourage you to review these Terms periodically.</p>
+
+      <h3>10. Contact Us</h3>
+      <p>If you have any questions about these Terms, please contact us:</p>
+      <p><strong>Covenant Senior Benefits LLC</strong><br>
+      Email: <a href="mailto:joey@covenantseniorbenefits.com">joey@covenantseniorbenefits.com</a><br>
+      Phone: <a href="tel:+14848598428">(484) 859-8428</a></p>
+
+      <p style="margin-top:2rem;font-size:0.9rem;color:var(--csb-ink-soft);">&copy; 2026 Covenant Senior Benefits</p>
+    </div>
+  </div>
+</dialog>
+
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var trigger = e.target.closest('[data-csb-modal]');
+    if (trigger) {
+      e.preventDefault();
+      var dlg = document.getElementById(trigger.getAttribute('data-csb-modal'));
+      if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
+      return;
+    }
+    if (e.target.matches('.csb-modal-close')) {
+      var d = e.target.closest('dialog'); if (d) d.close();
+      return;
+    }
+    if (e.target.matches('dialog.csb-modal')) e.target.close();
+  });
+})();
+</script>
+
+<script>
+/* Mobile nav: hamburger + Products tap-expand. No external libs. */
+(function(){
+  document.querySelectorAll('.csb-page').forEach(function(page){
+    var toggle = page.querySelector('.csb-nav-toggle');
+    var dropdown = page.querySelector('.csb-nav .has-dropdown');
+    var dropdownLink = dropdown && dropdown.querySelector(':scope > a');
+
+    if (toggle) {
+      toggle.addEventListener('click', function(e){
+        e.preventDefault();
+        var open = page.classList.toggle('nav-open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+        if (!open && dropdown) dropdown.classList.remove('expanded');
+      });
+    }
+
+    /* On mobile, tapping the Products link expands the submenu instead of navigating.
+       Desktop (>900px) keeps the hover behavior because mql.matches is false. */
+    if (dropdownLink) {
+      dropdownLink.addEventListener('click', function(e){
+        if (window.matchMedia('(max-width: 900px)').matches) {
+          e.preventDefault();
+          dropdown.classList.toggle('expanded');
+        }
+      });
+    }
+
+    /* Close drawer when any nav link inside is clicked (so navigation actually feels right) */
+    page.querySelectorAll('.csb-nav a').forEach(function(a){
+      a.addEventListener('click', function(){
+        if (window.matchMedia('(max-width: 900px)').matches && !a.matches('.has-dropdown > a')) {
+          page.classList.remove('nav-open');
+          if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    /* If viewport grows back past mobile, reset state */
+    window.addEventListener('resize', function(){
+      if (!window.matchMedia('(max-width: 900px)').matches) {
+        page.classList.remove('nav-open');
+        if (dropdown) dropdown.classList.remove('expanded');
+        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+})();
+</script>
+
+</div>
+<!-- /.csb-page  end GHL custom-code block -->

@@ -1,0 +1,931 @@
+<!--
+  ============================================================
+  GoHighLevel Custom-Code block — BOOK A CALL page
+  Paste everything below into a single GHL custom-code element
+  on the Book a Call page. Self-contained, scoped under
+  .csb-page, and full-bleed so it breaks out of GHL's 1170px
+  container.
+
+  Note: the calendar shown is a visual mockup. To wire up the
+  real GHL booking widget, REPLACE the block marked
+  "CALENDAR MOCKUP" with GHL's calendar embed iframe/div.
+  ============================================================
+-->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ================================================================
+   GHL parent-container override — neutralize the 1170px max-width
+   and 10px/5px gutters on the section/row/column wrapping us.
+   :has() walks up to find any ancestor that contains .csb-page, so
+   this works regardless of GHL's per-page random hash IDs.
+   ================================================================ */
+.skip-content { display: none; }  /* user-added, preserved */
+
+.hl_page-preview--content .c-section:has(.csb-page),
+.hl_page-preview--content .c-row:has(.csb-page),
+.hl_page-preview--content .c-column:has(.csb-page),
+.hl_page-preview--content .c-custom-code:has(.csb-page),
+.c-section:has(.csb-page),
+.c-row:has(.csb-page),
+.c-column:has(.csb-page),
+.c-custom-code:has(.csb-page) {
+  max-width: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+}
+.hl_page-preview--content .c-section:has(.csb-page) > .inner,
+.hl_page-preview--content .c-row:has(.csb-page) > .inner,
+.hl_page-preview--content .c-column:has(.csb-page) > .inner,
+.c-section:has(.csb-page) > .inner,
+.c-row:has(.csb-page) > .inner,
+.c-column:has(.csb-page) > .inner {
+  max-width: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.csb-page {
+  --csb-navy: #395a86;
+  --csb-navy-dark: #2a4465;
+  --csb-navy-deep: #1e3252;
+  --csb-red: #c7494d;
+  --csb-red-dark: #a73a3e;
+  --csb-white: #ffffff;
+  --csb-cream: #f8f6f2;
+  --csb-cream-warm: #eee8db;
+  --csb-ink: #1a1a1a;
+  --csb-ink-soft: #3d3d3d;
+  --csb-border: #d9d3c4;
+  --csb-success: #2d6e3e;
+
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 20px;
+  line-height: 1.6;
+  color: var(--csb-ink);
+  background: var(--csb-white);
+  -webkit-font-smoothing: antialiased;
+
+  /* Parent containers are unconstrained by the override above, so a simple 100% suffices. */
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.csb-page *, .csb-page *::before, .csb-page *::after { box-sizing: border-box; }
+
+.csb-page h1, .csb-page h2, .csb-page h3, .csb-page h4 {
+  font-family: 'Merriweather', Georgia, 'Times New Roman', serif;
+  color: var(--csb-navy); line-height: 1.25;
+  font-weight: 700; margin: 0 0 1rem;
+}
+.csb-page h1 { font-size: 3rem; }
+.csb-page h2 { font-size: 2.25rem; margin-bottom: 1.25rem; }
+.csb-page h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+.csb-page p { margin: 0 0 1rem; font-size: 1.125rem; color: var(--csb-ink-soft); }
+.csb-page ul { margin: 0; padding: 0; }
+.csb-page a { color: var(--csb-navy); text-decoration: underline; text-underline-offset: 3px; }
+.csb-page a:hover, .csb-page a:focus { color: var(--csb-red-dark); }
+
+.csb-page .skip-link {
+  position: absolute; top: -60px; left: 0;
+  background: var(--csb-navy); color: #fff;
+  padding: 1rem 1.5rem; z-index: 1000; font-weight: 600;
+}
+.csb-page .skip-link:focus { top: 0; }
+
+/* Header */
+.csb-page .csb-header {
+  background: #fff;
+  border-bottom: 4px solid var(--csb-red);
+  padding: 1rem 2rem;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+.csb-page .csb-header-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center; gap: 2rem;
+}
+.csb-page .csb-logo { display: flex; align-items: center; gap: 0.9rem; text-decoration: none; }
+.csb-page .csb-logo img { width: 76px; height: auto; display: block; }
+.csb-page .csb-logo-text { display: flex; flex-direction: column; line-height: 1.15; }
+.csb-page .csb-logo-text strong {
+  font-family: 'Merriweather', serif; font-size: 1.55rem; color: var(--csb-navy);
+}
+.csb-page .csb-logo-text span { font-size: 1.05rem; color: var(--csb-ink-soft); }
+.csb-page .csb-nav > ul { list-style: none; display: flex; gap: 2rem; align-items: center; padding: 0; margin: 0; }
+/* Nav TEXT links — exclude .btn so the CTA button keeps its own styling */
+.csb-page .csb-nav a:not(.btn) {
+  text-decoration: none; color: var(--csb-ink); font-weight: 600;
+  font-size: 1.25rem; padding: 0.5rem 0;
+  border-bottom: 3px solid transparent;
+}
+.csb-page .csb-nav a:not(.btn):hover, .csb-page .csb-nav a:not(.btn):focus,
+.csb-page .csb-nav a:not(.btn).active { border-bottom-color: var(--csb-red); color: var(--csb-navy); }
+
+/* Buttons */
+.csb-page .btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 0.6rem; min-height: 64px;
+  padding: 1rem 2.25rem; font-size: 1.25rem; font-weight: 700;
+  border-radius: 10px; text-decoration: none;
+  border: 3px solid transparent; cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.15s, background 0.15s;
+  line-height: 1.2; font-family: 'Inter', sans-serif;
+}
+.csb-page .btn-primary {
+  background: var(--csb-red); color: #fff;
+  border-color: var(--csb-red-dark);
+  box-shadow: 0 4px 0 var(--csb-red-dark);
+}
+.csb-page .btn-primary:hover, .csb-page .btn-primary:focus {
+  background: var(--csb-red-dark); color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--csb-red-dark);
+}
+.csb-page .btn-secondary {
+  background: #fff; color: var(--csb-navy);
+  border-color: var(--csb-navy);
+}
+.csb-page .btn-secondary:hover, .csb-page .btn-secondary:focus {
+  background: var(--csb-navy); color: #fff;
+}
+.csb-page .btn-small { min-height: 52px; font-size: 1.05rem; padding: 0.7rem 1.4rem; }
+
+/* Sections base */
+.csb-page section { padding: 5rem 2rem; }
+.csb-page .section-inner { max-width: 1200px; margin: 0 auto; }
+.csb-page .section-head { text-align: center; max-width: 760px; margin: 0 auto 3rem; }
+.csb-page .eyebrow {
+  display: inline-block; background: var(--csb-red); color: #fff;
+  padding: 0.4rem 1.1rem; border-radius: 20px;
+  font-size: 0.95rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+/* Booking intro */
+.csb-page .booking-intro {
+  background: linear-gradient(135deg, var(--csb-navy) 0%, var(--csb-navy-deep) 100%);
+  color: #fff; padding: 4rem 2rem 3rem; text-align: center;
+}
+.csb-page .booking-intro h1 { color: #fff; font-size: 2.75rem; margin-bottom: 0.75rem; }
+.csb-page .booking-intro p {
+  color: rgba(255,255,255,0.92); font-size: 1.25rem;
+  max-width: 680px; margin: 0 auto;
+}
+
+/* Booking area */
+.csb-page .booking-area { background: var(--csb-cream); padding: 4rem 2rem 5rem; }
+.csb-page .booking-inner {
+  max-width: 1160px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1.6fr;
+  gap: 2.5rem; align-items: stretch;
+}
+
+/* Left: consult info */
+.csb-page .consult-info {
+  background: #fff;
+  border: 3px solid var(--csb-navy);
+  border-radius: 14px; padding: 2rem;
+  position: relative;
+}
+.csb-page .consult-info h2 {
+  font-size: 1.65rem; margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--csb-border);
+}
+.csb-page .consult-meta { list-style: none; padding: 0; margin: 0 0 1.5rem; }
+.csb-page .consult-meta li {
+  display: flex; gap: 0.9rem; align-items: flex-start;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--csb-border);
+  font-size: 1.1rem;
+}
+.csb-page .consult-meta li:last-child { border-bottom: none; }
+.csb-page .consult-meta .icon {
+  flex-shrink: 0; width: 40px; height: 40px;
+  background: var(--csb-cream); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--csb-navy); font-weight: 700; font-size: 1.15rem;
+}
+.csb-page .consult-meta .label {
+  display: block;
+  font-size: 0.85rem; color: var(--csb-ink-soft);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  margin-bottom: 0.15rem;
+}
+.csb-page .consult-meta .value {
+  font-size: 1.1rem; font-weight: 600; color: var(--csb-ink);
+}
+.csb-page .consult-promise {
+  background: var(--csb-cream);
+  border-left: 4px solid var(--csb-red);
+  padding: 1rem 1.25rem; border-radius: 6px;
+  font-size: 1rem; color: var(--csb-ink); line-height: 1.5;
+}
+.csb-page .consult-promise strong {
+  color: var(--csb-navy); display: block; margin-bottom: 0.25rem;
+}
+
+/* Right: calendar widget */
+.csb-page .calendar-widget {
+  background: #fff;
+  border: 3px solid var(--csb-navy);
+  border-radius: 14px; padding: 2rem;
+  position: relative;
+}
+.csb-page .calendar-widget h2 {
+  font-size: 1.65rem; margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--csb-border);
+}
+.csb-page .calendar-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+}
+
+/* Date picker */
+.csb-page .cal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.csb-page .cal-nav {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 2px solid var(--csb-navy);
+  background: #fff; color: var(--csb-navy);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; font-weight: 700; cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  font-family: inherit;
+}
+.csb-page .cal-nav:hover:not(:disabled) { background: var(--csb-navy); color: #fff; }
+.csb-page .cal-nav:disabled { opacity: 0.4; cursor: not-allowed; }
+.csb-page .cal-month {
+  font-family: 'Merriweather', serif;
+  font-size: 1.3rem; font-weight: 700; color: var(--csb-navy);
+}
+.csb-page .cal-table { width: 100%; border-collapse: collapse; }
+.csb-page .cal-table th {
+  font-size: 0.9rem; color: var(--csb-ink-soft);
+  padding: 0.5rem 0; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.csb-page .cal-table td { padding: 4px 2px; text-align: center; }
+.csb-page .cal-day {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 1.05rem; font-weight: 600; cursor: pointer;
+  color: var(--csb-ink);
+  background: transparent;
+  border: 2px solid transparent;
+  transition: background 0.15s, color 0.15s;
+}
+.csb-page .cal-day.disabled { color: #bbb; cursor: not-allowed; font-weight: 400; }
+.csb-page .cal-day.selectable:hover {
+  background: var(--csb-cream-warm);
+  border-color: var(--csb-navy);
+}
+.csb-page .cal-day.today {
+  border: 2px solid var(--csb-red); color: var(--csb-red); font-weight: 700;
+}
+.csb-page .cal-day.selected {
+  background: var(--csb-navy); color: #fff;
+  border-color: var(--csb-navy);
+}
+
+.csb-page .timezone-row {
+  margin-top: 1.5rem; padding: 1rem;
+  background: var(--csb-cream);
+  border-radius: 8px; font-size: 1rem;
+  display: flex; gap: 0.6rem; align-items: center;
+}
+.csb-page .timezone-row strong { color: var(--csb-navy); }
+.csb-page .tz-icon {
+  width: 28px; height: 28px;
+  background: var(--csb-navy); color: #fff;
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 0.9rem; flex-shrink: 0;
+}
+
+/* Time slots */
+.csb-page .slots-head {
+  font-size: 1.1rem; font-weight: 700;
+  color: var(--csb-navy); margin-bottom: 1rem;
+  font-family: 'Merriweather', serif;
+}
+.csb-page .slots-head .selected-date {
+  display: block; font-size: 0.95rem;
+  font-family: 'Inter', sans-serif;
+  color: var(--csb-ink-soft);
+  font-weight: 500; margin-top: 0.2rem;
+}
+.csb-page .slots-list {
+  list-style: none; padding: 0; margin: 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem;
+  max-height: 380px; overflow-y: auto;
+}
+.csb-page .slot-btn {
+  display: block; width: 100%;
+  padding: 0.85rem 0.5rem;
+  border: 2px solid var(--csb-border);
+  background: #fff; color: var(--csb-navy);
+  font-size: 1.05rem; font-weight: 600;
+  border-radius: 8px; cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.csb-page .slot-btn:hover:not(:disabled) {
+  border-color: var(--csb-red);
+  background: var(--csb-red);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.csb-page .slot-btn:disabled {
+  background: #f5f5f5; color: #bbb;
+  cursor: not-allowed;
+  border-style: dashed;
+}
+.csb-page .slot-btn.available {
+  border-color: var(--csb-navy);
+  background: #fff;
+  color: var(--csb-navy);
+}
+.csb-page .slot-btn.available:hover {
+  background: var(--csb-red);
+  border-color: var(--csb-red-dark);
+  color: #fff;
+}
+
+.csb-page .slots-legend {
+  margin-top: 1rem; padding: 0.75rem 1rem;
+  background: var(--csb-cream);
+  border-radius: 6px;
+  font-size: 0.95rem; color: var(--csb-ink-soft);
+  display: flex; gap: 1.25rem; flex-wrap: wrap;
+}
+.csb-page .slots-legend .swatch {
+  display: inline-block; width: 14px; height: 14px;
+  border-radius: 3px; vertical-align: middle;
+  margin-right: 0.4rem;
+  border: 2px solid transparent;
+}
+.csb-page .slots-legend .swatch-avail { background: #fff; border-color: var(--csb-navy); }
+.csb-page .slots-legend .swatch-taken { background: #f5f5f5; border: 2px dashed #bbb; }
+
+/* Alternatives */
+.csb-page .alternatives {
+  background: #fff;
+  border-top: 1px solid var(--csb-border);
+}
+.csb-page .alt-grid {
+  display: grid; grid-template-columns: 1fr; gap: 1.5rem;
+  max-width: 520px; margin: 0 auto;
+}
+.csb-page .alt-card {
+  background: var(--csb-cream);
+  border: 2px solid var(--csb-border);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+}
+.csb-page .alt-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+.csb-page .alt-card p { font-size: 1.05rem; margin-bottom: 1.25rem; }
+
+/* Footer */
+.csb-page .csb-footer {
+  background: var(--csb-navy-deep); color: rgba(255,255,255,0.85);
+  padding: 3.5rem 2rem 1.5rem;
+}
+.csb-page .csb-footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 2.5rem;
+}
+.csb-page .csb-footer h4 {
+  color: #fff; font-size: 1.1rem; margin-bottom: 1rem;
+  font-family: 'Merriweather', serif;
+}
+.csb-page .csb-footer ul { list-style: none; padding: 0; margin: 0; }
+.csb-page .csb-footer li { margin-bottom: 0.6rem; }
+.csb-page .csb-footer a {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none; font-size: 1.05rem;
+}
+.csb-page .csb-footer a:hover { color: #fff; text-decoration: underline; }
+.csb-page .footer-brand p { color: rgba(255,255,255,0.75); font-size: 1rem; margin-top: 1rem; }
+.csb-page .footer-brand .csb-logo-text strong { color: #fff; }
+.csb-page .footer-brand .csb-logo-text span { color: rgba(255,255,255,0.75); }
+.csb-page .social-row { display: flex; gap: 0.75rem; margin-top: 1rem; }
+.csb-page .social-row a {
+  width: 48px; height: 48px;
+  background: rgba(255,255,255,0.1); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  transition: background 0.15s, transform 0.1s;
+}
+.csb-page .social-row a svg { width: 22px; height: 22px; display: block; }
+.csb-page .social-row a:hover { background: var(--csb-red); color: #fff; transform: translateY(-2px); }
+.csb-page .footer-bottom {
+  max-width: 1200px; margin: 2.5rem auto 0;
+  padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.15);
+  font-size: 0.95rem; color: rgba(255,255,255,0.65); text-align: center;
+}
+.csb-page .disclaimer {
+  font-size: 0.88rem; color: rgba(255,255,255,0.55);
+  margin: 0.6rem auto 0; max-width: 900px; line-height: 1.5;
+}
+
+/* Responsive */
+/* Mobile nav toggle (hamburger) — hidden on desktop, shown on mobile */
+.csb-page .csb-nav-toggle {
+  display: none;
+  width: 48px; height: 48px;
+  border: 2px solid var(--csb-border);
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s, background 0.15s;
+}
+.csb-page .csb-nav-toggle:hover,
+.csb-page .csb-nav-toggle:focus-visible { border-color: var(--csb-red); outline: none; }
+.csb-page .csb-nav-toggle .bars {
+  position: relative;
+  display: block;
+  width: 22px; height: 2px;
+  background: var(--csb-navy);
+  transition: background 0.2s;
+}
+.csb-page .csb-nav-toggle .bars::before,
+.csb-page .csb-nav-toggle .bars::after {
+  content: '';
+  position: absolute; left: 0;
+  width: 22px; height: 2px;
+  background: var(--csb-navy);
+  transition: transform 0.2s, top 0.2s;
+}
+.csb-page .csb-nav-toggle .bars::before { top: -7px; }
+.csb-page .csb-nav-toggle .bars::after  { top:  7px; }
+.csb-page.nav-open .csb-nav-toggle .bars { background: transparent; }
+.csb-page.nav-open .csb-nav-toggle .bars::before { top: 0; transform: rotate(45deg); }
+.csb-page.nav-open .csb-nav-toggle .bars::after  { top: 0; transform: rotate(-45deg); }
+
+@media (max-width: 900px) {
+  .csb-page h1 { font-size: 2.25rem; }
+  .csb-page h2 { font-size: 1.75rem; }
+
+  .csb-page section { padding: 3.5rem 1.25rem; }
+  .csb-page .booking-inner { grid-template-columns: 1fr; }
+  .csb-page .calendar-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .csb-page .booking-intro h1 { font-size: 2rem; }
+  .csb-page .csb-footer-inner { grid-template-columns: 1fr 1fr; }
+}
+
+
+@media (max-width: 900px) {
+  /* Show the hamburger; hide the desktop CTA button (still in drawer) */
+  .csb-page .csb-nav-toggle { display: inline-flex; }
+  .csb-page .csb-header { padding: 0.75rem 1.25rem; }
+  .csb-page .csb-logo img { width: 56px; }
+  .csb-page .csb-logo-text strong { font-size: 1.15rem; }
+  .csb-page .csb-logo-text span { font-size: 0.9rem; }
+
+  /* Drawer: slide down from below the sticky header */
+  .csb-page .csb-nav { position: static; }
+  .csb-page .csb-nav > ul {
+    display: none;
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    width: 100%;
+    background: #fff;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.5rem 0 1.5rem;
+    margin: 0;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    z-index: 99;
+    border-top: 1px solid var(--csb-border);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+  }
+  .csb-page.nav-open .csb-nav > ul { display: flex; }
+  .csb-page.nav-open { overflow: hidden; }
+
+  .csb-page .csb-nav > ul > li {
+    border-bottom: 1px solid var(--csb-border);
+  }
+  .csb-page .csb-nav > ul > li:last-child {
+    border-bottom: none;
+    padding: 1rem 1.25rem 0;
+  }
+
+  /* Big-touch nav links — 56px tall, full-width */
+  .csb-page .csb-nav a:not(.btn) {
+    display: flex !important;
+    align-items: center;
+    padding: 0 1.25rem !important;
+    min-height: 56px;
+    font-size: 1.1rem;
+    border-bottom: none;
+  }
+  .csb-page .csb-nav a:not(.btn).active {
+    background: var(--csb-cream);
+    color: var(--csb-navy) !important;
+    border-bottom: none;
+    border-left: 4px solid var(--csb-red);
+    padding-left: calc(1.25rem - 4px) !important;
+  }
+
+  /* CTA button inside drawer = full width */
+  .csb-page .csb-nav .btn {
+    display: flex;
+    width: 100%;
+    min-height: 56px;
+    font-size: 1.1rem;
+  }
+
+  /* Mobile dropdown = inline accordion (no hover, no fixed positioning) */
+  .csb-page .csb-nav .has-dropdown > a {
+    justify-content: flex-start;
+  }
+  .csb-page .csb-nav .has-dropdown > a::after {
+    margin-left: auto;
+    font-size: 1em;
+    transition: transform 0.2s;
+  }
+  .csb-page .csb-nav .has-dropdown.expanded > a::after {
+    transform: rotate(180deg); color: var(--csb-red);
+  }
+  .csb-page .csb-nav-dropdown {
+    position: static !important;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    background: var(--csb-cream);
+    border: none !important;
+    border-top: 1px solid var(--csb-border) !important;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .csb-page .csb-nav .has-dropdown:hover > .csb-nav-dropdown,
+  .csb-page .csb-nav .has-dropdown:focus-within > .csb-nav-dropdown { display: none; }
+  .csb-page .csb-nav .has-dropdown.expanded > .csb-nav-dropdown { display: block; }
+  .csb-page .csb-nav-dropdown a {
+    padding: 0 2.5rem !important;
+    min-height: 48px;
+  }
+  .csb-page .csb-nav-dropdown .dropdown-section {
+    padding: 0.6rem 2.5rem 0.2rem;
+    background: var(--csb-cream-warm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .csb-page *, .csb-page *::before, .csb-page *::after {
+    transition: none !important; animation: none !important;
+  }
+}
+
+.csb-page a:focus-visible,
+.csb-page button:focus-visible,
+.csb-page .btn:focus-visible {
+  outline: 3px solid var(--csb-red);
+  outline-offset: 3px;
+}
+
+</style>
+
+<div class="csb-page">
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<!-- Header -->
+<header class="csb-header">
+  <div class="csb-header-inner">
+    <a href="/home" class="csb-logo" aria-label="Covenant Senior Benefits home">
+      <img src="https://assets.cdn.filesafe.space/syjFFgbiNmGuYL7SwVMH/media/69e644decc4d90735ee45f57.png" alt="">
+        <div class="csb-logo-text">
+        <strong>Covenant Senior Benefits</strong>
+        <span>Medicare Made Simple</span>
+      </div>
+    </a>
+    <button type="button" class="csb-nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="csb-main-nav-list">
+      <span class="bars" aria-hidden="true"></span>
+    </button>
+    <nav class="csb-nav" aria-label="Main">
+      <ul id="csb-main-nav-list">
+        <li><a href="/home">Home</a></li>
+        <li><a href="/education-page">Education</a></li>
+        <li><a href="/book-a-call" class="active">Book a Call</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- Intro -->
+<section class="booking-intro">
+  <h1>Book Your Free Call</h1>
+  <p>Pick a time that works for you. It takes less than 60 seconds &mdash; no account, no forms, no obligation.</p>
+</section>
+
+<!-- Booking widget -->
+<section class="booking-area">
+  <div class="booking-inner">
+
+    <!-- Left: info -->
+    <aside class="consult-info" aria-label="Consultation details">
+      <h2>Free Consultation</h2>
+      <ul class="consult-meta">
+        <li>
+          <span class="icon" aria-hidden="true">&#9201;</span>
+          <div>
+            <span class="label">Duration</span>
+            <span class="value">45 minutes</span>
+          </div>
+        </li>
+        <li>
+          <span class="icon" aria-hidden="true">&#128197;</span>
+          <div>
+            <span class="label">How It Works</span>
+            <span class="value">Pick a date &amp; time on the right</span>
+          </div>
+        </li>
+        <li>
+          <span class="icon" aria-hidden="true">&#127760;</span>
+          <div>
+            <span class="label">Time Zone</span>
+            <span class="value">America/New_York (EDT)</span>
+          </div>
+        </li>
+        <li>
+          <span class="icon" aria-hidden="true">&#128172;</span>
+          <div>
+            <span class="label">How We'll Meet</span>
+            <span class="value">Phone, Zoom, or in person &mdash; your choice</span>
+          </div>
+        </li>
+        <li>
+          <span class="icon" aria-hidden="true">$</span>
+          <div>
+            <span class="label">Cost</span>
+            <span class="value">Free. Always.</span>
+          </div>
+        </li>
+      </ul>
+      <div class="consult-promise">
+        <strong>Our promise:</strong>
+        No sales pitch. No pressure. If we can't find a plan that genuinely fits, we'll tell you &mdash; and that's okay with us.
+      </div>
+    </aside>
+
+    <!-- Right: CALENDAR MOCKUP
+         Replace this entire .calendar-widget with GHL's real
+         calendar embed when you're ready to go live. -->
+    <div class="calendar-widget" aria-label="Select a date and time">
+      <h2>Select Date &amp; Time</h2>
+      <div class="calendar-grid">
+
+        <!-- Date picker -->
+        <div>
+          <div class="cal-header">
+            <button class="cal-nav" disabled aria-label="Previous month">&lsaquo;</button>
+            <div class="cal-month">April 2026</div>
+            <button class="cal-nav" aria-label="Next month">&rsaquo;</button>
+          </div>
+          <table class="cal-table" role="grid">
+            <thead>
+              <tr>
+                <th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="cal-day disabled">29</span></td>
+                <td><span class="cal-day disabled">30</span></td>
+                <td><span class="cal-day disabled">31</span></td>
+                <td><span class="cal-day disabled">1</span></td>
+                <td><span class="cal-day disabled">2</span></td>
+                <td><span class="cal-day disabled">3</span></td>
+                <td><span class="cal-day disabled">4</span></td>
+              </tr>
+              <tr>
+                <td><span class="cal-day disabled">5</span></td>
+                <td><span class="cal-day disabled">6</span></td>
+                <td><span class="cal-day disabled">7</span></td>
+                <td><span class="cal-day disabled">8</span></td>
+                <td><span class="cal-day disabled">9</span></td>
+                <td><span class="cal-day disabled">10</span></td>
+                <td><span class="cal-day disabled">11</span></td>
+              </tr>
+              <tr>
+                <td><span class="cal-day disabled">12</span></td>
+                <td><span class="cal-day disabled">13</span></td>
+                <td><span class="cal-day disabled">14</span></td>
+                <td><span class="cal-day disabled">15</span></td>
+                <td><span class="cal-day disabled">16</span></td>
+                <td><span class="cal-day disabled">17</span></td>
+                <td><span class="cal-day disabled">18</span></td>
+              </tr>
+              <tr>
+                <td><span class="cal-day disabled">19</span></td>
+                <td><span class="cal-day today disabled" aria-label="Today, April 20">20</span></td>
+                <td><span class="cal-day selected" aria-label="Selected: Tuesday April 21">21</span></td>
+                <td><span class="cal-day selectable">22</span></td>
+                <td><span class="cal-day selectable">23</span></td>
+                <td><span class="cal-day selectable">24</span></td>
+                <td><span class="cal-day selectable">25</span></td>
+              </tr>
+              <tr>
+                <td><span class="cal-day disabled">26</span></td>
+                <td><span class="cal-day selectable">27</span></td>
+                <td><span class="cal-day selectable">28</span></td>
+                <td><span class="cal-day selectable">29</span></td>
+                <td><span class="cal-day selectable">30</span></td>
+                <td><span class="cal-day disabled">1</span></td>
+                <td><span class="cal-day disabled">2</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="timezone-row">
+            <span class="tz-icon" aria-hidden="true">&#127760;</span>
+            <span><strong>Your time zone:</strong> GMT-04:00 America/New_York (EDT)</span>
+          </div>
+        </div>
+
+        <!-- Time slots -->
+        <div>
+          <div class="slots-head">
+            Available Times
+            <span class="selected-date">Tuesday, April 21, 2026</span>
+          </div>
+          <ul class="slots-list">
+            <li><button class="slot-btn available">12:00 PM</button></li>
+            <li><button class="slot-btn available">12:30 PM</button></li>
+            <li><button class="slot-btn available">1:00 PM</button></li>
+            <li><button class="slot-btn" disabled>1:30 PM</button></li>
+            <li><button class="slot-btn available">2:00 PM</button></li>
+            <li><button class="slot-btn available">2:30 PM</button></li>
+            <li><button class="slot-btn" disabled>3:00 PM</button></li>
+            <li><button class="slot-btn available">3:30 PM</button></li>
+            <li><button class="slot-btn available">4:00 PM</button></li>
+            <li><button class="slot-btn available">4:30 PM</button></li>
+            <li><button class="slot-btn" disabled>5:00 PM</button></li>
+            <li><button class="slot-btn available">5:30 PM</button></li>
+            <li><button class="slot-btn available">6:00 PM</button></li>
+            <li><button class="slot-btn" disabled>6:30 PM</button></li>
+            <li><button class="slot-btn available">7:00 PM</button></li>
+            <li><button class="slot-btn available">7:30 PM</button></li>
+            <li><button class="slot-btn" disabled>8:00 PM</button></li>
+          </ul>
+          <div class="slots-legend">
+            <span><span class="swatch swatch-avail"></span>Available</span>
+            <span><span class="swatch swatch-taken"></span>Taken</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- END CALENDAR MOCKUP -->
+
+  </div>
+</section>
+
+<!-- Alternative: email -->
+<section class="alternatives">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">Prefer email?</span>
+      <h2>Reach Joey directly</h2>
+    </div>
+    <div class="alt-grid">
+      <div class="alt-card">
+        <h3>Email Joey</h3>
+        <p>Send a quick note and you'll hear back within one business day.</p>
+        <a href="mailto:joey@covenantseniorbenefits.com" class="btn btn-secondary btn-small" style="margin-top:0.5rem;">joey@covenantsenior<wbr>benefits.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer class="csb-footer">
+  <div class="csb-footer-inner">
+    <div class="footer-brand">
+      <a href="/home" class="csb-logo" aria-label="Covenant Senior Benefits home">
+        <img src="https://assets.cdn.filesafe.space/syjFFgbiNmGuYL7SwVMH/media/69e644decc4d90735ee45f57.png" alt="">
+        <div class="csb-logo-text">
+          <strong>Covenant Senior Benefits</strong>
+          <span>Medicare Made Simple</span>
+        </div>
+      </a>
+      <p>To glorify God by helping seniors get the best healthcare &mdash; with honesty, patience, and lifelong support.</p>
+      <div class="social-row">
+        <a href="https://www.facebook.com/people/65iscomingfast/61572078636697/" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/covenantseniorbenefits/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <h4>Pages</h4>
+      <ul>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/education-page">Education</a></li>
+        <li><a href="/book-a-call">Book a Call</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Services</h4>
+      <ul>
+        <li><a href="/home#services">Turning 65</a></li>
+        <li><a href="/home#services">Leaving Employer Plan</a></li>
+        <li><a href="/home#services">Annual Plan Review</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+14848598428">(484) 859-8428</a></li>
+        <li><a href="mailto:joey@covenantseniorbenefits.com">joey@covenantsenior<wbr>benefits.com</a></li>
+        <li>Mon &ndash; Fri, 8am &ndash; 6pm</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Covenant Senior Benefits. All rights reserved.</p>
+    <p class="disclaimer">
+      We do not offer every plan available in your area. Any information we provide is limited to those plans we do offer in your area. Please contact Medicare.gov or 1-800-MEDICARE to get information on all of your options.
+    </p>
+  </div>
+</footer>
+
+<script>
+/* Mobile nav: hamburger + Products tap-expand. No external libs. */
+(function(){
+  document.querySelectorAll('.csb-page').forEach(function(page){
+    var toggle = page.querySelector('.csb-nav-toggle');
+    var dropdown = page.querySelector('.csb-nav .has-dropdown');
+    var dropdownLink = dropdown && dropdown.querySelector(':scope > a');
+
+    if (toggle) {
+      toggle.addEventListener('click', function(e){
+        e.preventDefault();
+        var open = page.classList.toggle('nav-open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+        if (!open && dropdown) dropdown.classList.remove('expanded');
+      });
+    }
+
+    /* On mobile, tapping the Products link expands the submenu instead of navigating.
+       Desktop (>900px) keeps the hover behavior because mql.matches is false. */
+    if (dropdownLink) {
+      dropdownLink.addEventListener('click', function(e){
+        if (window.matchMedia('(max-width: 900px)').matches) {
+          e.preventDefault();
+          dropdown.classList.toggle('expanded');
+        }
+      });
+    }
+
+    /* Close drawer when any nav link inside is clicked (so navigation actually feels right) */
+    page.querySelectorAll('.csb-nav a').forEach(function(a){
+      a.addEventListener('click', function(){
+        if (window.matchMedia('(max-width: 900px)').matches && !a.matches('.has-dropdown > a')) {
+          page.classList.remove('nav-open');
+          if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    /* If viewport grows back past mobile, reset state */
+    window.addEventListener('resize', function(){
+      if (!window.matchMedia('(max-width: 900px)').matches) {
+        page.classList.remove('nav-open');
+        if (dropdown) dropdown.classList.remove('expanded');
+        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+})();
+</script>
+
+</div>
+<!-- /.csb-page  end GHL custom-code block -->

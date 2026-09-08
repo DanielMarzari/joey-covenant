@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medicare 101 — Covenant Senior Benefits</title>
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="icon" href="https://assets.cdn.filesafe.space/syjFFgbiNmGuYL7SwVMH/media/69e644decc4d90735ee45f57.png" type="image/svg+xml">
+<style>
+  /* ---- Education page intro banner ---- */
+  .page-intro {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color: #fff;
+    padding: 4.5rem 2rem 3.5rem;
+    text-align: center;
+  }
+  .page-intro h1 { color: #fff; font-size: 3rem; margin-bottom: 1rem; }
+  .page-intro h1 .accent { color: #fff; border-bottom: 4px solid var(--red); padding-bottom: 4px; }
+  .page-intro p {
+    color: rgba(255,255,255,0.92); font-size: 1.25rem;
+    max-width: 720px; margin: 0 auto;
+  }
+
+  /* ---- Video picker ---- */
+  .video-section { background: var(--white); padding: 5rem 2rem; }
+  .video-section:nth-of-type(even) { background: var(--cream); }
+
+  .chooser-head {
+    text-align: center; max-width: 760px; margin: 0 auto 3rem;
+  }
+  .chooser-head h2 { font-size: 2.5rem; }
+  .chooser-head p { font-size: 1.25rem; }
+
+  .video-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .video-card {
+    background: #fff;
+    border: 3px solid var(--navy);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 24px rgba(30, 50, 82, 0.08);
+    display: flex; flex-direction: column;
+  }
+  .video-card .badge {
+    align-self: flex-start;
+    display: inline-block;
+    background: var(--red); color: #fff;
+    padding: 0.4rem 1rem; border-radius: 20px;
+    font-size: 0.95rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+  .video-card h3 {
+    font-size: 1.65rem;
+    margin-bottom: 0.75rem;
+  }
+  .video-card > p {
+    font-size: 1.1rem;
+    margin-bottom: 1.25rem;
+  }
+  .video-frame {
+    position: relative;
+    background: #000;
+    border-radius: 12px;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .video-frame::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(57, 90, 134, 0.85) 0%, rgba(30, 50, 82, 0.95) 100%);
+  }
+  .video-frame .play-button {
+    position: relative; z-index: 2;
+    width: 96px; height: 96px;
+    background: var(--red); color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem;
+    box-shadow: 0 8px 32px rgba(199, 73, 77, 0.5);
+    transition: transform 0.15s, background 0.15s;
+    border: 4px solid #fff;
+  }
+  .video-frame:hover .play-button {
+    transform: scale(1.08);
+    background: var(--red-dark);
+  }
+  .video-frame .video-label {
+    position: absolute; bottom: 1.25rem; left: 1.25rem;
+    z-index: 2; color: #fff;
+    background: rgba(0,0,0,0.6); padding: 0.5rem 1rem;
+    border-radius: 6px; font-size: 0.95rem; font-weight: 600;
+  }
+  .video-frame .video-duration {
+    position: absolute; top: 1.25rem; right: 1.25rem;
+    z-index: 2; color: #fff;
+    background: rgba(0,0,0,0.6); padding: 0.4rem 0.8rem;
+    border-radius: 6px; font-size: 0.95rem; font-weight: 600;
+  }
+  .video-covers {
+    display: flex; flex-direction: column; gap: 0.6rem;
+    padding: 1.25rem 0 1.5rem;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+  .video-covers strong {
+    display: block; font-size: 1.05rem;
+    color: var(--navy); margin-bottom: 0.3rem;
+  }
+  .video-covers ul { list-style: none; padding: 0; }
+  .video-covers li {
+    font-size: 1.05rem; padding: 0.3rem 0;
+    display: flex; gap: 0.6rem; align-items: flex-start;
+  }
+  .video-covers li::before {
+    content: '✓'; color: var(--red); font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* ---- Post-video CTA ---- */
+  .post-video-cta {
+    background: var(--cream-warm);
+    text-align: center;
+    padding: 4.5rem 2rem;
+  }
+  .post-video-cta h2 { font-size: 2.25rem; margin-bottom: 0.75rem; }
+  .post-video-cta p {
+    font-size: 1.25rem; max-width: 640px;
+    margin: 0 auto 2rem; color: var(--ink);
+  }
+
+  /* ---- Quick tips strip ---- */
+  .tips {
+    background: #fff;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .tip-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+  }
+  .tip {
+    text-align: center; padding: 1.5rem;
+  }
+  .tip-icon {
+    width: 72px; height: 72px; margin: 0 auto 1rem;
+    background: var(--navy); color: #fff;
+    border: 3px solid var(--red);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.75rem; font-weight: 700;
+    font-family: 'Merriweather', serif;
+  }
+  .tip h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+  .tip p { font-size: 1.05rem; }
+
+  @media (max-width: 900px) {
+    .video-grid, .tip-grid { grid-template-columns: 1fr; }
+    .page-intro h1 { font-size: 2.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<!-- Header -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo" aria-label="Covenant Senior Benefits home">
+      <img src="https://assets.cdn.filesafe.space/syjFFgbiNmGuYL7SwVMH/media/69e644decc4d90735ee45f57.png" alt="">
+      <div class="logo-text">
+        <strong>Covenant Senior Benefits</strong>
+        <span>Medicare Made Simple</span>
+      </div>
+    </a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="education.html" class="active">Education</a></li>
+        <li><a href="book-a-call.html">Book a Call</a></li>
+        <li><a href="book-a-call.html" class="btn btn-primary btn-small">Book My Free Call</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- Intro -->
+<section class="page-intro">
+  <h1>Medicare <span class="accent">101</span></h1>
+  <p>Start here. Pick the short video that matches your situation, and we'll walk you through what you need to know — no jargon, no pressure.</p>
+</section>
+
+<!-- Choose your situation — 2 videos -->
+<section class="video-section">
+  <div class="chooser-head">
+    <span class="eyebrow" style="display:inline-block;background:var(--red);color:#fff;padding:0.4rem 1.1rem;border-radius:20px;font-size:0.95rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:1rem;">Step 1 — Watch</span>
+    <h2>Choose your situation</h2>
+    <p>Pick the video that fits where you are today. Each runs about 10 minutes.</p>
+  </div>
+  <div class="video-grid">
+
+    <div class="video-card">
+      <span class="badge">For Ages 63–65</span>
+      <h3>Turning 65 Soon or On Employer Coverage?</h3>
+      <p>A simple walkthrough of what happens when you become eligible for Medicare — and what to do if you're still working.</p>
+      <div class="video-frame" role="button" tabindex="0" aria-label="Play video: Turning 65 Soon or On Employer Coverage">
+        <span class="video-duration">10 min</span>
+        <div class="play-button" aria-hidden="true">▶</div>
+        <span class="video-label">▶ Play with sound</span>
+      </div>
+      <div class="video-covers">
+        <strong>What you'll learn:</strong>
+        <ul>
+          <li>When and how to enroll — and how to avoid late penalties</li>
+          <li>Whether to take Medicare now or stay on your employer plan</li>
+          <li>The difference between Parts A, B, C, and D</li>
+          <li>What a "supplement" is and why it matters</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <span class="badge">Current Enrollees</span>
+      <h3>Already on Medicare?</h3>
+      <p>If you're already enrolled, your plan may not be your best option anymore. Here's how a free annual review works.</p>
+      <div class="video-frame" role="button" tabindex="0" aria-label="Play video: Already on Medicare">
+        <span class="video-duration">9 min</span>
+        <div class="play-button" aria-hidden="true">▶</div>
+        <span class="video-label">▶ Play with sound</span>
+      </div>
+      <div class="video-covers">
+        <strong>What you'll learn:</strong>
+        <ul>
+          <li>Why Medicare plans change every year — and what that means for you</li>
+          <li>How to tell if your current plan still fits your doctors and meds</li>
+          <li>When you're allowed to switch plans</li>
+          <li>What a free annual review actually looks like</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Quick tips bar -->
+<section class="tips">
+  <div class="section-inner">
+    <div class="tip-grid">
+      <div class="tip">
+        <div class="tip-icon" aria-hidden="true">?</div>
+        <h3>Questions while watching?</h3>
+        <p>Jot them down. We'll answer every one on your free call.</p>
+      </div>
+      <div class="tip">
+        <div class="tip-icon" aria-hidden="true">i</div>
+        <h3>Need closed captions?</h3>
+        <p>Click the CC button on either video — subtitles are always available.</p>
+      </div>
+      <div class="tip">
+        <div class="tip-icon" aria-hidden="true">☎</div>
+        <h3>Prefer to talk to a person?</h3>
+        <p>Call us anytime at (555) 555-1234. We're happy to skip the video.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Post-video CTA -->
+<section class="post-video-cta">
+  <div class="section-inner">
+    <span class="eyebrow" style="display:inline-block;background:var(--red);color:#fff;padding:0.4rem 1.1rem;border-radius:20px;font-size:0.95rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:1rem;">Step 2 — Talk</span>
+    <h2>Watched the video? Let's talk it through.</h2>
+    <p>Book a free 45-minute call with a licensed local agent. We'll answer your questions, review your options, and help you decide — with no pressure either way.</p>
+    <a href="book-a-call.html" class="btn btn-primary btn-large">Book My Free Call →</a>
+  </div>
+</section>
+
+<!-- Final CTA with phone -->
+<section class="cta-final">
+  <div class="section-inner">
+    <h2>Still have questions?</h2>
+    <p>We'd rather you call and ask than sit on it. There's no such thing as a silly Medicare question.</p>
+    <a href="book-a-call.html" class="btn btn-primary btn-large">Book My Free Call →</a>
+  </div>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="logo" aria-label="Covenant Senior Benefits home">
+        <img src="https://assets.cdn.filesafe.space/syjFFgbiNmGuYL7SwVMH/media/69e644decc4d90735ee45f57.png" alt="">
+        <div class="logo-text">
+          <strong>Covenant Senior Benefits</strong>
+          <span>Medicare Made Simple</span>
+        </div>
+      </a>
+      <p>To glorify God by helping seniors get the best healthcare — with honesty, patience, and lifelong support.</p>
+      <div class="social-row">
+        <a href="https://www.facebook.com/people/65iscomingfast/61572078636697/" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/covenantseniorbenefits/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <h4>Pages</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="book-a-call.html">Book a Call</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Services</h4>
+      <ul>
+        <li><a href="index.html#services">Turning 65</a></li>
+        <li><a href="index.html#services">Leaving Employer Plan</a></li>
+        <li><a href="index.html#services">Annual Plan Review</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+15555551234">(555) 555-1234</a></li>
+        <li><a href="mailto:joey@covenantseniorbenefits.com">joey@covenantsenior<wbr>benefits.com</a></li>
+        <li>Mon – Fri, 8am – 6pm</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Covenant Senior Benefits. All rights reserved.</p>
+    <p class="disclaimer">
+      We do not offer every plan available in your area. Any information we provide is limited to those plans we do offer in your area. Please contact Medicare.gov or 1-800-MEDICARE to get information on all of your options.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Free Call — Covenant Senior Benefits</title>
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="icon" href="https://assets.cdn.filesafe.space/syjFFgbiNmGuYL7SwVMH/media/69e644decc4d90735ee45f57.png" type="image/svg+xml">
+<style>
+  /* ---- Booking page layout ---- */
+  .booking-intro {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color: #fff;
+    padding: 4rem 2rem 3rem;
+    text-align: center;
+  }
+  .booking-intro h1 { color: #fff; font-size: 2.75rem; margin-bottom: 0.75rem; }
+  .booking-intro p {
+    color: rgba(255,255,255,0.92); font-size: 1.25rem;
+    max-width: 680px; margin: 0 auto;
+  }
+
+  .booking-area {
+    background: var(--cream);
+    padding: 4rem 2rem 5rem;
+  }
+  .booking-inner {
+    max-width: 1160px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1.6fr;
+    gap: 2.5rem;
+    align-items: stretch;
+  }
+
+  /* ---- Consultation info (left column) ---- */
+  .consult-info {
+    background: #fff;
+    border: 3px solid var(--navy);
+    border-radius: 14px;
+    padding: 2rem;
+    position: relative;
+  }
+  .consult-info h2 {
+    font-size: 1.65rem; margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--border);
+  }
+  .consult-meta {
+    list-style: none; padding: 0; margin: 0 0 1.5rem;
+  }
+  .consult-meta li {
+    display: flex; gap: 0.9rem; align-items: flex-start;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 1.1rem;
+  }
+  .consult-meta li:last-child { border-bottom: none; }
+  .consult-meta .icon {
+    flex-shrink: 0;
+    width: 40px; height: 40px;
+    background: var(--cream); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--navy); font-weight: 700; font-size: 1.15rem;
+  }
+  .consult-meta .label {
+    display: block;
+    font-size: 0.85rem; color: var(--ink-soft);
+    text-transform: uppercase; letter-spacing: 0.05em;
+    margin-bottom: 0.15rem;
+  }
+  .consult-meta .value {
+    font-size: 1.1rem; font-weight: 600; color: var(--ink);
+  }
+  .consult-promise {
+    background: var(--cream);
+    border-left: 4px solid var(--red);
+    padding: 1rem 1.25rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .consult-promise strong { color: var(--navy); display: block; margin-bottom: 0.25rem; }
+
+  /* ---- Calendar widget (right column) ---- */
+  .calendar-widget {
+    background: #fff;
+    border: 3px solid var(--navy);
+    border-radius: 14px;
+    padding: 2rem;
+    position: relative;
+  }
+  .calendar-widget h2 {
+    font-size: 1.65rem; margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .calendar-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  /* --- Date picker --- */
+  .cal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .cal-nav {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 2px solid var(--navy);
+    background: #fff; color: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .cal-nav:hover:not(:disabled) { background: var(--navy); color: #fff; }
+  .cal-nav:disabled { opacity: 0.4; cursor: not-allowed; }
+  .cal-month {
+    font-family: 'Merriweather', serif;
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--navy);
+  }
+  .cal-table {
+    width: 100%; border-collapse: collapse;
+  }
+  .cal-table th {
+    font-size: 0.9rem; color: var(--ink-soft);
+    padding: 0.5rem 0; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .cal-table td {
+    padding: 4px 2px;
+    text-align: center;
+  }
+  .cal-day {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1.05rem; font-weight: 600;
+    cursor: pointer;
+    color: var(--ink);
+    background: transparent;
+    border: 2px solid transparent;
+    transition: background 0.15s, color 0.15s;
+  }
+  .cal-day.disabled {
+    color: #bbb; cursor: not-allowed; font-weight: 400;
+  }
+  .cal-day.selectable:hover {
+    background: var(--cream-warm);
+    border-color: var(--navy);
+  }
+  .cal-day.today {
+    border: 2px solid var(--red);
+    color: var(--red); font-weight: 700;
+  }
+  .cal-day.selected {
+    background: var(--navy); color: #fff;
+    border-color: var(--navy);
+  }
+
+  .timezone-row {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: var(--cream);
+    border-radius: 8px;
+    font-size: 1rem;
+    display: flex; gap: 0.6rem; align-items: center;
+  }
+  .timezone-row strong { color: var(--navy); }
+  .timezone-row .tz-icon {
+    width: 28px; height: 28px;
+    background: var(--navy); color: #fff;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; flex-shrink: 0;
+  }
+
+  /* --- Time slots --- */
+  .slots-head {
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--navy); margin-bottom: 1rem;
+    font-family: 'Merriweather', serif;
+  }
+  .slots-head .selected-date {
+    display: block; font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink-soft);
+    font-weight: 500; margin-top: 0.2rem;
+  }
+  .slots-list {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    max-height: 380px; overflow-y: auto;
+  }
+  .slot-btn {
+    display: block; width: 100%;
+    padding: 0.85rem 0.5rem;
+    border: 2px solid var(--border);
+    background: #fff; color: var(--navy);
+    font-size: 1.05rem; font-weight: 600;
+    border-radius: 8px; cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .slot-btn:hover:not(:disabled) {
+    border-color: var(--red);
+    background: var(--red);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+  .slot-btn:disabled {
+    background: #f5f5f5; color: #bbb;
+    cursor: not-allowed;
+    border-style: dashed;
+  }
+  .slot-btn.available {
+    border-color: var(--navy);
+    background: #fff;
+    color: var(--navy);
+  }
+  .slot-btn.available:hover {
+    background: var(--red);
+    border-color: var(--red-dark);
+    color: #fff;
+  }
+
+  .slots-legend {
+    margin-top: 1rem; padding: 0.75rem 1rem;
+    background: var(--cream);
+    border-radius: 6px;
+    font-size: 0.95rem; color: var(--ink-soft);
+    display: flex; gap: 1.25rem; flex-wrap: wrap;
+  }
+  .slots-legend .swatch {
+    display: inline-block; width: 14px; height: 14px;
+    border-radius: 3px; vertical-align: middle;
+    margin-right: 0.4rem;
+    border: 2px solid transparent;
+  }
+  .slots-legend .swatch-avail { background: #fff; border-color: var(--navy); }
+  .slots-legend .swatch-taken { background: #f5f5f5; border: 2px dashed #bbb; }
+
+  /* ---- Alternatives strip ---- */
+  .alternatives {
+    background: #fff;
+    border-top: 1px solid var(--border);
+  }
+  .alternatives .section-head h2 { font-size: 2rem; }
+  .alt-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;
+    max-width: 900px; margin: 0 auto;
+  }
+  .alt-grid-single {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+  }
+  .alt-card {
+    background: var(--cream);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+  }
+  .alt-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .alt-card p { font-size: 1.05rem; margin-bottom: 1.25rem; }
+  .alt-phone {
+    display: block;
+    font-family: 'Merriweather', serif;
+    font-size: 2rem; color: var(--red);
+    text-decoration: none; font-weight: 700;
+    margin: 0.5rem 0;
+  }
+  .alt-phone:hover { color: var(--red-dark); text-decoration: underline; }
+
+  @media (max-width: 900px) {
+    .booking-inner { grid-template-columns: 1fr; }
+    .calendar-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .alt-grid { grid-template-columns: 1fr; }
+    .booking-intro h1 { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<!-- Header -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo" aria-label="Covenant Senior Benefits home">
+      <img src="https://assets.cdn.filesafe.space/syjFFgbiNmGuYL7SwVMH/media/69e644decc4d90735ee45f57.png" alt="">
+      <div class="logo-text">
+        <strong>Covenant Senior Benefits</strong>
+        <span>Medicare Made Simple</span>
+      </div>
+    </a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="book-a-call.html" class="active">Book a Call</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- Intro -->
+<section class="booking-intro">
+  <h1>Book Your Free Call</h1>
+  <p>Pick a time that works for you. It takes less than 60 seconds — no account, no forms, no obligation.</p>
+</section>
+
+<!-- Booking widget -->
+<section class="booking-area">
+  <div class="booking-inner">
+
+    <!-- Left: info -->
+    <aside class="consult-info" aria-label="Consultation details">
+      <h2>Free Consultation</h2>
+      <ul class="consult-meta">
+        <li>
+          <span class="icon" aria-hidden="true">⏱</span>
+          <div>
+            <span class="label">Duration</span>
+            <span class="value">45 minutes</span>
+          </div>
+        </li>
+        <li>
+          <span class="icon" aria-hidden="true">📅</span>
+          <div>
+            <span class="label">Selected Date</span>
+            <span class="value">Tue, Apr 21, 2026</span>
+          </div>
+        </li>
+        <li>
+          <span class="icon" aria-hidden="true">🌐</span>
+          <div>
+            <span class="label">Time Zone</span>
+            <span class="value">America/New_York (EDT)</span>
+          </div>
+        </li>
+        <li>
+          <span class="icon" aria-hidden="true">💬</span>
+          <div>
+            <span class="label">How We'll Meet</span>
+            <span class="value">Phone, Zoom, or in person — your choice</span>
+          </div>
+        </li>
+        <li>
+          <span class="icon" aria-hidden="true">$</span>
+          <div>
+            <span class="label">Cost</span>
+            <span class="value">Free. Always.</span>
+          </div>
+        </li>
+      </ul>
+      <div class="consult-promise">
+        <strong>Our promise:</strong>
+        No sales pitch. No pressure. If we can't find a plan that genuinely fits, we'll tell you — and that's okay with us.
+      </div>
+    </aside>
+
+    <!-- Right: calendar -->
+    <div class="calendar-widget" aria-label="Select a date and time">
+      <h2>Select Date &amp; Time</h2>
+      <div class="calendar-grid">
+
+        <!-- Date picker -->
+        <div>
+          <div class="cal-header">
+            <button class="cal-nav" disabled aria-label="Previous month">‹</button>
+            <div class="cal-month">April 2026</div>
+            <button class="cal-nav" aria-label="Next month">›</button>
+          </div>
+          <table class="cal-table" role="grid">
+            <thead>
+              <tr>
+                <th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="cal-day disabled">29</span></td>
+                <td><span class="cal-day disabled">30</span></td>
+                <td><span class="cal-day disabled">31</span></td>
+                <td><span class="cal-day disabled">1</span></td>
+                <td><span class="cal-day disabled">2</span></td>
+                <td><span class="cal-day disabled">3</span></td>
+                <td><span class="cal-day disabled">4</span></td>
+              </tr>
+              <tr>
+                <td><span class="cal-day disabled">5</span></td>
+                <td><span class="cal-day disabled">6</span></td>
+                <td><span class="cal-day disabled">7</span></td>
+                <td><span class="cal-day disabled">8</span></td>
+                <td><span class="cal-day disabled">9</span></td>
+                <td><span class="cal-day disabled">10</span></td>
+                <td><span class="cal-day disabled">11</span></td>
+              </tr>
+              <tr>
+                <td><span class="cal-day disabled">12</span></td>
+                <td><span class="cal-day disabled">13</span></td>
+                <td><span class="cal-day disabled">14</span></td>
+                <td><span class="cal-day disabled">15</span></td>
+                <td><span class="cal-day disabled">16</span></td>
+                <td><span class="cal-day disabled">17</span></td>
+                <td><span class="cal-day disabled">18</span></td>
+              </tr>
+              <tr>
+                <td><span class="cal-day disabled">19</span></td>
+                <td><span class="cal-day today disabled" aria-label="Today, April 20">20</span></td>
+                <td><span class="cal-day selected" aria-label="Selected: Tuesday April 21">21</span></td>
+                <td><span class="cal-day selectable">22</span></td>
+                <td><span class="cal-day selectable">23</span></td>
+                <td><span class="cal-day selectable">24</span></td>
+                <td><span class="cal-day selectable">25</span></td>
+              </tr>
+              <tr>
+                <td><span class="cal-day disabled">26</span></td>
+                <td><span class="cal-day selectable">27</span></td>
+                <td><span class="cal-day selectable">28</span></td>
+                <td><span class="cal-day selectable">29</span></td>
+                <td><span class="cal-day selectable">30</span></td>
+                <td><span class="cal-day disabled">1</span></td>
+                <td><span class="cal-day disabled">2</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="timezone-row">
+            <span class="tz-icon" aria-hidden="true">🌐</span>
+            <span><strong>Your time zone:</strong> GMT-04:00 America/New_York (EDT)</span>
+          </div>
+        </div>
+
+        <!-- Time slots -->
+        <div>
+          <div class="slots-head">
+            Available Times
+            <span class="selected-date">Tuesday, April 21, 2026</span>
+          </div>
+          <ul class="slots-list">
+            <li><button class="slot-btn available">12:00 PM</button></li>
+            <li><button class="slot-btn available">12:30 PM</button></li>
+            <li><button class="slot-btn available">1:00 PM</button></li>
+            <li><button class="slot-btn" disabled>1:30 PM</button></li>
+            <li><button class="slot-btn available">2:00 PM</button></li>
+            <li><button class="slot-btn available">2:30 PM</button></li>
+            <li><button class="slot-btn" disabled>3:00 PM</button></li>
+            <li><button class="slot-btn available">3:30 PM</button></li>
+            <li><button class="slot-btn available">4:00 PM</button></li>
+            <li><button class="slot-btn available">4:30 PM</button></li>
+            <li><button class="slot-btn" disabled>5:00 PM</button></li>
+            <li><button class="slot-btn available">5:30 PM</button></li>
+            <li><button class="slot-btn available">6:00 PM</button></li>
+            <li><button class="slot-btn" disabled>6:30 PM</button></li>
+            <li><button class="slot-btn available">7:00 PM</button></li>
+            <li><button class="slot-btn available">7:30 PM</button></li>
+            <li><button class="slot-btn" disabled>8:00 PM</button></li>
+          </ul>
+          <div class="slots-legend">
+            <span><span class="swatch swatch-avail"></span>Available</span>
+            <span><span class="swatch swatch-taken"></span>Taken</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Alternatives (phone/email) -->
+<section class="alternatives">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">Prefer email?</span>
+      <h2>Reach Joey directly</h2>
+    </div>
+    <div class="alt-grid alt-grid-single">
+      <div class="alt-card">
+        <h3>Email Joey</h3>
+        <p>Send a quick note and you'll hear back within one business day.</p>
+        <a href="mailto:joey@covenantseniorbenefits.com" class="btn btn-secondary btn-small" style="margin-top:0.5rem;">joey@covenantsenior<wbr>benefits.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="logo" aria-label="Covenant Senior Benefits home">
+        <img src="https://assets.cdn.filesafe.space/syjFFgbiNmGuYL7SwVMH/media/69e644decc4d90735ee45f57.png" alt="">
+        <div class="logo-text">
+          <strong>Covenant Senior Benefits</strong>
+          <span>Medicare Made Simple</span>
+        </div>
+      </a>
+      <p>To glorify God by helping seniors get the best healthcare — with honesty, patience, and lifelong support.</p>
+      <div class="social-row">
+        <a href="https://www.facebook.com/people/65iscomingfast/61572078636697/" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/covenantseniorbenefits/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <h4>Pages</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="book-a-call.html">Book a Call</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Services</h4>
+      <ul>
+        <li><a href="index.html#services">Turning 65</a></li>
+        <li><a href="index.html#services">Leaving Employer Plan</a></li>
+        <li><a href="index.html#services">Annual Plan Review</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+15555551234">(555) 555-1234</a></li>
+        <li><a href="mailto:joey@covenantseniorbenefits.com">joey@covenantsenior<wbr>benefits.com</a></li>
+        <li>Mon – Fri, 8am – 6pm</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Covenant Senior Benefits. All rights reserved.</p>
+    <p class="disclaimer">
+      We do not offer every plan available in your area. Any information we provide is limited to those plans we do offer in your area. Please contact Medicare.gov or 1-800-MEDICARE to get information on all of your options.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

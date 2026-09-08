@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 340" role="img" aria-label="Covenant Senior Benefits">
+  <!-- Red outer shield -->
+  <path d="M40 30 L220 30 L220 160 Q220 240 130 300 Q40 240 40 160 Z" fill="#c7494d"/>
+  <!-- White inner trim -->
+  <path d="M54 44 L206 44 L206 160 Q206 230 130 284 Q54 230 54 160 Z" fill="#ffffff"/>
+  <!-- Navy shield body -->
+  <path d="M64 54 L196 54 L196 160 Q196 222 130 272 Q64 222 64 160 Z" fill="#395a86"/>
+  <!-- White medical plus -->
+  <path d="M110 90 H150 V130 H190 V170 H150 V210 H110 V170 H70 V130 H110 Z" fill="#ffffff"/>
+</svg>

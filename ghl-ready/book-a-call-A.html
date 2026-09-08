@@ -1,0 +1,649 @@
+<!--
+  ============================================================
+  GoHighLevel Custom-Code block — BOOK A CALL, SECTION A
+  Paste everything below into the FIRST custom-code element
+  on the Book a Call page (BEFORE the native GHL calendar).
+  Contains: header, booking intro, consultation details,
+  plus CSS that themes the native GHL calendar widget below.
+  Fully self-contained. Scoped under .csb-page.
+  ============================================================
+-->
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ================================================================
+   GHL parent-container override — neutralize the 1170px max-width
+   and 10px/5px gutters on the section/row/column wrapping us.
+   :has() walks up to find any ancestor that contains .csb-page.
+   Each of the two custom-code blocks has its OWN .csb-page
+   wrapper, so this rule fires on both sections independently.
+   ================================================================ */
+.skip-content { display: none; }  /* user-added, preserved */
+
+.hl_page-preview--content .col-H648-NBRNQ, .hl_page-preview--content .row-JoSM0zN6Rp, .hl_page-preview--content .section-4YD0K45cZP{
+  background-color: #f9f6f3 !important;
+}
+    
+.hl_page-preview--content .c-section:has(.csb-page),
+.hl_page-preview--content .c-row:has(.csb-page),
+.hl_page-preview--content .c-column:has(.csb-page),
+.hl_page-preview--content .c-custom-code:has(.csb-page),
+.c-section:has(.csb-page),
+.c-row:has(.csb-page),
+.c-column:has(.csb-page),
+.c-custom-code:has(.csb-page) {
+  max-width: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+}
+.hl_page-preview--content .c-section:has(.csb-page) > .inner,
+.hl_page-preview--content .c-row:has(.csb-page) > .inner,
+.hl_page-preview--content .c-column:has(.csb-page) > .inner,
+.c-section:has(.csb-page) > .inner,
+.c-row:has(.csb-page) > .inner,
+.c-column:has(.csb-page) > .inner {
+  max-width: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* ---- Scoped root ---- */
+.csb-page {
+  --csb-navy: #395a86;
+  --csb-navy-dark: #2a4465;
+  --csb-navy-deep: #1e3252;
+  --csb-red: #c7494d;
+  --csb-red-dark: #a73a3e;
+  --csb-white: #ffffff;
+  --csb-cream: #f8f6f2;
+  --csb-cream-warm: #eee8db;
+  --csb-ink: #1a1a1a;
+  --csb-ink-soft: #3d3d3d;
+  --csb-border: #d9d3c4;
+  --csb-success: #2d6e3e;
+
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 20px;
+  line-height: 1.6;
+  color: var(--csb-ink);
+  background: var(--csb-white);
+  -webkit-font-smoothing: antialiased;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.csb-page *, .csb-page *::before, .csb-page *::after { box-sizing: border-box; }
+
+.csb-page h1, .csb-page h2, .csb-page h3, .csb-page h4 {
+  font-family: 'Merriweather', Georgia, 'Times New Roman', serif;
+  color: var(--csb-navy); line-height: 1.25;
+  font-weight: 700; margin: 0 0 1rem;
+}
+.csb-page h1 { font-size: 3rem; }
+.csb-page h2 { font-size: 2.25rem; margin-bottom: 1.25rem; }
+.csb-page h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+.csb-page p { margin: 0 0 1rem; font-size: 1.125rem; color: var(--csb-ink-soft); }
+.csb-page ul { margin: 0; padding: 0; }
+.csb-page a { color: var(--csb-navy); text-decoration: underline; text-underline-offset: 3px; }
+.csb-page a:hover, .csb-page a:focus { color: var(--csb-red-dark); }
+
+/* Header */
+.csb-page .csb-header {
+  background: #fff;
+  border-bottom: 4px solid var(--csb-red);
+  padding: 1rem 2rem;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+.csb-page .csb-header-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center; gap: 2rem;
+}
+.csb-page .csb-logo { display: flex; align-items: center; gap: 0.9rem; text-decoration: none; }
+.csb-page .csb-logo img { width: 76px; height: auto; display: block; }
+.csb-page .csb-logo-text { display: flex; flex-direction: column; line-height: 1.15; }
+.csb-page .csb-logo-text strong {
+  font-family: 'Merriweather', serif; font-size: 1.55rem; color: var(--csb-navy);
+}
+.csb-page .csb-logo-text span { font-size: 1.05rem; color: var(--csb-ink-soft); }
+.csb-page .csb-nav > ul { list-style: none; display: flex; gap: 2rem; align-items: center; padding: 0; margin: 0; }
+/* Nav TEXT links — exclude .btn so the CTA button keeps its own styling */
+.csb-page .csb-nav a:not(.btn) {
+  text-decoration: none; color: var(--csb-ink); font-weight: 600;
+  font-size: 1.25rem; padding: 0.5rem 0;
+  border-bottom: 3px solid transparent;
+}
+.csb-page .csb-nav a:not(.btn):hover, .csb-page .csb-nav a:not(.btn):focus,
+.csb-page .csb-nav a:not(.btn).active { border-bottom-color: var(--csb-red); color: var(--csb-navy); }
+
+
+/* Dropdown nav */
+.csb-page .csb-nav .has-dropdown { position: relative; }
+.csb-page .csb-nav .has-dropdown > a::after {
+  content: ' \25BE'; font-size: 0.7em; margin-left: 0.25em;
+  color: var(--csb-ink-soft); display: inline-block;
+  transition: transform 0.15s, color 0.15s;
+}
+.csb-page .csb-nav .has-dropdown:hover > a::after,
+.csb-page .csb-nav .has-dropdown:focus-within > a::after {
+  transform: rotate(180deg); color: var(--csb-red);
+}
+.csb-page .csb-nav-dropdown {
+  position: absolute; top: 100%; left: -1rem;
+  background: #fff;
+  border: 2px solid var(--csb-border);
+  border-top: 4px solid var(--csb-red);
+  border-radius: 0 0 12px 12px;
+  list-style: none;
+  padding: 0.5rem 0;
+  min-width: 260px;
+  margin: 0;
+  box-shadow: 0 12px 32px rgba(30, 50, 82, 0.18);
+  display: none;
+  z-index: 200;
+}
+.csb-page .csb-nav .has-dropdown:hover > .csb-nav-dropdown,
+.csb-page .csb-nav .has-dropdown:focus-within > .csb-nav-dropdown {
+  display: block;
+}
+.csb-page .csb-nav-dropdown li { margin: 0; list-style: none; }
+.csb-page .csb-nav-dropdown a {
+  display: block !important;
+  padding: 0.55rem 1.25rem !important;
+  border-bottom: none !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  text-decoration: none;
+  color: var(--csb-ink) !important;
+}
+.csb-page .csb-nav-dropdown a:hover,
+.csb-page .csb-nav-dropdown a:focus,
+.csb-page .csb-nav-dropdown a.active {
+  background: var(--csb-cream);
+  color: var(--csb-red-dark) !important;
+  border-bottom: none !important;
+}
+.csb-page .csb-nav-dropdown .dropdown-section {
+  padding: 0.65rem 1.25rem 0.2rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--csb-ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.csb-page .csb-nav-dropdown .dropdown-divider {
+  height: 1px; background: var(--csb-border);
+  margin: 0.4rem 0.75rem;
+}
+.csb-page .csb-nav-dropdown a.overview-link {
+  font-weight: 700 !important;
+  color: var(--csb-navy) !important;
+}
+
+/* Buttons */
+.csb-page .btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 0.6rem; min-height: 64px;
+  padding: 1rem 2.25rem; font-size: 1.25rem; font-weight: 700;
+  border-radius: 10px; text-decoration: none;
+  border: 3px solid transparent; cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.15s, background 0.15s;
+  line-height: 1.2; font-family: 'Inter', sans-serif;
+}
+.csb-page .btn-primary {
+  background: var(--csb-red); color: #fff;
+  border-color: var(--csb-red-dark);
+  box-shadow: 0 4px 0 var(--csb-red-dark);
+}
+.csb-page .btn-primary:hover, .csb-page .btn-primary:focus {
+  background: var(--csb-red-dark); color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--csb-red-dark);
+}
+.csb-page .btn-small { min-height: 52px; font-size: 1.05rem; padding: 0.7rem 1.4rem; }
+
+/* Booking intro banner */
+.csb-page .booking-intro {
+  background: linear-gradient(135deg, var(--csb-navy) 0%, var(--csb-navy-deep) 100%);
+  color: #fff; padding: 4rem 2rem 3rem; text-align: center;
+}
+.csb-page .booking-intro h1 { color: #fff; font-size: 2.75rem; margin-bottom: 0.75rem; }
+.csb-page .booking-intro p {
+  color: rgba(255,255,255,0.92); font-size: 1.25rem;
+  max-width: 680px; margin: 0 auto;
+}
+
+/* Consultation details — now a full-width single card, centered */
+.csb-page .booking-area {
+  background: var(--csb-cream);
+  padding: 4rem 2rem 0rem;
+}
+.csb-page .booking-inner-single {
+  max-width: 900px; margin: 0 auto;
+}
+.csb-page .consult-info {
+  background: #fff;
+  border: 3px solid var(--csb-navy);
+  border-radius: 14px; padding: 2rem 2.25rem;
+}
+.csb-page .consult-info h2 {
+  font-size: 1.65rem; margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--csb-border);
+}
+.csb-page .consult-meta {
+  list-style: none; padding: 0; margin: 0 0 1.5rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.5rem;
+}
+.csb-page .consult-meta li {
+  display: flex; gap: 0.9rem; align-items: flex-start;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--csb-border);
+  font-size: 1.1rem;
+}
+.csb-page .consult-meta .icon {
+  flex-shrink: 0; width: 40px; height: 40px;
+  background: var(--csb-cream); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--csb-navy); font-weight: 700; font-size: 1.15rem;
+}
+.csb-page .consult-meta .label {
+  display: block; font-size: 0.85rem; color: var(--csb-ink-soft);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  margin-bottom: 0.15rem;
+}
+.csb-page .consult-meta .value {
+  font-size: 1.1rem; font-weight: 600; color: var(--csb-ink);
+}
+.csb-page .consult-promise {
+  background: var(--csb-cream);
+  border-left: 4px solid var(--csb-red);
+  padding: 1rem 1.25rem; border-radius: 6px;
+  font-size: 1rem; color: var(--csb-ink); line-height: 1.5;
+}
+.csb-page .consult-promise strong {
+  color: var(--csb-navy); display: block; margin-bottom: 0.25rem;
+}
+
+/* Hint leading into the calendar below */
+.csb-page .pick-time-hint {
+  max-width: 900px; margin: 2.25rem auto 0;
+  text-align: center;
+  font-family: 'Merriweather', serif;
+  font-size: 1.4rem;
+  color: var(--csb-navy); font-weight: 700;
+}
+.csb-page .pick-time-hint .arrow {
+  display: block; margin-top: 0.4rem;
+  font-size: 2rem; color: var(--csb-red);
+  line-height: 1;
+}
+
+/* ================================================================
+   THEME THE NATIVE GHL CALENDAR (.appointment_widgets--revamp)
+   Not scoped under .csb-page since we're targeting GHL classes.
+   Uses !important to win over GHL's component styles.
+   Tweak freely — these are starting-point defaults.
+   ================================================================ */
+.appointment_widgets--revamp {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 17px !important;
+  --appointment_widgets-primary-color: #c7494d;
+  --appointment_widgets-light-primary-color: #395a86;
+  --appointment_widgets-light-text-color: #1a1a1a;
+}
+.appointment_widgets--revamp .widgets--service-name,
+.appointment_widgets--revamp .label-select-date {
+  font-family: 'Merriweather', Georgia, serif !important;
+  color: #395a86 !important;
+  font-weight: 700 !important;
+  font-size: 1.5rem !important;
+}
+.appointment_widgets--revamp .booking-info-value {
+  color: #1a1a1a !important; font-weight: 600 !important;
+}
+.appointment_widgets--revamp .vdpPeriodControl button {
+  font-family: 'Merriweather', serif !important;
+  color: #395a86 !important;
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+}
+.appointment_widgets--revamp .arrowPrevious,
+.appointment_widgets--revamp .arrowNext {
+  border: 2px solid #395a86 !important;
+  border-radius: 50% !important;
+  background: #fff !important;
+}
+.appointment_widgets--revamp .vdpCell.selectable:hover .vdpCellContent {
+  background: #eee8db !important;
+  color: #1a1a1a !important;
+  border: 2px solid #395a86 !important;
+}
+.appointment_widgets--revamp .vdpCell.selected .vdpCellContent,
+.appointment_widgets--revamp .vdpCell.selected {
+  background: #395a86 !important; color: #fff !important;
+}
+.appointment_widgets--revamp .vdpCell.today .vdpCellContent {
+  border: 2px solid #c7494d !important; color: #c7494d !important; font-weight: 700 !important;
+}
+.appointment_widgets--revamp .widgets-time-slot .btn,
+.appointment_widgets--revamp .widgets-time-slot button {
+  border: 2px solid #395a86 !important;
+  color: #395a86 !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  min-height: 48px !important;
+  font-size: 1.05rem !important;
+}
+.appointment_widgets--revamp .widgets-time-slot:hover .btn:not(.disabled-slot),
+.appointment_widgets--revamp .widgets-time-slot:hover button:not(.disabled-slot) {
+  background: #c7494d !important;
+  border-color: #a73a3e !important;
+  color: #fff !important;
+}
+.appointment_widgets--revamp .widgets-time-slot .btn.disabled-slot {
+  background: #f5f5f5 !important; color: #bbb !important;
+  border-style: dashed !important; border-color: #ccc !important;
+  cursor: not-allowed !important;
+}
+
+/* ================================================================
+   Extend the cream background across the GHL calendar section so
+   the consult-info card in section A visually flows into the
+   calendar and up to the "Reach Joey directly" section in B.
+   Targets any GHL section that contains a ccalendar-* widget.
+   ================================================================ */
+.hl_page-preview--content .c-section:has([id^="ccalendar-"]),
+.hl_page-preview--content .c-section:has(.appointment_widgets--revamp),
+.c-section:has([id^="ccalendar-"]),
+.c-section:has(.appointment_widgets--revamp) {
+  background: #f8f6f2 !important;
+}
+
+/* Responsive */
+/* Mobile nav toggle (hamburger) — hidden on desktop, shown on mobile */
+.csb-page .csb-nav-toggle {
+  display: none;
+  width: 48px; height: 48px;
+  border: 2px solid var(--csb-border);
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s, background 0.15s;
+}
+.csb-page .csb-nav-toggle:hover,
+.csb-page .csb-nav-toggle:focus-visible { border-color: var(--csb-red); outline: none; }
+.csb-page .csb-nav-toggle .bars {
+  position: relative;
+  display: block;
+  width: 22px; height: 2px;
+  background: var(--csb-navy);
+  transition: background 0.2s;
+}
+.csb-page .csb-nav-toggle .bars::before,
+.csb-page .csb-nav-toggle .bars::after {
+  content: '';
+  position: absolute; left: 0;
+  width: 22px; height: 2px;
+  background: var(--csb-navy);
+  transition: transform 0.2s, top 0.2s;
+}
+.csb-page .csb-nav-toggle .bars::before { top: -7px; }
+.csb-page .csb-nav-toggle .bars::after  { top:  7px; }
+.csb-page.nav-open .csb-nav-toggle .bars { background: transparent; }
+.csb-page.nav-open .csb-nav-toggle .bars::before { top: 0; transform: rotate(45deg); }
+.csb-page.nav-open .csb-nav-toggle .bars::after  { top: 0; transform: rotate(-45deg); }
+
+@media (max-width: 900px) {
+  .csb-page h1 { font-size: 2.25rem; }
+  .csb-page h2 { font-size: 1.75rem; }
+
+  .csb-page section { padding: 3.5rem 1.25rem; }
+  .csb-page .booking-intro h1 { font-size: 2rem; }
+  .csb-page .consult-meta { grid-template-columns: 1fr; }
+}
+
+
+@media (max-width: 900px) {
+  /* Show the hamburger; hide the desktop CTA button (still in drawer) */
+  .csb-page .csb-nav-toggle { display: inline-flex; }
+  .csb-page .csb-header { padding: 0.75rem 1.25rem; }
+  .csb-page .csb-logo img { width: 56px; }
+  .csb-page .csb-logo-text strong { font-size: 1.15rem; }
+  .csb-page .csb-logo-text span { font-size: 0.9rem; }
+
+  /* Drawer: slide down from below the sticky header */
+  .csb-page .csb-nav { position: static; }
+  .csb-page .csb-nav > ul {
+    display: none;
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    width: 100%;
+    background: #fff;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.5rem 0 1.5rem;
+    margin: 0;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    z-index: 99;
+    border-top: 1px solid var(--csb-border);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+  }
+  .csb-page.nav-open .csb-nav > ul { display: flex; }
+  .csb-page.nav-open { overflow: hidden; }
+
+  .csb-page .csb-nav > ul > li {
+    border-bottom: 1px solid var(--csb-border);
+  }
+  .csb-page .csb-nav > ul > li:last-child {
+    border-bottom: none;
+    padding: 1rem 1.25rem 0;
+  }
+
+  /* Big-touch nav links — 56px tall, full-width */
+  .csb-page .csb-nav a:not(.btn) {
+    display: flex !important;
+    align-items: center;
+    padding: 0 1.25rem !important;
+    min-height: 56px;
+    font-size: 1.1rem;
+    border-bottom: none;
+  }
+  .csb-page .csb-nav a:not(.btn).active {
+    background: var(--csb-cream);
+    color: var(--csb-navy) !important;
+    border-bottom: none;
+    border-left: 4px solid var(--csb-red);
+    padding-left: calc(1.25rem - 4px) !important;
+  }
+
+  /* CTA button inside drawer = full width */
+  .csb-page .csb-nav .btn {
+    display: flex;
+    width: 100%;
+    min-height: 56px;
+    font-size: 1.1rem;
+  }
+
+  /* Mobile dropdown = inline accordion (no hover, no fixed positioning) */
+  .csb-page .csb-nav .has-dropdown > a {
+    justify-content: flex-start;
+  }
+  .csb-page .csb-nav .has-dropdown > a::after {
+    margin-left: auto;
+    font-size: 1em;
+    transition: transform 0.2s;
+  }
+  .csb-page .csb-nav .has-dropdown.expanded > a::after {
+    transform: rotate(180deg); color: var(--csb-red);
+  }
+  .csb-page .csb-nav-dropdown {
+    position: static !important;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    background: var(--csb-cream);
+    border: none !important;
+    border-top: 1px solid var(--csb-border) !important;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .csb-page .csb-nav .has-dropdown:hover > .csb-nav-dropdown,
+  .csb-page .csb-nav .has-dropdown:focus-within > .csb-nav-dropdown { display: none; }
+  .csb-page .csb-nav .has-dropdown.expanded > .csb-nav-dropdown { display: block; }
+  .csb-page .csb-nav-dropdown a {
+    padding: 0 2.5rem !important;
+    min-height: 48px;
+  }
+  .csb-page .csb-nav-dropdown .dropdown-section {
+    padding: 0.6rem 2.5rem 0.2rem;
+    background: var(--csb-cream-warm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .csb-page *, .csb-page *::before, .csb-page *::after {
+    transition: none !important; animation: none !important;
+  }
+}
+
+.csb-page a:focus-visible,
+.csb-page button:focus-visible,
+.csb-page .btn:focus-visible {
+  outline: 3px solid var(--csb-red);
+  outline-offset: 3px;
+}
+
+</style>
+
+<div class="csb-page">
+
+<a href="#main" class="skip-content">Skip to main content</a>
+
+<!-- Header -->
+<header class="csb-header">
+  <div class="csb-header-inner">
+    <a href="/home" class="csb-logo" aria-label="Covenant Senior Benefits home">
+      <img src="https://assets.cdn.filesafe.space/syjFFgbiNmGuYL7SwVMH/media/69e644decc4d90735ee45f57.png" alt="">
+        <div class="csb-logo-text">
+        <strong>Covenant Senior Benefits</strong>
+        <span>Medicare Made Simple</span>
+      </div>
+    </a>
+    <button type="button" class="csb-nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="csb-main-nav-list">
+      <span class="bars" aria-hidden="true"></span>
+    </button>
+    <nav class="csb-nav" aria-label="Main">
+      <ul id="csb-main-nav-list">
+        <li><a href="/home">Home</a></li>
+        <li class="has-dropdown">
+          <a href="/products">Products</a>
+          <ul class="csb-nav-dropdown">
+            <li><a href="/products" class="overview-link">Product Overview</a></li>
+            <li class="dropdown-divider"></li>
+            <li class="dropdown-section">Core Medicare</li>
+            <li><a href="/medicare-part-a">Medicare Part A</a></li>
+            <li><a href="/medicare-part-b">Medicare Part B</a></li>
+            <li><a href="/medicare-advantage">Medicare Advantage</a></li>
+            <li><a href="/medicare-part-d">Medicare Part D</a></li>
+            <li><a href="/medicare-supplement">Medicare Supplement</a></li>
+            <li class="dropdown-section">Added Protection</li>
+            <li><a href="/dental-vision-hearing">Dental, Vision &amp; Hearing</a></li>
+            <li><a href="/hospital-indemnity">Hospital Indemnity</a></li>
+            <li><a href="/critical-illness">Cancer, Heart &amp; Stroke</a></li>
+            <li><a href="/final-expense">Final Expense</a></li>
+            <li><a href="/recovery-care">Recovery Care</a></li>
+          </ul>
+        </li>
+        <li><a href="/learn">Education</a></li>
+        <li><a href="/book-a-call" class="active">Book a Call</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- Intro banner -->
+<section class="booking-intro">
+  <h1>Book Your Free Call</h1>
+  <p>Pick a time that works for you. It takes less than 60 seconds &mdash; no account, no forms, no obligation.</p>
+</section>
+
+<!-- Consultation details (above the calendar) -->
+<section class="booking-area">
+  <div class="booking-inner-single">
+    <div class="pick-time-hint">
+      Pick a time that works for you
+      <span class="arrow" aria-hidden="true">&darr;</span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+/* Mobile nav: hamburger + Products tap-expand. No external libs. */
+(function(){
+  document.querySelectorAll('.csb-page').forEach(function(page){
+    var toggle = page.querySelector('.csb-nav-toggle');
+    var dropdown = page.querySelector('.csb-nav .has-dropdown');
+    var dropdownLink = dropdown && dropdown.querySelector(':scope > a');
+
+    if (toggle) {
+      toggle.addEventListener('click', function(e){
+        e.preventDefault();
+        var open = page.classList.toggle('nav-open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+        if (!open && dropdown) dropdown.classList.remove('expanded');
+      });
+    }
+
+    /* On mobile, tapping the Products link expands the submenu instead of navigating.
+       Desktop (>900px) keeps the hover behavior because mql.matches is false. */
+    if (dropdownLink) {
+      dropdownLink.addEventListener('click', function(e){
+        if (window.matchMedia('(max-width: 900px)').matches) {
+          e.preventDefault();
+          dropdown.classList.toggle('expanded');
+        }
+      });
+    }
+
+    /* Close drawer when any nav link inside is clicked (so navigation actually feels right) */
+    page.querySelectorAll('.csb-nav a').forEach(function(a){
+      a.addEventListener('click', function(){
+        if (window.matchMedia('(max-width: 900px)').matches && !a.matches('.has-dropdown > a')) {
+          page.classList.remove('nav-open');
+          if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    /* If viewport grows back past mobile, reset state */
+    window.addEventListener('resize', function(){
+      if (!window.matchMedia('(max-width: 900px)').matches) {
+        page.classList.remove('nav-open');
+        if (dropdown) dropdown.classList.remove('expanded');
+        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+})();
+</script>
+
+</div>
+<!-- /.csb-page  end GHL custom-code block A -->
