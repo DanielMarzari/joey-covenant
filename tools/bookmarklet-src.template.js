@@ -1,10 +1,16 @@
 /*
- * CSB → GHL Sync bookmarklet
- * ---------------------------
- * Click the bookmarklet while a GHL custom-code editor is open. A small
- * panel appears in the top-right listing every ghl-ready/*.html file.
- * Click a file → the latest content is fetched from GitHub and copied
- * to the clipboard. Then Cmd+V (Ctrl+V on Windows) into the editor.
+ * CSB → GHL Sync bookmarklet — popup edition
+ * -------------------------------------------
+ * The GHL builder page enforces a Content Security Policy that blocks any
+ * cross-origin fetch from a bookmarklet running in its context (Chrome
+ * shows "Failed to fetch"). To work around that we open a tiny popup
+ * window (about:blank) which has its own permissive CSP, and run all
+ * fetch + clipboard operations there. The parent GHL tab is untouched.
+ *
+ * Click the bookmarklet while a GHL custom-code editor is open:
+ *   1. A small popup opens listing every ghl-ready/*.html file.
+ *   2. Click a file → fetched from GitHub → copied to clipboard.
+ *   3. Switch back to the GHL tab → Cmd+V into the editor → Save.
  *
  * Repo access:
  *   - If the repo is PUBLIC, leave TOKEN blank.
@@ -12,11 +18,12 @@
  *     → Personal access tokens → Fine-grained) with:
  *       Repository access: only the joey-covenant repo
  *       Permissions: Contents = Read
- *     Paste it into TOKEN below, then rebuild the bookmarklet.
+ *     Copy this file to `bookmarklet-src.js` (gitignored), paste the token
+ *     into TOKEN below, then rebuild the bookmarklet.
  *
  * Build:
  *   python3 tools/build-bookmarklet.py
- *   (Reads this file, minifies, URL-encodes, prints javascript: URL)
+ *   (Reads bookmarklet-src.js if present, else this template.)
  */
 (function () {
   var OWNER = 'DanielMarzari';
@@ -41,77 +48,71 @@
     ['Video sub-pages', ['learn-turning-65.html', 'learn-medicare-101.html']]
   ];
 
-  // Toggle: if panel already exists, close it and bail
-  var existing = document.getElementById('csb-sync-panel');
-  if (existing) { existing.remove(); return; }
+  var w = window.open('', 'csb_sync_popup', 'width=420,height=720,scrollbars=yes,resizable=yes');
+  if (!w) { alert('Popup blocked. Allow pop-ups for this site and click the bookmarklet again.'); return; }
+  w.focus();
+  var wd = w.document;
 
-  var p = document.createElement('div');
-  p.id = 'csb-sync-panel';
-  p.style.cssText = 'position:fixed;top:16px;right:16px;background:#fff;border:2px solid #395a86;border-radius:12px;padding:14px 16px;box-shadow:0 16px 40px rgba(0,0,0,0.2);z-index:2147483647;font:14px system-ui,-apple-system,sans-serif;width:320px;max-height:85vh;overflow-y:auto;color:#1a1a1a;';
+  wd.title = 'CSB → GHL Sync';
+  wd.body.innerHTML = '';
+  wd.body.style.cssText = 'margin:0;font:14px system-ui,-apple-system,sans-serif;padding:14px;background:#fff;color:#1a1a1a;';
 
-  var head = document.createElement('div');
-  head.style.cssText = 'font-weight:700;color:#395a86;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;font-size:15px;';
-  var headTitle = document.createElement('span');
-  headTitle.textContent = 'CSB → GHL Sync';
-  head.appendChild(headTitle);
-  var close = document.createElement('button');
-  close.textContent = '×';
-  close.style.cssText = 'border:none;background:none;font-size:22px;cursor:pointer;color:#999;padding:0 6px;line-height:1;';
-  close.onclick = function () { p.remove(); };
-  head.appendChild(close);
-  p.appendChild(head);
+  var h = wd.createElement('h1');
+  h.textContent = 'CSB → GHL Sync';
+  h.style.cssText = 'font-size:16px;color:#395a86;margin:0 0 6px;';
+  wd.body.appendChild(h);
 
-  var sub = document.createElement('div');
-  sub.style.cssText = 'font-size:12px;color:#666;margin-bottom:10px;';
-  sub.textContent = 'Click a file to copy the latest to your clipboard, then paste into the custom-code editor and Save.';
-  p.appendChild(sub);
+  var sub = wd.createElement('div');
+  sub.textContent = 'Click a file → copies latest to clipboard. Then switch back to GHL, ⌘V, Save.';
+  sub.style.cssText = 'font-size:12px;color:#666;margin-bottom:10px;line-height:1.4;';
+  wd.body.appendChild(sub);
 
-  var toast = document.createElement('div');
+  var toast = wd.createElement('div');
   toast.style.cssText = 'font-size:13px;padding:8px 10px;background:#f8f6f2;border-radius:6px;margin-bottom:10px;min-height:20px;line-height:1.35;';
   toast.textContent = 'Ready.';
-  p.appendChild(toast);
+  wd.body.appendChild(toast);
 
   FILES.forEach(function (group) {
-    var label = document.createElement('div');
-    label.style.cssText = 'font-size:10px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:0.05em;margin:10px 0 4px;';
+    var label = wd.createElement('div');
+    label.style.cssText = 'font-size:10px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.05em;margin:12px 0 4px;';
     label.textContent = group[0];
-    p.appendChild(label);
+    wd.body.appendChild(label);
 
     group[1].forEach(function (f) {
-      var b = document.createElement('button');
+      var b = wd.createElement('button');
       b.textContent = f;
-      b.style.cssText = 'display:block;width:100%;text-align:left;padding:7px 10px;margin:2px 0;border:1px solid #d9d3c4;border-radius:6px;background:#fff;cursor:pointer;font:13px Menlo,Consolas,monospace;color:#395a86;';
+      b.style.cssText = 'display:block;width:100%;text-align:left;padding:8px 10px;margin:3px 0;border:1px solid #d9d3c4;border-radius:6px;background:#fff;cursor:pointer;font:13px Menlo,Consolas,monospace;color:#395a86;';
       b.onmouseover = function () { b.style.background = '#eee8db'; b.style.borderColor = '#c7494d'; };
       b.onmouseout = function () { b.style.background = '#fff'; b.style.borderColor = '#d9d3c4'; };
       b.onclick = function () {
-        toast.style.background = '#f8f6f2';
-        toast.style.color = '#666';
+        toast.style.background = '#f8f6f2'; toast.style.color = '#666';
         toast.textContent = 'Fetching ' + f + '…';
 
         var opts = { cache: 'no-store' };
         if (TOKEN) opts.headers = { Authorization: 'token ' + TOKEN };
 
-        fetch(BASE + f + '?t=' + Date.now(), opts)
+        // Use the POPUP's fetch + clipboard so the parent GHL CSP doesn't apply
+        w.fetch(BASE + f + '?t=' + Date.now(), opts)
           .then(function (r) {
-            if (!r.ok) throw new Error('HTTP ' + r.status + ' — make repo public, or set TOKEN in the bookmarklet.');
+            if (!r.ok) {
+              var hint = (r.status === 401 || r.status === 403 || r.status === 404)
+                ? ' — check TOKEN or repo visibility.' : '';
+              throw new Error('HTTP ' + r.status + hint);
+            }
             return r.text();
           })
           .then(function (txt) {
-            return navigator.clipboard.writeText(txt).then(function () {
-              toast.style.background = '#e8f5e9';
-              toast.style.color = '#2d6e3e';
-              toast.innerHTML = '<strong>✓ Copied</strong> ' + f + ' <span style="color:#999">(' + (txt.length / 1024).toFixed(1) + ' KB)</span><br><span style="font-size:11px;color:#555">Now ⌘V into the custom-code editor and Save.</span>';
+            return w.navigator.clipboard.writeText(txt).then(function () {
+              toast.style.background = '#e8f5e9'; toast.style.color = '#2d6e3e';
+              toast.innerHTML = '<strong>✓ Copied</strong> ' + f + ' (' + (txt.length / 1024).toFixed(1) + ' KB)<br><span style="font-size:11px;color:#555">Switch back to the GHL tab and ⌘V into the editor.</span>';
             });
           })
           .catch(function (err) {
-            toast.style.background = '#fdecea';
-            toast.style.color = '#c7494d';
+            toast.style.background = '#fdecea'; toast.style.color = '#c7494d';
             toast.textContent = 'Error: ' + err.message;
           });
       };
-      p.appendChild(b);
+      wd.body.appendChild(b);
     });
   });
-
-  document.body.appendChild(p);
 })();
