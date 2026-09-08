@@ -1,18 +1,20 @@
 /*
- * CSB → GHL Sync bookmarklet — popup edition
- * -------------------------------------------
- * Uses the GitHub API (api.github.com/repos/.../contents/...) with the
- * Accept: application/vnd.github.raw header to fetch file contents. The
- * REST API has proper CORS support (raw.githubusercontent.com does not
- * — it 404s the preflight OPTIONS when an Authorization header is sent).
+ * CSB → GHL Sync bookmarklet — floating panel edition
+ * ----------------------------------------------------
+ * Uses the GitHub REST API (api.github.com/repos/.../contents/...) with
+ * Accept: application/vnd.github.raw — the API has proper CORS headers,
+ * so an in-page fetch works even when the parent page is
+ * app.gohighlevel.com.
  *
- * Opens the file picker in a small popup so the panel stays visible
- * while you paste into the GHL editor.
+ * UX:
+ *   Click bookmarklet → floating panel appears in the top-right corner
+ *   of the GHL builder. Click a file → the latest content is copied to
+ *   your clipboard and the panel auto-closes after ~1.2s so you can
+ *   immediately Cmd+V into the editor.
  *
- * Click the bookmarklet while a GHL custom-code editor is open:
- *   1. A small popup opens listing every ghl-ready/*.html file.
- *   2. Click a file → fetched from GitHub → copied to clipboard.
- *   3. Switch back to the GHL tab → Cmd+V into the editor → Save.
+ * On error the panel stays open so you can read the message.
+ *
+ * Click the bookmarklet again while the panel is showing to close it.
  *
  * Repo access:
  *   - If the repo is PUBLIC, leave TOKEN blank.
@@ -21,11 +23,7 @@
  *       Repository access: only the joey-covenant repo
  *       Permissions: Contents = Read
  *     Copy this file to `bookmarklet-src.js` (gitignored), paste the token
- *     into TOKEN below, then rebuild the bookmarklet.
- *
- * Build:
- *   python3 tools/build-bookmarklet.py
- *   (Reads bookmarklet-src.js if present, else this template.)
+ *     into TOKEN below, then run: python3 tools/build-bookmarklet.py
  */
 (function () {
   var OWNER = 'DanielMarzari';
@@ -50,52 +48,56 @@
     ['Video sub-pages', ['learn-turning-65.html', 'learn-medicare-101.html']]
   ];
 
-  var w = window.open('', 'csb_sync_popup', 'width=420,height=720,scrollbars=yes,resizable=yes');
-  if (!w) { alert('Popup blocked. Allow pop-ups for this site and click the bookmarklet again.'); return; }
-  w.focus();
-  var wd = w.document;
+  // Toggle: click again while open = close.
+  var existing = document.getElementById('csb-sync-panel');
+  if (existing) { existing.remove(); return; }
 
-  wd.title = 'CSB → GHL Sync';
-  wd.body.innerHTML = '';
-  wd.body.style.cssText = 'margin:0;font:14px system-ui,-apple-system,sans-serif;padding:14px;background:#fff;color:#1a1a1a;';
+  var p = document.createElement('div');
+  p.id = 'csb-sync-panel';
+  p.style.cssText = 'position:fixed;top:16px;right:16px;background:#fff;border:2px solid #395a86;border-radius:12px;padding:14px 16px;box-shadow:0 16px 40px rgba(0,0,0,0.25);z-index:2147483647;font:14px system-ui,-apple-system,sans-serif;width:320px;max-height:85vh;overflow-y:auto;color:#1a1a1a;';
 
-  var h = wd.createElement('h1');
-  h.textContent = 'CSB → GHL Sync';
-  h.style.cssText = 'font-size:16px;color:#395a86;margin:0 0 6px;';
-  wd.body.appendChild(h);
+  var head = document.createElement('div');
+  head.style.cssText = 'font-weight:700;color:#395a86;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;font-size:15px;';
+  var headTitle = document.createElement('span');
+  headTitle.textContent = 'CSB → GHL Sync';
+  head.appendChild(headTitle);
+  var close = document.createElement('button');
+  close.textContent = '×';
+  close.style.cssText = 'border:none;background:none;font-size:22px;cursor:pointer;color:#999;padding:0 6px;line-height:1;';
+  close.onclick = function () { p.remove(); };
+  head.appendChild(close);
+  p.appendChild(head);
 
-  var sub = wd.createElement('div');
-  sub.textContent = 'Click a file → copies latest to clipboard. Then switch back to GHL, ⌘V, Save.';
+  var sub = document.createElement('div');
   sub.style.cssText = 'font-size:12px;color:#666;margin-bottom:10px;line-height:1.4;';
-  wd.body.appendChild(sub);
+  sub.textContent = 'Click a file → copies to clipboard, panel auto-closes. Then ⌘V into the editor.';
+  p.appendChild(sub);
 
-  var toast = wd.createElement('div');
+  var toast = document.createElement('div');
   toast.style.cssText = 'font-size:13px;padding:8px 10px;background:#f8f6f2;border-radius:6px;margin-bottom:10px;min-height:20px;line-height:1.35;';
   toast.textContent = 'Ready.';
-  wd.body.appendChild(toast);
+  p.appendChild(toast);
 
   FILES.forEach(function (group) {
-    var label = wd.createElement('div');
-    label.style.cssText = 'font-size:10px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.05em;margin:12px 0 4px;';
+    var label = document.createElement('div');
+    label.style.cssText = 'font-size:10px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.05em;margin:10px 0 4px;';
     label.textContent = group[0];
-    wd.body.appendChild(label);
+    p.appendChild(label);
 
     group[1].forEach(function (f) {
-      var b = wd.createElement('button');
+      var b = document.createElement('button');
       b.textContent = f;
-      b.style.cssText = 'display:block;width:100%;text-align:left;padding:8px 10px;margin:3px 0;border:1px solid #d9d3c4;border-radius:6px;background:#fff;cursor:pointer;font:13px Menlo,Consolas,monospace;color:#395a86;';
+      b.style.cssText = 'display:block;width:100%;text-align:left;padding:7px 10px;margin:2px 0;border:1px solid #d9d3c4;border-radius:6px;background:#fff;cursor:pointer;font:13px Menlo,Consolas,monospace;color:#395a86;';
       b.onmouseover = function () { b.style.background = '#eee8db'; b.style.borderColor = '#c7494d'; };
       b.onmouseout = function () { b.style.background = '#fff'; b.style.borderColor = '#d9d3c4'; };
       b.onclick = function () {
         toast.style.background = '#f8f6f2'; toast.style.color = '#666';
         toast.textContent = 'Fetching ' + f + '…';
 
-        // GitHub REST API with Accept: raw returns file bytes directly (no base64).
-        // Authorization uses Bearer per GitHub's current recommendation.
         var opts = { cache: 'no-store', headers: { Accept: 'application/vnd.github.raw' } };
         if (TOKEN) opts.headers.Authorization = 'Bearer ' + TOKEN;
 
-        w.fetch(BASE + f + '?ref=' + BRANCH + '&t=' + Date.now(), opts)
+        fetch(BASE + f + '?ref=' + BRANCH + '&t=' + Date.now(), opts)
           .then(function (r) {
             if (!r.ok) {
               var hint = (r.status === 401 || r.status === 403 || r.status === 404)
@@ -105,17 +107,22 @@
             return r.text();
           })
           .then(function (txt) {
-            return w.navigator.clipboard.writeText(txt).then(function () {
+            return navigator.clipboard.writeText(txt).then(function () {
               toast.style.background = '#e8f5e9'; toast.style.color = '#2d6e3e';
-              toast.innerHTML = '<strong>✓ Copied</strong> ' + f + ' (' + (txt.length / 1024).toFixed(1) + ' KB)<br><span style="font-size:11px;color:#555">Switch back to the GHL tab and ⌘V into the editor.</span>';
+              toast.innerHTML = '<strong>✓ Copied</strong> ' + f + ' (' + (txt.length / 1024).toFixed(1) + ' KB) — ⌘V in the editor';
+              // Auto-close after 1.2s so the user can see the confirmation
+              setTimeout(function () { if (p.parentNode) p.remove(); }, 1200);
             });
           })
           .catch(function (err) {
+            // Leave the panel open on error so user can read the message
             toast.style.background = '#fdecea'; toast.style.color = '#c7494d';
             toast.textContent = 'Error: ' + err.message;
           });
       };
-      wd.body.appendChild(b);
+      p.appendChild(b);
     });
   });
+
+  document.body.appendChild(p);
 })();
