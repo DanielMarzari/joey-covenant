@@ -1190,48 +1190,76 @@
 
 
 <script>
-/* Fetch video config from data/content.json in the GitHub repo and upgrade
-   facades on tap. Runs on page load. If the fetch fails the facade stays as
-   a placeholder — no error UI. To change the video: edit data/content.json,
-   commit, push. */
+/* Video facade — pulls the video source from GHL Custom Values, so Joey can
+   swap the underlying video without touching the code. Falls back through:
+     1. Media Library video URL (self-hosted MP4)    → <video> tag
+     2. YouTube ID                                    → youtube-nocookie iframe
+     3. Nothing set                                   → "Video coming soon"
+   GHL substitutes merge fields server-side before render. If a value
+   isn't defined in Settings → Custom Values, GHL leaves the literal
+   template braces — the unset() guard catches that. */
 (function () {
-  var facades = document.querySelectorAll('[data-video-slot]');
-  if (!facades.length) return;
+  var facade = document.querySelector('[data-video-slot]');
+  if (!facade) return;
 
-  var CONTENT_URL = 'https://raw.githubusercontent.com/DanielMarzari/joey-covenant/main/data/content.json';
+  var CFG = {
+    videoUrl:  '{{ custom_values.approaching_medicare_video_url }}',
+    youtubeId: '{{ custom_values.approaching_medicare_youtube_id }}',
+    posterUrl: '{{ custom_values.approaching_medicare_poster_url }}',
+    title:     "Turning 65 Soon? Here's What You Need to Know"
+  };
 
-  fetch(CONTENT_URL, { cache: 'default' })
-    .then(function (r) { return r.ok ? r.json() : { videos: [] }; })
-    .then(function (data) {
-      var videos = (data && data.videos) || [];
-      facades.forEach(function (facade) {
-        var slot = facade.dataset.videoSlot;
-        var v = videos.find(function (x) { return x.slot === slot; });
-        if (!v || !v.youtube_id) {
-          var lbl = facade.querySelector('.video-label');
-          if (lbl) lbl.textContent = 'Video coming soon';
-          facade.style.cursor = 'default';
-          return;
-        }
-        var poster = v.poster_url ||
-          'https://i.ytimg.com/vi/' + v.youtube_id + '/maxresdefault.jpg';
-        facade.style.backgroundImage = 'url("' + poster + '")';
+  function unset(v) { return !v || v.indexOf('{{') !== -1; }
 
-        facade.addEventListener('click', function upgrade() {
-          var iframe = document.createElement('iframe');
-          iframe.src = 'https://www.youtube-nocookie.com/embed/' + v.youtube_id +
-            '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
-          iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; ' +
-            'gyroscope; picture-in-picture; web-share';
-          iframe.allowFullscreen = true;
-          iframe.title = v.title || 'Video';
-          facade.innerHTML = '';
-          facade.appendChild(iframe);
-          facade.classList.add('is-embedded');
-        }, { once: true });
-      });
-    })
-    .catch(function () { /* silent fail — placeholder remains */ });
+  function upgradeToVideo(src, poster, title) {
+    var v = document.createElement('video');
+    v.src = src;
+    v.controls = true;
+    v.autoplay = true;
+    v.playsInline = true;
+    if (poster) v.poster = poster;
+    v.title = title;
+    v.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border-radius:12px;object-fit:cover;background:#000;';
+    facade.innerHTML = '';
+    facade.appendChild(v);
+    facade.classList.add('is-embedded');
+  }
+
+  function upgradeToYouTube(id, title) {
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube-nocookie.com/embed/' + id +
+      '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; ' +
+      'gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+    iframe.title = title;
+    facade.innerHTML = '';
+    facade.appendChild(iframe);
+    facade.classList.add('is-embedded');
+  }
+
+  // Prefer Media Library MP4 over YouTube if both are set
+  if (!unset(CFG.videoUrl)) {
+    if (!unset(CFG.posterUrl)) facade.style.backgroundImage = 'url("' + CFG.posterUrl + '")';
+    facade.addEventListener('click', function () {
+      upgradeToVideo(CFG.videoUrl, unset(CFG.posterUrl) ? null : CFG.posterUrl, CFG.title);
+    }, { once: true });
+    return;
+  }
+  if (!unset(CFG.youtubeId)) {
+    var poster = unset(CFG.posterUrl)
+      ? 'https://i.ytimg.com/vi/' + CFG.youtubeId + '/maxresdefault.jpg'
+      : CFG.posterUrl;
+    facade.style.backgroundImage = 'url("' + poster + '")';
+    facade.addEventListener('click', function () {
+      upgradeToYouTube(CFG.youtubeId, CFG.title);
+    }, { once: true });
+    return;
+  }
+
+  var lbl = facade.querySelector('.video-label');
+  if (lbl) lbl.textContent = 'Video coming soon';
+  facade.style.cursor = 'default';
 })();
 </script>
 

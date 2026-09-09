@@ -36,8 +36,7 @@
       'dental-vision-hearing.html', 'hospital-indemnity.html', 'critical-illness.html',
       'final-expense.html', 'recovery-care.html'
     ]],
-    ['Video sub-pages', ['learn-turning-65.html', 'learn-medicare-101.html']],
-    ['System', ['admin.html']]
+    ['Video sub-pages', ['learn-turning-65.html', 'learn-medicare-101.html']]
   ];
 
   // Toggle: click again while open = close.
