@@ -920,7 +920,7 @@
       <span class="eyebrow">What our clients say</span>
       <h2>Real stories from real seniors</h2>
     </div>
-    <div class="testimonial-grid">
+    <div class="testimonial-grid" data-csb-slot="testimonials" data-csb-page="home">
       <div class="testimonial">
         <div class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <blockquote>Joey saved me an average of $381 a month &mdash; $4,572 a year, Part B premium included. I kept the same doctors and hospital, and I got critical-illness protection plus dental, vision, and hearing on top.</blockquote>
@@ -1253,5 +1253,111 @@
 })();
 </script>
 
+<script>
+/* Live content from the admin API (/admin).
+
+   Progressive enhancement, deliberately: whatever markup is already in the
+   page is the fallback and is left untouched unless the fetch succeeds AND
+   returns something publishable. If the Worker is down, undeployed, or the
+   collection is empty, the visitor sees the hand-written content instead of
+   an empty section. Nothing here can blank out a page.
+
+   Mark a container with:
+     data-csb-slot="testimonials" | "locations" | "gallery"
+     data-csb-page="home"    (optional — only show items tagged for this page)
+     data-csb-limit="3"      (optional — cap how many render)
+*/
+(function () {
+  var slots = document.querySelectorAll('[data-csb-slot]');
+  if (!slots.length) return;
+
+  /* Shared across every slot on the page so several sections don't each
+     trigger their own request. */
+  window.__csbContent = window.__csbContent ||
+    fetch('/api/public/v1/content.json', { cache: 'default' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function () { return null; });
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  function monthYear(iso) {
+    if (!iso) return '';
+    var p = String(iso).split('-');
+    return (MONTHS[parseInt(p[1], 10) - 1] || '') + ' ' + p[0];
+  }
+
+  /* An untagged item shows everywhere; a tagged one only on its pages. */
+  function forPage(items, page) {
+    return items.filter(function (i) {
+      var tags = i.tags || [];
+      return !tags.length || (page && tags.indexOf(page) !== -1);
+    });
+  }
+
+  var render = {
+    testimonials: function (items) {
+      return items.map(function (t) {
+        return '<div class="testimonial">' +
+          '<div class="stars" aria-label="' + t.stars + ' out of 5 stars">' +
+            new Array(t.stars + 1).join('&#9733;') + '</div>' +
+          '<blockquote>' + esc(t.quote) + '</blockquote>' +
+          '<div class="testimonial-author">' +
+            '<div class="author-avatar" aria-hidden="true">' + esc(t.initials) + '</div>' +
+            '<div class="author-info"><strong>' + esc(t.author_name) + '</strong>' +
+              (t.author_meta ? '<span>' + esc(t.author_meta) + '</span>' : '') +
+            '</div>' +
+          '</div></div>';
+      }).join('');
+    },
+
+    locations: function (items) {
+      return items.map(function (l) {
+        var place = [l.city, l.state].filter(Boolean).join(', ');
+        var when = monthYear(l.event_date);
+        return '<div class="presented">' +
+          '<div class="presented-when">' + esc(when || '&mdash;') + '</div>' +
+          '<div class="presented-what">' +
+            '<strong>' + esc(l.venue) + '</strong>' +
+            (place ? '<span>' + esc(place) + '</span>' : '') +
+            (l.description ? '<p>' + esc(l.description) + '</p>' : '') +
+          '</div></div>';
+      }).join('');
+    },
+
+    gallery: function (items) {
+      return items.map(function (p) {
+        return '<img src="' + esc(p.url) + '" alt="' + esc(p.alt) + '"' +
+          (p.width ? ' width="' + p.width + '"' : '') +
+          (p.height ? ' height="' + p.height + '"' : '') +
+          ' loading="lazy" decoding="async">';
+      }).join('');
+    }
+  };
+
+  window.__csbContent.then(function (data) {
+    if (!data) return;                     /* unreachable → keep the fallback */
+
+    Array.prototype.forEach.call(slots, function (el) {
+      var kind = el.getAttribute('data-csb-slot');
+      var items = data[kind === 'gallery' ? 'photos' : kind];
+      if (!items || !render[kind]) return;
+
+      items = forPage(items, el.getAttribute('data-csb-page') || '');
+      var limit = parseInt(el.getAttribute('data-csb-limit'), 10);
+      if (limit > 0) items = items.slice(0, limit);
+      if (!items.length) return;           /* nothing published → keep the fallback */
+
+      var markup = render[kind](items);
+      if (markup) el.innerHTML = markup;
+    });
+  });
+})();
+</script>
 </div>
 <!-- /.csb-page  end GHL custom-code block -->

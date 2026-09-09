@@ -730,6 +730,30 @@
 .csb-page .download-card h3 { font-size: 1.25rem; margin-bottom: 0.25rem; }
 .csb-page .download-card p { font-size: 0.98rem; margin: 0 0 0.75rem; color: var(--csb-ink-soft); }
 .csb-page .download-card .btn-small { min-height: 44px; padding: 0.55rem 1.2rem; }
+.csb-page .presented-list {
+  max-width: 820px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 0.75rem;
+}
+.csb-page .presented {
+  display: grid; grid-template-columns: 96px 1fr; gap: 1.25rem; align-items: start;
+  background: var(--csb-white);
+  border: 1px solid var(--csb-border);
+  border-left: 4px solid var(--csb-navy);
+  border-radius: 10px; padding: 1rem 1.25rem;
+}
+.csb-page .presented-when {
+  font-weight: 700; color: var(--csb-navy); font-size: 0.9rem; padding-top: 0.15rem;
+}
+.csb-page .presented-what strong { display: block; color: var(--csb-ink); }
+.csb-page .presented-what span {
+  display: block; color: var(--csb-ink-soft); font-size: 0.92rem; margin-top: 0.15rem;
+}
+.csb-page .presented-what p {
+  margin: 0.5rem 0 0; font-size: 0.95rem; color: var(--csb-ink-soft);
+}
+@media (max-width: 560px) {
+  .csb-page .presented { grid-template-columns: 1fr; gap: 0.35rem; }
+}
 .csb-page .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -864,6 +888,24 @@
   </div>
 </section>
 
+<!-- ========== WHERE JOEY HAS PRESENTED ========== -->
+<section class="content-block">
+  <div class="section-inner">
+    <h2 style="text-align:center;">Where Joey Has Presented</h2>
+    <p class="lead" style="text-align:center;">Recent free Q&amp;A sessions across the Lehigh Valley and beyond.</p>
+    <div class="presented-list" data-csb-slot="locations" data-csb-page="presentations" style="margin-top:2rem;">
+      <div class="presented">
+        <div class="presented-when">&mdash;</div>
+        <div class="presented-what">
+          <strong>Sessions are listed here as they&rsquo;re scheduled</strong>
+          <span>Lehigh Valley, PA</span>
+          <p>Call Joey to host a free Medicare Q&amp;A for your community.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ========== INVITE JOEY (contact block) ========== -->
 <section class="content-block alt">
   <div class="section-inner">
@@ -898,7 +940,7 @@
   <div class="section-inner">
     <h2 style="text-align:center;">Joey in the Community</h2>
     <p class="lead" style="text-align:center;">A look at recent free Q&amp;A sessions across the Lehigh Valley.</p>
-    <div class="gallery" style="margin-top:2rem;">
+    <div class="gallery" data-csb-slot="gallery" data-csb-page="presentations" style="margin-top:2rem;">
       <!-- REPLACE with GHL Media URLs if repo is private -->
       <img src="https://cdn.jsdelivr.net/gh/DanielMarzari/joey-covenant@main/assets/presentations/event-2300.jpg" alt="Covenant Senior Benefits Q&A session — table setup with informational materials" loading="lazy" decoding="async" width="1200" height="900">
       <img src="https://cdn.jsdelivr.net/gh/DanielMarzari/joey-covenant@main/assets/presentations/event-2301.jpg" alt="Covenant Senior Benefits community event" loading="lazy" decoding="async" width="1200" height="900">
@@ -1064,5 +1106,111 @@
 })();
 </script>
 
+<script>
+/* Live content from the admin API (/admin).
+
+   Progressive enhancement, deliberately: whatever markup is already in the
+   page is the fallback and is left untouched unless the fetch succeeds AND
+   returns something publishable. If the Worker is down, undeployed, or the
+   collection is empty, the visitor sees the hand-written content instead of
+   an empty section. Nothing here can blank out a page.
+
+   Mark a container with:
+     data-csb-slot="testimonials" | "locations" | "gallery"
+     data-csb-page="home"    (optional — only show items tagged for this page)
+     data-csb-limit="3"      (optional — cap how many render)
+*/
+(function () {
+  var slots = document.querySelectorAll('[data-csb-slot]');
+  if (!slots.length) return;
+
+  /* Shared across every slot on the page so several sections don't each
+     trigger their own request. */
+  window.__csbContent = window.__csbContent ||
+    fetch('/api/public/v1/content.json', { cache: 'default' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function () { return null; });
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  function monthYear(iso) {
+    if (!iso) return '';
+    var p = String(iso).split('-');
+    return (MONTHS[parseInt(p[1], 10) - 1] || '') + ' ' + p[0];
+  }
+
+  /* An untagged item shows everywhere; a tagged one only on its pages. */
+  function forPage(items, page) {
+    return items.filter(function (i) {
+      var tags = i.tags || [];
+      return !tags.length || (page && tags.indexOf(page) !== -1);
+    });
+  }
+
+  var render = {
+    testimonials: function (items) {
+      return items.map(function (t) {
+        return '<div class="testimonial">' +
+          '<div class="stars" aria-label="' + t.stars + ' out of 5 stars">' +
+            new Array(t.stars + 1).join('&#9733;') + '</div>' +
+          '<blockquote>' + esc(t.quote) + '</blockquote>' +
+          '<div class="testimonial-author">' +
+            '<div class="author-avatar" aria-hidden="true">' + esc(t.initials) + '</div>' +
+            '<div class="author-info"><strong>' + esc(t.author_name) + '</strong>' +
+              (t.author_meta ? '<span>' + esc(t.author_meta) + '</span>' : '') +
+            '</div>' +
+          '</div></div>';
+      }).join('');
+    },
+
+    locations: function (items) {
+      return items.map(function (l) {
+        var place = [l.city, l.state].filter(Boolean).join(', ');
+        var when = monthYear(l.event_date);
+        return '<div class="presented">' +
+          '<div class="presented-when">' + esc(when || '&mdash;') + '</div>' +
+          '<div class="presented-what">' +
+            '<strong>' + esc(l.venue) + '</strong>' +
+            (place ? '<span>' + esc(place) + '</span>' : '') +
+            (l.description ? '<p>' + esc(l.description) + '</p>' : '') +
+          '</div></div>';
+      }).join('');
+    },
+
+    gallery: function (items) {
+      return items.map(function (p) {
+        return '<img src="' + esc(p.url) + '" alt="' + esc(p.alt) + '"' +
+          (p.width ? ' width="' + p.width + '"' : '') +
+          (p.height ? ' height="' + p.height + '"' : '') +
+          ' loading="lazy" decoding="async">';
+      }).join('');
+    }
+  };
+
+  window.__csbContent.then(function (data) {
+    if (!data) return;                     /* unreachable → keep the fallback */
+
+    Array.prototype.forEach.call(slots, function (el) {
+      var kind = el.getAttribute('data-csb-slot');
+      var items = data[kind === 'gallery' ? 'photos' : kind];
+      if (!items || !render[kind]) return;
+
+      items = forPage(items, el.getAttribute('data-csb-page') || '');
+      var limit = parseInt(el.getAttribute('data-csb-limit'), 10);
+      if (limit > 0) items = items.slice(0, limit);
+      if (!items.length) return;           /* nothing published → keep the fallback */
+
+      var markup = render[kind](items);
+      if (markup) el.innerHTML = markup;
+    });
+  });
+})();
+</script>
 </div>
 <!-- /.csb-page  end GHL custom-code block -->
