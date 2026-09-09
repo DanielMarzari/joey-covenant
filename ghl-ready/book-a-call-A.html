@@ -550,6 +550,33 @@
   contain-intrinsic-size: 1px 700px;
 }
 
+
+/* Consent checkboxes above the calendar */
+.csb-page .consent-block {
+  max-width: 900px; margin: 2rem auto 0;
+  background: #fff; border: 2px solid var(--csb-border);
+  border-radius: 12px; padding: 1.5rem 1.75rem;
+}
+.csb-page .consent-block h3 {
+  font-size: 1.1rem; margin-bottom: 1rem;
+}
+.csb-page .consent-item {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  padding: 0.6rem 0; font-size: 1rem; line-height: 1.5;
+  color: var(--csb-ink); cursor: pointer;
+}
+.csb-page .consent-item input[type="checkbox"] {
+  flex-shrink: 0; margin-top: 0.25rem;
+  width: 22px; height: 22px;
+  accent-color: var(--csb-red);
+  cursor: pointer;
+}
+.csb-page .consent-item a {
+  color: var(--csb-navy); text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.csb-page .consent-item a:hover { color: var(--csb-red-dark); }
+
 </style>
 
 <div class="csb-page">
@@ -613,6 +640,22 @@
       Pick a time that works for you
       <span class="arrow" aria-hidden="true">&darr;</span>
     </div>
+  </div>
+</section>
+
+
+<!-- Consent checkboxes — required for the booking widget to submit -->
+<section class="booking-area" style="background:#fff;padding:0 2rem 2.5rem;">
+  <div class="consent-block" aria-label="Consent">
+    <h3>Before you book, please confirm:</h3>
+    <label class="consent-item">
+      <input type="checkbox" id="csb-consent-privacy" required>
+      <span>I agree to the <a href="/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a> and <a href="/privacy-policy#terms" target="_blank" rel="noopener">Terms of Service</a>.</span>
+    </label>
+    <label class="consent-item">
+      <input type="checkbox" id="csb-consent-contact" required>
+      <span>I consent to being contacted by Covenant Senior Benefits by phone, text, or email regarding Medicare guidance.</span>
+    </label>
   </div>
 </section>
 

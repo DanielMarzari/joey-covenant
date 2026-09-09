@@ -1,7 +1,10 @@
 <!--
   ============================================================
-  GoHighLevel Custom-Code block — Medicare Part B page
-  Slug: /medicare-part-b
+  GoHighLevel Custom-Code block — PRESENTATIONS
+  Slug: /presentations
+  Assets served from cdn.jsdelivr.net (public repo). If keeping
+  the repo private, upload assets to GHL Media Library and
+  swap the URLs marked "REPLACE with GHL Media URL".
   ============================================================
 -->
 <link rel="preconnect" href="https://images.leadconnectorhq.com" crossorigin>
@@ -680,6 +683,85 @@
   contain-intrinsic-size: 1px 700px;
 }
 
+
+/* --- Presentations page extras --- */
+.csb-page .qa-hero-flyer {
+  max-width: 500px; margin: 0 auto;
+  border-radius: 12px; overflow: hidden;
+  box-shadow: 0 12px 32px rgba(30, 50, 82, 0.18);
+  border: 2px solid var(--csb-border);
+}
+.csb-page .qa-hero-flyer img { display: block; width: 100%; height: auto; }
+.csb-page .qa-topics-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem; margin: 1.5rem 0 0;
+  max-width: 900px; margin-left: auto; margin-right: auto;
+}
+.csb-page .qa-topic {
+  background: #fff; border: 2px solid var(--csb-border);
+  border-left: 4px solid var(--csb-red);
+  border-radius: 8px; padding: 0.75rem 1rem;
+  font-size: 1rem; color: var(--csb-ink);
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.csb-page .qa-topic::before {
+  content: '\2713'; color: var(--csb-red); font-weight: 700; flex-shrink: 0;
+}
+.csb-page .download-card {
+  background: #fff; border: 2px solid var(--csb-navy);
+  border-radius: 14px; padding: 2rem;
+  max-width: 720px; margin: 0 auto;
+  display: flex; gap: 1.5rem; align-items: center;
+}
+.csb-page .download-card .icon {
+  flex-shrink: 0;
+  width: 72px; height: 72px; border-radius: 12px;
+  background: var(--csb-navy); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Merriweather', serif; font-weight: 700; font-size: 1.4rem;
+}
+.csb-page .download-card .meta { flex: 1; }
+.csb-page .download-card h3 { font-size: 1.25rem; margin-bottom: 0.25rem; }
+.csb-page .download-card p { font-size: 0.98rem; margin: 0 0 0.75rem; color: var(--csb-ink-soft); }
+.csb-page .download-card .btn-small { min-height: 44px; padding: 0.55rem 1.2rem; }
+.csb-page .gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  max-width: 1100px; margin: 0 auto;
+}
+.csb-page .gallery img {
+  width: 100%; height: 260px;
+  object-fit: cover; border-radius: 12px;
+  border: 2px solid var(--csb-border);
+  box-shadow: 0 8px 20px rgba(30, 50, 82, 0.1);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.csb-page .gallery img:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(30, 50, 82, 0.18);
+}
+.csb-page .invite-card {
+  background: linear-gradient(135deg, var(--csb-navy) 0%, var(--csb-navy-deep) 100%);
+  color: #fff; padding: 2.5rem 2rem;
+  border-radius: 14px; max-width: 900px; margin: 0 auto;
+  text-align: center;
+}
+.csb-page .invite-card h3 { color: #fff; font-size: 1.5rem; margin-bottom: 0.75rem; }
+.csb-page .invite-card p { color: rgba(255,255,255,0.9); margin-bottom: 1.5rem; }
+.csb-page .invite-card .btn {
+  background: #fff; color: var(--csb-navy);
+  border-color: rgba(255,255,255,0.4);
+  box-shadow: 0 4px 0 rgba(0,0,0,0.15);
+}
+.csb-page .invite-card .btn:hover {
+  background: var(--csb-cream); color: var(--csb-navy-deep);
+}
+@media (max-width: 700px) {
+  .csb-page .download-card { flex-direction: column; text-align: center; }
+  .csb-page .gallery img { height: 220px; }
+}
+
 </style>
 
 <div class="csb-page">
@@ -707,8 +789,8 @@
           <li><a href="/products" class="overview-link">Product Overview</a></li>
           <li class="dropdown-divider"></li>
           <li class="dropdown-section">Core Medicare</li>
-          <li><a href="/medicare-part-a">Medicare Part A</a></li>
-          <li><a href="/medicare-part-b" class="active">Medicare Part B</a></li>
+          <li><a href="/medicare-part-a" class="active">Medicare Part A</a></li>
+          <li><a href="/medicare-part-b">Medicare Part B</a></li>
           <li><a href="/medicare-part-d">Medicare Part D</a></li>
           <li><a href="/medicare-advantage">Medicare Advantage</a></li>
           <li><a href="/medicare-supplement">Medicare Supplement</a></li>
@@ -721,7 +803,7 @@
         </ul>
         </li>
         <li><a href="/learn">Education</a></li>
-        <li><a href="/presentations">Presentations</a></li>
+        <li><a href="/presentations" class="active">Presentations</a></li>
         <li><a href="/book-a-call" class="btn btn-primary btn-small">Book My Free Call</a></li>
       </ul>
     </nav>
@@ -731,122 +813,97 @@
 <main id="main">
 
 <section class="product-hero">
-  <span class="hero-tag">Original Medicare</span>
-  <h1>Medicare Part B</h1>
-  <p>Part B is the medical half of Original Medicare. It pays 80% of approved costs &mdash; you pay 20%. The catch? <strong>That 20% has no cap.</strong></p>
-  <div class="key-stats">
-      <div class="key-stat"><span class="num">$202.90/mo</span><span class="lbl">2026 standard premium (income-based)</span></div>
-      <div class="key-stat"><span class="num">$283/yr</span><span class="lbl">2026 annual deductible</span></div>
-      <div class="key-stat"><span class="num">80 / 20</span><span class="lbl">Cost share with no out-of-pocket cap</span></div>
-  </div>
+  <span class="hero-tag">Community Education</span>
+  <h1>Presentations &amp; <span class="accent">Educational Materials</span></h1>
+  <p>Free Medicare education for your community, workplace, or organization &mdash; plus resources you can download and share.</p>
 </section>
 
+<!-- ========== FREE EDUCATIONAL MEDICARE Q&A SESSIONS ========== -->
 <section class="content-block">
   <div class="section-inner">
-    <h2>What Medicare Part B Covers</h2>
-    <p class="lead">Pretty much everything outside the hospital walls.</p>
-    <div class="check-grid">
-      <div class="check-card">
-        <div class="check-icon" aria-hidden="true">&#10003;</div>
-        <div>
-          <h3>Doctor &amp; Specialist Visits</h3>
-          <p>Office visits, second opinions, and most consultations with providers who accept Medicare.</p>
-        </div>
-      </div>
-      <div class="check-card">
-        <div class="check-icon" aria-hidden="true">&#10003;</div>
-        <div>
-          <h3>Outpatient Procedures</h3>
-          <p>Same-day surgeries and procedures performed in clinics or outpatient hospital settings.</p>
-        </div>
-      </div>
-      <div class="check-card">
-        <div class="check-icon" aria-hidden="true">&#10003;</div>
-        <div>
-          <h3>Lab Work, X-Rays &amp; Imaging</h3>
-          <p>Blood tests, X-rays, MRIs, CT scans, and other diagnostic imaging.</p>
-        </div>
-      </div>
-      <div class="check-card">
-        <div class="check-icon" aria-hidden="true">&#10003;</div>
-        <div>
-          <h3>Chemo, Radiation &amp; Injectables</h3>
-          <p>Most cancer treatments delivered on an outpatient basis, plus injectable medications.</p>
-        </div>
-      </div>
-      <div class="check-card">
-        <div class="check-icon" aria-hidden="true">&#10003;</div>
-        <div>
-          <h3>Durable Medical Equipment</h3>
-          <p>Wheelchairs, walkers, oxygen, CPAP machines, and other doctor-prescribed equipment.</p>
-        </div>
-      </div>
-      <div class="check-card">
-        <div class="check-icon" aria-hidden="true">&#10003;</div>
-        <div>
-          <h3>Ambulance &amp; Emergency Room</h3>
-          <p>Medically necessary ambulance transport and emergency room visits.</p>
-        </div>
-      </div>
+    <div style="text-align:center;">
+      <span class="hero-tag" style="background:var(--csb-red);color:#fff;">Live &amp; Free</span>
     </div>
+    <h2 style="text-align:center;">Free Educational Medicare Q&amp;A Sessions</h2>
+    <p class="lead" style="text-align:center;">Helping Lehigh Valley residents understand Medicare with confidence. Joey Guida runs these sessions at senior centers, retirement communities, employer groups, faith communities, and libraries &mdash; at no cost to the venue or attendees.</p>
+
+    <div class="qa-hero-flyer" style="margin:2rem auto;">
+      <!-- REPLACE with GHL Media URL if repo is private -->
+      <img src="https://cdn.jsdelivr.net/gh/DanielMarzari/joey-covenant@main/assets/presentations/qa-flyer.png" alt="Free Educational Medicare Q&A flyer — Presented by Joey Guida" width="1000" height="1500" loading="lazy" decoding="async">
+    </div>
+
+    <h3 style="text-align:center;margin-top:2.5rem;">Topics Covered</h3>
+    <div class="qa-topics-grid">
+      <div class="qa-topic">Medicare Parts A, B, C &amp; D explained</div>
+      <div class="qa-topic">When to enroll in Medicare</div>
+      <div class="qa-topic">Supplement vs. Advantage</div>
+      <div class="qa-topic">Avoiding common enrollment mistakes</div>
+      <div class="qa-topic">Understanding retirement healthcare costs</div>
+      <div class="qa-topic">Employer coverage vs. Medicare</div>
+      <div class="qa-topic">Live audience Q&amp;A</div>
+    </div>
+
+    <h3 style="text-align:center;margin-top:2.5rem;">Who Should Attend</h3>
+    <div class="qa-topics-grid" style="max-width:700px;">
+      <div class="qa-topic">Turning 65 soon</div>
+      <div class="qa-topic">Approaching retirement</div>
+      <div class="qa-topic">Already on Medicare</div>
+      <div class="qa-topic">Helping a parent or loved one</div>
+    </div>
+
+    <h3 style="text-align:center;margin-top:2.5rem;">What to Expect</h3>
+    <p style="text-align:center;max-width:720px;margin:0 auto;">This is an educational community program. <strong>There is no cost to attend. There is no obligation.</strong> Attendees are encouraged to ask questions and participate. Sessions run approximately <strong>45 minutes</strong> and include a dedicated Q&amp;A segment.</p>
   </div>
 </section>
 
+<!-- ========== INVITE JOEY (contact block) ========== -->
 <section class="content-block alt">
   <div class="section-inner">
-    <div class="callout">
-      <h3>Original Medicare&rsquo;s greatest flaw: the 20% has no CAP &mdash; ever.</h3>
-      <p>Medicare pays 80% of approved costs. You pay 20%. On a $100,000 cancer treatment, that's $20,000 out of pocket. On a $500,000 treatment, $100,000. There's no annual stop-loss limit. This is why most seniors pair Part B with a Medicare Supplement or choose Medicare Advantage.</p>
+    <div class="invite-card">
+      <h3>Interested in hosting a session for your community?</h3>
+      <p>Joey would be honored to serve your residents, members, or team. Reach out and we&rsquo;ll schedule a time that works.</p>
+      <a href="tel:+14848598428" class="btn">&#9742; Call Joey: (484) 859-8428</a>
+      <p style="margin-top:1.25rem;font-size:0.95rem;color:rgba(255,255,255,0.75);">Or email <a href="mailto:joey@covenantseniorbenefits.com" style="color:#fff;font-weight:600;">joey@covenantseniorbenefits.com</a></p>
     </div>
   </div>
 </section>
 
+<!-- ========== MEDICARE 101 SEMINAR SLIDES (download) ========== -->
+<section class="content-block">
+  <div class="section-inner">
+    <h2 style="text-align:center;">Medicare 101 &mdash; Full Seminar Deck</h2>
+    <p class="lead" style="text-align:center;">The complete 50-slide presentation Joey uses at live seminars. Covers every part of Medicare, common mistakes, cost comparisons, and how to build a &ldquo;Shield of Protection&rdquo; for your retirement healthcare.</p>
+    <div class="download-card" style="margin-top:2rem;">
+      <div class="icon" aria-hidden="true">PDF</div>
+      <div class="meta">
+        <h3>Everything You Need to Succeed on Medicare</h3>
+        <p>50 slides &middot; ~16 MB PDF &middot; Presented by Joey Guida</p>
+        <!-- REPLACE with GHL Media URL if repo is private -->
+        <a href="https://cdn.jsdelivr.net/gh/DanielMarzari/joey-covenant@main/assets/presentations/seminar-slides.pdf" class="btn btn-primary btn-small" target="_blank" rel="noopener" download>&#8681; Download the presentation</a>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- ========== JOEY IN THE COMMUNITY (photo gallery) ========== -->
 <section class="content-block alt">
   <div class="section-inner">
-    <h2>IRMAA &mdash; Higher-Income Surcharge (2026)</h2>
-    <p class="lead">If your modified adjusted gross income exceeds the thresholds below, Medicare charges a monthly surcharge on top of the standard Part&nbsp;B premium. Rates apply to your 2024 tax return for 2026 coverage.</p>
-    <div class="cost-table">
-      <div class="cost-row header">
-        <div class="cell">Individual filers (MAGI)</div>
-        <div class="cell">Joint filers (MAGI)</div>
-      </div>
-      <div class="cost-row">
-        <div class="cell label">&le; $109,000</div>
-        <div class="cell"><strong>&le; $217,000</strong> &mdash; $202.90/mo (standard)</div>
-      </div>
-      <div class="cost-row">
-        <div class="cell label">$109,001 &ndash; $137,000</div>
-        <div class="cell"><strong>$217,001 &ndash; $274,000</strong> &mdash; $284.10/mo</div>
-      </div>
-      <div class="cost-row">
-        <div class="cell label">$137,001 &ndash; $171,000</div>
-        <div class="cell"><strong>$274,001 &ndash; $342,000</strong> &mdash; $405.80/mo</div>
-      </div>
-      <div class="cost-row">
-        <div class="cell label">$171,001 &ndash; $205,000</div>
-        <div class="cell"><strong>$342,001 &ndash; $410,000</strong> &mdash; $527.50/mo</div>
-      </div>
-      <div class="cost-row">
-        <div class="cell label">$205,001 &ndash; $499,999</div>
-        <div class="cell"><strong>$410,001 &ndash; $749,999</strong> &mdash; $649.30/mo</div>
-      </div>
-      <div class="cost-row warning">
-        <div class="cell label">&gt; $500,000</div>
-        <div class="cell"><strong>&gt; $750,000</strong> &mdash; $689.90/mo</div>
-      </div>
-    </div>
-    <div class="callout" style="margin-top:2rem;">
-      <h3>You can appeal IRMAA</h3>
-      <p>If your income dropped recently (retirement, divorce, death of a spouse, work reduction), file <strong>SSA Form SSA-44</strong> &mdash; &ldquo;Life-Changing Event&rdquo; &mdash; with Social Security. This can lower you back to the standard bracket immediately. We help clients identify if they qualify and how to file.</p>
+    <h2 style="text-align:center;">Joey in the Community</h2>
+    <p class="lead" style="text-align:center;">A look at recent free Q&amp;A sessions across the Lehigh Valley.</p>
+    <div class="gallery" style="margin-top:2rem;">
+      <!-- REPLACE with GHL Media URLs if repo is private -->
+      <img src="https://cdn.jsdelivr.net/gh/DanielMarzari/joey-covenant@main/assets/presentations/event-2300.jpg" alt="Covenant Senior Benefits Q&A session — table setup with informational materials" loading="lazy" decoding="async" width="1200" height="900">
+      <img src="https://cdn.jsdelivr.net/gh/DanielMarzari/joey-covenant@main/assets/presentations/event-2301.jpg" alt="Covenant Senior Benefits community event" loading="lazy" decoding="async" width="1200" height="900">
+      <img src="https://cdn.jsdelivr.net/gh/DanielMarzari/joey-covenant@main/assets/presentations/event-2302.jpg" alt="Covenant Senior Benefits Medicare Q&A materials" loading="lazy" decoding="async" width="1200" height="900">
     </div>
   </div>
 </section>
 
+<!-- ========== FINAL CTA ========== -->
 <section class="cta-final">
   <div class="section-inner">
-    <h2>Not sure which plan is right for you?</h2>
-    <p>Book a free 45-minute call with a licensed Medicare specialist. We'll walk through your situation, compare plans side-by-side, and help you choose &mdash; with zero pressure.</p>
+    <h2>Have Medicare questions of your own?</h2>
+    <p>Book a free 45-minute call with Joey. We&rsquo;ll walk through your situation, compare plans, and help you decide &mdash; with zero pressure.</p>
     <a href="/book-a-call" class="btn btn-primary btn-large">Book a Free Consultation &rarr;</a>
   </div>
 </section>
@@ -992,57 +1049,6 @@
       return;
     }
     if (e.target.matches('dialog.csb-modal')) e.target.close();
-  });
-})();
-</script>
-
-<script>
-/* Mobile nav: hamburger + Products tap-expand. No external libs. */
-(function(){
-  document.querySelectorAll('.csb-page').forEach(function(page){
-    var toggle = page.querySelector('.csb-nav-toggle');
-    var dropdown = page.querySelector('.csb-nav .has-dropdown');
-    var dropdownLink = dropdown && dropdown.querySelector(':scope > a');
-
-    if (toggle) {
-      toggle.addEventListener('click', function(e){
-        e.preventDefault();
-        var open = page.classList.toggle('nav-open');
-        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-        toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
-        if (!open && dropdown) dropdown.classList.remove('expanded');
-      });
-    }
-
-    /* On mobile, tapping the Products link expands the submenu instead of navigating.
-       Desktop (>900px) keeps the hover behavior because mql.matches is false. */
-    if (dropdownLink) {
-      dropdownLink.addEventListener('click', function(e){
-        if (window.matchMedia('(max-width: 900px)').matches) {
-          e.preventDefault();
-          dropdown.classList.toggle('expanded');
-        }
-      });
-    }
-
-    /* Close drawer when any nav link inside is clicked (so navigation actually feels right) */
-    page.querySelectorAll('.csb-nav a').forEach(function(a){
-      a.addEventListener('click', function(){
-        if (window.matchMedia('(max-width: 900px)').matches && !a.matches('.has-dropdown > a')) {
-          page.classList.remove('nav-open');
-          if (toggle) toggle.setAttribute('aria-expanded', 'false');
-        }
-      });
-    });
-
-    /* If viewport grows back past mobile, reset state */
-    window.addEventListener('resize', function(){
-      if (!window.matchMedia('(max-width: 900px)').matches) {
-        page.classList.remove('nav-open');
-        if (dropdown) dropdown.classList.remove('expanded');
-        if (toggle) toggle.setAttribute('aria-expanded', 'false');
-      }
-    });
   });
 })();
 </script>

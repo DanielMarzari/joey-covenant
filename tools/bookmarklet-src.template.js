@@ -34,7 +34,7 @@
   var BASE = 'https://api.github.com/repos/' + OWNER + '/' + REPO + '/contents/ghl-ready/';
 
   var FILES = [
-    ['Core pages', ['home.html', 'products.html', 'education.html']],
+    ['Core pages', ['home.html', 'products.html', 'presentations.html', 'education.html', 'privacy-policy.html']],
     ['Booking (split)', ['book-a-call-A.html', 'book-a-call-B.html']],
     ['Quiz (split)', ['quiz-A.html', 'quiz-B.html']],
     ['Core Medicare', [
