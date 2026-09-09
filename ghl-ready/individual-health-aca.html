@@ -1,7 +1,7 @@
 <!--
   ============================================================
-  GoHighLevel Custom-Code block — Dental, Vision &amp; Hearing page
-  Slug: /dental-vision-hearing
+  GoHighLevel Custom-Code block — Individual Health Insurance (ACA) page
+  Slug: /individual-health-aca
   ============================================================
 -->
 <link rel="preconnect" href="https://images.leadconnectorhq.com" crossorigin>
@@ -686,6 +686,15 @@
   contain-intrinsic-size: 1px 700px;
 }
 
+
+/* Joey: force supplement check-grid 2x2 */
+.csb-page .content-block.alt .check-grid {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 900px;
+}
+@media (max-width: 700px) {
+  .csb-page .content-block.alt .check-grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <div class="csb-page">
@@ -719,9 +728,9 @@
           <li><a href="/medicare-advantage">Medicare Advantage</a></li>
           <li><a href="/medicare-supplement">Medicare Supplement</a></li>
           <li class="dropdown-section">Under 65</li>
-          <li><a href="/individual-health-aca">Individual Health (ACA)</a></li>
+          <li><a href="/individual-health-aca" class="active">Individual Health (ACA)</a></li>
           <li class="dropdown-section">Added Protection</li>
-          <li><a href="/dental-vision-hearing" class="active">Dental, Vision & Hearing</a></li>
+          <li><a href="/dental-vision-hearing">Dental, Vision & Hearing</a></li>
           <li><a href="/hospital-indemnity">Hospital Indemnity</a></li>
           <li><a href="/critical-illness">Cancer, Heart & Stroke</a></li>
           <li><a href="/final-expense">Final Expense</a></li>
@@ -739,70 +748,142 @@
 <main id="main">
 
 <section class="product-hero">
-  <span class="hero-tag">Everyday Care</span>
-  <h1>Dental, Vision &amp; Hearing</h1>
-  <p>Original Medicare doesn't pay for routine dental, eye exams, glasses, hearing exams, or hearing aids. A DVH plan fills those gaps with predictable copays and yearly allowances.</p>
+  <span class="hero-tag">Under 65</span>
+  <h1>Individual Health Insurance (ACA)</h1>
+  <p>Not on Medicare yet? Individual and family plans through the Affordable Care Act marketplace cover you until you turn 65. No health questions, no denial for pre-existing conditions &mdash; and most households qualify for help paying the premium.</p>
   <div class="key-stats">
-      <div class="key-stat"><span class="num">$40–$70/mo</span><span class="lbl">Typical standalone DVH premium</span></div>
-      <div class="key-stat"><span class="num">50–100%</span><span class="lbl">Of routine costs covered</span></div>
-      <div class="key-stat"><span class="num">Use with</span><span class="lbl">Any Medicare plan</span></div>
+      <div class="key-stat"><span class="num">Guaranteed issue</span><span class="lbl">No medical underwriting &mdash; you cannot be turned down</span></div>
+      <div class="key-stat"><span class="num">Nov 1 &ndash; Jan 15</span><span class="lbl">Annual Open Enrollment on the federal marketplace</span></div>
+      <div class="key-stat"><span class="num">Income-based</span><span class="lbl">Premium tax credits lower what you actually pay each month</span></div>
   </div>
 </section>
 
 <section class="content-block">
   <div class="section-inner">
-    <h2>What Routine Care Actually Costs (Out of Pocket)</h2>
-    <p class="lead">Without a DVH plan, these come straight out of your savings.</p>
-    <div class="cost-table">
-    <div class="cost-row">
-      <div class="cell label">Dental implant</div>
-      <div class="cell">$3,000–$5,000 each</div>
-    </div>
-    <div class="cost-row">
-      <div class="cell label">Dentures (per arch)</div>
-      <div class="cell">$1,500–$3,500</div>
-    </div>
-    <div class="cost-row">
-      <div class="cell label">Root canal</div>
-      <div class="cell">$700–$1,500</div>
-    </div>
-    <div class="cost-row">
-      <div class="cell label">Periodontal treatment</div>
-      <div class="cell">$500–$2,000+</div>
-    </div>
-    <div class="cost-row">
-      <div class="cell label">Eye exam</div>
-      <div class="cell">$100–$300/year</div>
-    </div>
-    <div class="cost-row">
-      <div class="cell label">Prescription glasses</div>
-      <div class="cell">$200–$600</div>
-    </div>
-    <div class="cost-row">
-      <div class="cell label">Cataract surgery</div>
-      <div class="cell">$2,000–$4,000 per eye</div>
-    </div>
-    <div class="cost-row">
-      <div class="cell label">Hearing exam</div>
-      <div class="cell">$200–$500</div>
-    </div>
-    <div class="cost-row">
-      <div class="cell label">Basic hearing aids</div>
-      <div class="cell">$1,500–$3,500 per ear</div>
-    </div>
-    <div class="cost-row">
-      <div class="cell label">Premium hearing aids</div>
-      <div class="cell">$3,000–$6,000 per ear</div>
-    </div>
+    <h2>Who Individual Health Insurance Is For</h2>
+    <p class="lead">If you're under 65 and don't have coverage through an employer, this is your path. It's also the plan we set up most often for the spouse who isn't 65 yet when the other one goes on Medicare.</p>
+    <div class="check-grid">
+      <div class="check-card">
+        <div class="check-icon" aria-hidden="true">&#10003;</div>
+        <div>
+          <h3>Retiring Before 65</h3>
+          <p>You stopped working at 62 and Medicare is still three years away. A marketplace plan bridges the gap without the COBRA price tag.</p>
+        </div>
+      </div>
+      <div class="check-card">
+        <div class="check-icon" aria-hidden="true">&#10003;</div>
+        <div>
+          <h3>A Spouse Under 65</h3>
+          <p>You're going on Medicare but your spouse isn't there yet. When the family plan ends, they need their own coverage &mdash; and that loss of coverage opens a Special Enrollment Period.</p>
+        </div>
+      </div>
+      <div class="check-card">
+        <div class="check-icon" aria-hidden="true">&#10003;</div>
+        <div>
+          <h3>Self-Employed or 1099</h3>
+          <p>There's no employer plan to fall back on. Once premium tax credits are applied, marketplace coverage is usually the most affordable route.</p>
+        </div>
+      </div>
+      <div class="check-card">
+        <div class="check-icon" aria-hidden="true">&#10003;</div>
+        <div>
+          <h3>Between Jobs</h3>
+          <p>COBRA lets you keep your old plan, but you pay the entire premium yourself. A marketplace plan is often a fraction of the cost for comparable coverage.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="content-block alt">
   <div class="section-inner">
+    <h2>The Four Metal Levels</h2>
+    <p class="lead">Every marketplace plan is sorted into a metal level. The metal tells you how the bill gets split between you and the carrier &mdash; not how good the care is. All four cover the same essential benefits.</p>
+    <div class="cost-table">
+    <div class="cost-row">
+      <div class="cell label">Bronze</div>
+      <div class="cell">Lowest premium, highest deductible &mdash; the plan pays roughly 60% of covered costs. Best if you rarely see a doctor and mainly want protection from a catastrophe.</div>
+    </div>
+    <div class="cost-row">
+      <div class="cell label">Silver</div>
+      <div class="cell">The middle option &mdash; the plan pays roughly 70%. <strong>The only level where cost-sharing reductions apply</strong>, which can sharply lower your deductible and copays if your income qualifies.</div>
+    </div>
+    <div class="cost-row">
+      <div class="cell label">Gold</div>
+      <div class="cell">Higher premium, lower deductible &mdash; the plan pays roughly 80%. Often worth it if you take regular medications or see specialists.</div>
+    </div>
+    <div class="cost-row">
+      <div class="cell label">Platinum</div>
+      <div class="cell">Highest premium, lowest out-of-pocket &mdash; the plan pays roughly 90%. Not offered by every carrier in every county.</div>
+    </div>
+    </div>
     <div class="callout">
-      <h3>1 in 3 adults 65+ have hearing loss</h3>
-      <p>Hearing aids alone can cost $7,000+ for a pair. Most DVH plans cut that cost significantly with annual allowances. Many Medicare Advantage plans include basic DVH benefits, but standalone DVH plans offer richer coverage if you need it.</p>
+      <h3>Silver is worth a second look</h3>
+      <p>Most people shop on premium alone and land on Bronze. But if your household income falls in the range that qualifies for cost-sharing reductions, a Silver plan can end up with a lower deductible than Gold &mdash; at a Silver price. That help only attaches to Silver plans, and it's the most commonly missed savings in the marketplace.</p>
+    </div>
+  </div>
+</section>
+
+<section class="content-block">
+  <div class="section-inner">
+    <h2>What Every ACA Plan Covers</h2>
+    <p class="lead">Ten categories of essential health benefits are required by law &mdash; in every marketplace plan, from every carrier, at every metal level.</p>
+    <div class="compare-grid">
+      <div class="compare-card pro">
+        <h3>Included in Every Plan</h3>
+        <ul>
+        <li>Doctor visits and outpatient care</li>
+        <li>Emergency services</li>
+        <li>Hospitalization and surgery</li>
+        <li>Prescription drugs</li>
+        <li>Lab work and diagnostics</li>
+        <li>Maternity and newborn care</li>
+        <li>Mental health and substance use treatment</li>
+        <li>Rehabilitative services and devices</li>
+        <li>Pediatric dental and vision</li>
+        <li>Preventive care and chronic disease management &mdash; at no cost to you</li>
+        </ul>
+      </div>
+      <div class="compare-card pro">
+        <h3>Protections That Come With It</h3>
+        <ul>
+        <li>No health questions on the application</li>
+        <li>Pre-existing conditions covered from day one</li>
+        <li>You can't be charged more for being sick</li>
+        <li>No annual or lifetime dollar caps on essential benefits</li>
+        <li>Every plan has an out-of-pocket maximum &mdash; once you reach it, the plan pays 100%</li>
+        <li>Adult children can stay on a parent's plan to age 26</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content-block alt">
+  <div class="section-inner">
+    <h2>When You Can Enroll</h2>
+    <p class="lead">Unlike Medicare, the marketplace has one annual window &mdash; plus special windows that open when your life changes.</p>
+    <div class="cost-table">
+    <div class="cost-row">
+      <div class="cell label">Nov 1 &ndash; Jan 15</div>
+      <div class="cell">Open Enrollment on the federal marketplace. A few state-run marketplaces, New Jersey among them, run later &mdash; we'll confirm the dates for your state.</div>
+    </div>
+    <div class="cost-row">
+      <div class="cell label">Enroll by Dec 15</div>
+      <div class="cell">Coverage starts January 1. Enroll after that and coverage typically starts the first of the following month.</div>
+    </div>
+    <div class="cost-row">
+      <div class="cell label">Life events</div>
+      <div class="cell">A Special Enrollment Period opens for 60 days after you lose coverage, marry or divorce, have or adopt a child, or move permanently.</div>
+    </div>
+    <div class="cost-row warning">
+      <div class="cell label">Miss the window</div>
+      <div class="cell">Without a qualifying life event you wait for the next Open Enrollment &mdash; a gap that can run most of a year.</div>
+    </div>
+    </div>
+    <div class="callout">
+      <h3>Turning 65 while on a marketplace plan?</h3>
+      <p>Tell us early. Your premium tax credit generally ends once you're eligible for premium-free Medicare Part A, and dropping the marketplace plan at the wrong moment can leave you with a coverage gap or a lifelong Part B late-enrollment penalty. We coordinate the handoff so the two line up to the day.</p>
     </div>
   </div>
 </section>
@@ -810,7 +891,7 @@
 <section class="cta-final">
   <div class="section-inner">
     <h2>Not sure which plan is right for you?</h2>
-    <p>Book a free 45-minute call with a licensed Medicare specialist. We'll walk through your situation, compare plans side-by-side, and help you choose &mdash; with zero pressure.</p>
+    <p>Book a free 45-minute call with a licensed agent. We'll check what you qualify for, compare plans side-by-side, and help you choose &mdash; with zero pressure.</p>
     <a href="/book-a-call" class="btn btn-primary btn-large">Book a Free Consultation &rarr;</a>
   </div>
 </section>

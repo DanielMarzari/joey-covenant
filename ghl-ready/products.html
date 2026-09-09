@@ -240,6 +240,12 @@
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
 }
+/* A section with a single product: keep the card from stretching the full row */
+.csb-page .product-grid.single {
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .csb-page .product-card {
   background: #fff;
   border: 2px solid var(--csb-border);
@@ -385,6 +391,12 @@
   text-align: left;
 }
 .csb-page .disclaimer strong { color: rgba(255,255,255,0.8); }
+.csb-page .footer-licensed {
+  font-size: 0.92rem; color: rgba(255,255,255,0.72);
+  margin: 0 auto 1.1rem; max-width: 900px; line-height: 1.7;
+  text-align: center;
+}
+.csb-page .footer-licensed strong { color: rgba(255,255,255,0.9); }
 .csb-page .footer-legal-links {
   text-align: center; margin-top: 1rem;
   font-size: 0.95rem; color: rgba(255,255,255,0.7);
@@ -671,6 +683,8 @@
             <li><a href="/medicare-part-d">Medicare Part D</a></li>
             <li><a href="/medicare-advantage">Medicare Advantage</a></li>
             <li><a href="/medicare-supplement">Medicare Supplement</a></li>
+            <li class="dropdown-section">Under 65</li>
+            <li><a href="/individual-health-aca">Individual Health (ACA)</a></li>
             <li class="dropdown-section">Added Protection</li>
             <li><a href="/dental-vision-hearing">Dental, Vision &amp; Hearing</a></li>
             <li><a href="/hospital-indemnity">Hospital Indemnity</a></li>
@@ -795,8 +809,40 @@
   </div>
 </section>
 
-<!-- ADDED PROTECTION -->
+<!-- UNDER 65 -->
 <section class="products-section alt">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">Under 65</span>
+      <h2>Coverage before Medicare begins</h2>
+      <p>Medicare starts at 65. If you're retiring early, working for yourself, or your spouse isn't 65 yet, an individual health plan through the ACA marketplace covers the years in between.</p>
+    </div>
+
+    <div class="product-grid single">
+
+      <!-- Individual Health / ACA -->
+      <article class="product-card">
+        <div class="product-badge badge-sm" aria-hidden="true">ACA</div>
+        <span class="product-sub">Marketplace</span>
+        <h3>Individual Health Insurance</h3>
+        <p>Individual and family coverage through the Affordable Care Act marketplace, for anyone not yet eligible for Medicare. No health questions, and no denial for pre-existing conditions.</p>
+        <ul class="product-features">
+          <li>Guaranteed issue &mdash; no medical underwriting</li>
+          <li>Premium tax credits based on household income</li>
+          <li>Bronze, Silver, Gold and Platinum levels</li>
+          <li>Bridges the gap until you turn 65</li>
+        </ul>
+        <div class="product-cta">
+          <a href="/individual-health-aca">See how ACA plans work <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ADDED PROTECTION -->
+<section class="products-section">
   <div class="section-inner">
     <div class="section-head">
       <span class="eyebrow">Added Protection</span>
@@ -956,6 +1002,9 @@
     </div>
   </div>
   <div class="footer-bottom">
+    <p class="footer-licensed">
+      <strong>Licensed in:</strong> Pennsylvania &middot; New Jersey &middot; Delaware &middot; Virginia &middot; Ohio &middot; North Carolina &middot; South Carolina &middot; Tennessee &middot; Alabama &middot; Florida &middot; Louisiana &middot; Texas &middot; Arizona
+    </p>
     <p class="disclaimer">
       <strong>Disclaimer:</strong> This is a solicitation for insurance. Submitting information or calling numbers listed on this website will direct you to a licensed Agent/Broker. Important disclosures about Medicare Plans: Medicare has neither endorsed nor reviewed this information. Not connected or affiliated with any United States Government or State agency. We do not offer every plan available in your area. Any information we provide is limited to those plans we do offer in your area. Please contact Medicare.gov or 1-800-MEDICARE to get information on all of your options. Copyright 2026 &mdash; Covenant Senior Benefits
     </p>
