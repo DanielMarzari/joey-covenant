@@ -1,5 +1,5 @@
 {
-  "_readme": "Site content editable without a redeploy. Pages fetch this file from raw.githubusercontent.com at load time. To change a value: edit this file, commit, push — pages pick it up on next cache miss. Video URLs, testimonials, locations, photos live here. Keep valid JSON (no trailing commas, no comments).",
+  "_readme": "Editable site content. Pages fetch this file from raw.githubusercontent.com at load time. To change: use the /admin page on the site, or edit this file directly on github.com and commit.",
 
   "videos": [
     {
