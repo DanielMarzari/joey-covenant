@@ -680,6 +680,15 @@
   contain-intrinsic-size: 1px 700px;
 }
 
+
+/* Joey: force supplement check-grid 2x2 */
+.csb-page .content-block.alt .check-grid {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 900px;
+}
+@media (max-width: 700px) {
+  .csb-page .content-block.alt .check-grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <div class="csb-page">
@@ -709,8 +718,8 @@
           <li class="dropdown-section">Core Medicare</li>
           <li><a href="/medicare-part-a">Medicare Part A</a></li>
           <li><a href="/medicare-part-b">Medicare Part B</a></li>
-          <li><a href="/medicare-advantage">Medicare Advantage</a></li>
           <li><a href="/medicare-part-d">Medicare Part D</a></li>
+          <li><a href="/medicare-advantage">Medicare Advantage</a></li>
           <li><a href="/medicare-supplement" class="active">Medicare Supplement</a></li>
           <li class="dropdown-section">Added Protection</li>
           <li><a href="/dental-vision-hearing">Dental, Vision & Hearing</a></li>
@@ -721,7 +730,7 @@
         </ul>
         </li>
         <li><a href="/learn">Education</a></li>
-        <li><a href="/book-a-call">Book a Call</a></li>
+        <li><a href="/presentations">Presentations</a></li>
         <li><a href="/book-a-call" class="btn btn-primary btn-small">Book My Free Call</a></li>
       </ul>
     </nav>
@@ -737,7 +746,7 @@
   <div class="key-stats">
       <div class="key-stat"><span class="num">$100–$200/mo</span><span class="lbl">Typical Plan G premium</span></div>
       <div class="key-stat"><span class="num">Any doctor</span><span class="lbl">That accepts Medicare nationwide</span></div>
-      <div class="key-stat"><span class="num">Standardized</span><span class="lbl">Plan G from any carrier = identical coverage</span></div>
+      <div class="key-stat"><span class="num">Standardized</span><span class="lbl">Plans don&rsquo;t change year to year &mdash; only the premium increases</span></div>
   </div>
 </section>
 
@@ -830,7 +839,7 @@
           <span>Medicare Made Simple</span>
         </div>
       </a>
-      <p>To glorify God by helping seniors get the best healthcare &mdash; with honesty, patience, and lifelong support.</p>
+      <p>To Glorify &mdash; with Loving Kindness, Education, and Integrity.</p>
       <div class="social-row">
         <a href="https://www.facebook.com/people/65iscomingfast/61572078636697/" target="_blank" rel="noopener" aria-label="Facebook">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
@@ -846,7 +855,7 @@
         <li><a href="/home">Home</a></li>
         <li><a href="/products">Products</a></li>
         <li><a href="/learn">Education</a></li>
-        <li><a href="/book-a-call">Book a Call</a></li>
+        <li><a href="/presentations">Presentations</a></li>
       </ul>
     </div>
     <div>
@@ -854,8 +863,8 @@
       <ul>
         <li><a href="/medicare-part-a">Medicare Part A</a></li>
         <li><a href="/medicare-part-b">Medicare Part B</a></li>
-        <li><a href="/medicare-advantage">Medicare Advantage</a></li>
         <li><a href="/medicare-part-d">Medicare Part D</a></li>
+        <li><a href="/medicare-advantage">Medicare Advantage</a></li>
         <li><a href="/medicare-supplement">Medigap / Supplement</a></li>
       </ul>
     </div>
