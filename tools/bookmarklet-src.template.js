@@ -1,10 +1,8 @@
 /*
  * CSB → GHL Sync bookmarklet — floating panel edition
  * ----------------------------------------------------
- * Uses the GitHub REST API (api.github.com/repos/.../contents/...) with
- * Accept: application/vnd.github.raw — the API has proper CORS headers,
- * so an in-page fetch works even when the parent page is
- * app.gohighlevel.com.
+ * Repo is PUBLIC, so we fetch straight from raw.githubusercontent.com with
+ * no Authorization header. Simple GET → no preflight → no CORS pain.
  *
  * UX:
  *   Click bookmarklet → floating panel appears in the top-right corner
@@ -13,25 +11,17 @@
  *   immediately Cmd+V into the editor.
  *
  * On error the panel stays open so you can read the message.
- *
  * Click the bookmarklet again while the panel is showing to close it.
  *
- * Repo access:
- *   - If the repo is PUBLIC, leave TOKEN blank.
- *   - If PRIVATE, create a fine-grained PAT (Settings → Developer settings
- *     → Personal access tokens → Fine-grained) with:
- *       Repository access: only the joey-covenant repo
- *       Permissions: Contents = Read
- *     Copy this file to `bookmarklet-src.js` (gitignored), paste the token
- *     into TOKEN below, then run: python3 tools/build-bookmarklet.py
+ * If the repo goes private again, switch BASE back to the api.github.com
+ * form and add an Authorization header (see git history for that variant).
  */
 (function () {
   var OWNER = 'DanielMarzari';
   var REPO = 'joey-covenant';
   var BRANCH = 'main';
-  var TOKEN = ''; // Fill in if repo is private (fine-grained PAT, contents:read)
 
-  var BASE = 'https://api.github.com/repos/' + OWNER + '/' + REPO + '/contents/ghl-ready/';
+  var BASE = 'https://raw.githubusercontent.com/' + OWNER + '/' + REPO + '/' + BRANCH + '/ghl-ready/';
 
   var FILES = [
     ['Core pages', ['home.html', 'products.html', 'presentations.html', 'education.html', 'privacy-policy.html']],
@@ -94,14 +84,11 @@
         toast.style.background = '#f8f6f2'; toast.style.color = '#666';
         toast.textContent = 'Fetching ' + f + '…';
 
-        var opts = { cache: 'no-store', headers: { Accept: 'application/vnd.github.raw' } };
-        if (TOKEN) opts.headers.Authorization = 'Bearer ' + TOKEN;
-
-        fetch(BASE + f + '?ref=' + BRANCH + '&t=' + Date.now(), opts)
+        // Plain GET, no custom headers → no CORS preflight.
+        fetch(BASE + f + '?t=' + Date.now(), { cache: 'no-store' })
           .then(function (r) {
             if (!r.ok) {
-              var hint = (r.status === 401 || r.status === 403 || r.status === 404)
-                ? ' — check TOKEN or repo visibility.' : '';
+              var hint = r.status === 404 ? ' — file not found on main.' : '';
               throw new Error('HTTP ' + r.status + hint);
             }
             return r.text();
