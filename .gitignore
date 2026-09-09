@@ -7,11 +7,6 @@ node_modules/
 tools/bookmarklet-src.js
 tools/bookmarklet.txt
 
-# Worker local state / secrets
-api/node_modules/
-api/.wrangler/
-api/.dev.vars
-
 # Python
 __pycache__/
 *.pyc

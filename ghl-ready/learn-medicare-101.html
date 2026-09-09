@@ -1206,14 +1206,17 @@
 
 
 <script>
-/* Fetch video config from the admin API and upgrade facades on tap.
-   Runs on page load. If /api/public/v1/content.json isn't reachable yet
-   (Worker not deployed) the facade stays as a placeholder — no error UI. */
+/* Fetch video config from data/content.json in the GitHub repo and upgrade
+   facades on tap. Runs on page load. If the fetch fails the facade stays as
+   a placeholder — no error UI. To change the video: edit data/content.json,
+   commit, push. */
 (function () {
   var facades = document.querySelectorAll('[data-video-slot]');
   if (!facades.length) return;
 
-  fetch('/api/public/v1/content.json', { cache: 'default' })
+  var CONTENT_URL = 'https://raw.githubusercontent.com/DanielMarzari/joey-covenant/main/data/content.json';
+
+  fetch(CONTENT_URL, { cache: 'default' })
     .then(function (r) { return r.ok ? r.json() : { videos: [] }; })
     .then(function (data) {
       var videos = (data && data.videos) || [];
