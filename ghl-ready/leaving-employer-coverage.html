@@ -1,7 +1,7 @@
 <!--
   ============================================================
-  GoHighLevel Custom-Code block — Medicare Part D page
-  Slug: /medicare-part-d
+  GoHighLevel Custom-Code block — Leaving Employer Coverage page
+  Slug: /leaving-employer-coverage
   ============================================================
 -->
 <link rel="preconnect" href="https://images.leadconnectorhq.com" crossorigin>
@@ -686,6 +686,63 @@
   contain-intrinsic-size: 1px 700px;
 }
 
+
+/* Joey: force supplement check-grid 2x2 */
+.csb-page .content-block.alt .check-grid {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 900px;
+}
+@media (max-width: 700px) {
+  .csb-page .content-block.alt .check-grid { grid-template-columns: 1fr; }
+}
+
+/* ---- Numbered checklist (ported from the annual-review page) ---- */
+.csb-page .mistake-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem; max-width: 1100px; margin: 0 auto;
+}
+.csb-page .mistake-card {
+  background: var(--csb-cream);
+  border: 2px solid var(--csb-border);
+  border-radius: 12px;
+  padding: 1.75rem;
+  position: relative;
+  padding-left: 4.5rem;
+}
+.csb-page .mistake-card .num {
+  position: absolute; top: 1.5rem; left: 1.5rem;
+  width: 44px; height: 44px;
+  background: var(--csb-red); color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Merriweather', serif;
+  font-weight: 700; font-size: 1.2rem;
+  border: 3px solid var(--csb-navy);
+}
+.csb-page .mistake-card h3 {
+  font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--csb-navy);
+}
+.csb-page .mistake-card p {
+  font-size: 1rem; margin: 0; color: var(--csb-ink); line-height: 1.5;
+}
+
+/* ---- FAQ cards: same surface, no number gutter ---- */
+.csb-page .faq-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem; max-width: 1100px; margin: 0 auto;
+}
+.csb-page .faq-card {
+  background: var(--csb-cream);
+  border: 2px solid var(--csb-border);
+  border-radius: 12px;
+  padding: 1.75rem;
+}
+.csb-page .faq-card h3 {
+  font-size: 1.15rem; margin-bottom: 0.6rem; color: var(--csb-navy);
+}
+.csb-page .faq-card p {
+  font-size: 1rem; margin: 0; color: var(--csb-ink); line-height: 1.6;
+}
 </style>
 
 <div class="csb-page">
@@ -708,14 +765,14 @@
       <ul id="csb-main-nav-list">
         <li><a href="/">Home</a></li>
         <li class="has-dropdown">
-          <a href="/products" class="active">Products</a>
+          <a href="/products">Products</a>
           <ul class="csb-nav-dropdown">
           <li><a href="/products" class="overview-link">Product Overview</a></li>
           <li class="dropdown-divider"></li>
           <li class="dropdown-section">Core Medicare</li>
           <li><a href="/medicare-part-a">Medicare Part A</a></li>
           <li><a href="/medicare-part-b">Medicare Part B</a></li>
-          <li><a href="/medicare-part-d" class="active">Medicare Part D</a></li>
+          <li><a href="/medicare-part-d">Medicare Part D</a></li>
           <li><a href="/medicare-advantage">Medicare Advantage</a></li>
           <li><a href="/medicare-supplement">Medicare Supplement</a></li>
           <li class="dropdown-section">Under 65</li>
@@ -728,7 +785,7 @@
           <li><a href="/recovery-care">Recovery Care</a></li>
         </ul>
         </li>
-        <li><a href="/learn">Education</a></li>
+        <li><a href="/learn" class="active">Education</a></li>
         <li><a href="/presentations">Presentations</a></li>
         <li><a href="/book-a-call" class="btn btn-primary btn-small">Book My Free Call</a></li>
       </ul>
@@ -737,49 +794,48 @@
 </header>
 
 <main id="main">
-
 <section class="product-hero">
-  <span class="hero-tag">Prescription Drugs</span>
-  <h1>Medicare Part D</h1>
-  <p>Part D is private prescription drug coverage that pairs with Original Medicare. <strong>New for 2026:</strong> a $2,100 annual cap on out-of-pocket drug costs.</p>
+  <span class="hero-tag">Life Change</span>
+  <h1>Leaving Employer Coverage</h1>
+  <p>Retiring, laid off, or dropping off a spouse's plan after 65? The rules here are unforgiving and the deadlines are real. Miss one and you can pay a penalty on every Medicare premium for the rest of your life. Get it right and the switch is straightforward.</p>
   <div class="key-stats">
-      <div class="key-stat"><span class="num">$2,100</span><span class="lbl">2026 annual out-of-pocket drug cap (NEW)</span></div>
-      <div class="key-stat"><span class="num">Standalone</span><span class="lbl">Required with a Medicare Supplement plan (Advantage usually bundles it)</span></div>
-      <div class="key-stat"><span class="num">Annually</span><span class="lbl">Plans should be re-shopped each fall</span></div>
+      <div class="key-stat"><span class="num">8 months</span><span class="lbl">Your Special Enrollment Period for Part B once employment ends</span></div>
+      <div class="key-stat"><span class="num">63 days</span><span class="lbl">Window to pick up Part D before a late penalty starts building</span></div>
+      <div class="key-stat"><span class="num">20 employees</span><span class="lbl">The threshold that decides whether Medicare or your employer pays first</span></div>
   </div>
 </section>
 
 <section class="content-block">
   <div class="section-inner">
-    <h2>How Medicare Part D Works</h2>
-    <p class="lead">Sold as private plans, with formularies that vary by carrier and pharmacy.</p>
+    <h2>Who This Applies To</h2>
+    <p class="lead">If you are 65 or older and about to lose coverage tied to a job, this is your situation. It does not matter whether the job was yours or your spouse's.</p>
     <div class="check-grid">
       <div class="check-card">
         <div class="check-icon" aria-hidden="true">&#10003;</div>
         <div>
-          <h3>Sold Alongside Original Medicare</h3>
-          <p>Stand-alone Part D plans pair with Parts A &amp; B. With Medicare Advantage, drug coverage is usually built in.</p>
+          <h3>Retiring After 65</h3>
+          <p>You stayed on the company plan past 65 and are now setting a retirement date. Your Medicare clock starts when the job ends, not when you turn 65.</p>
         </div>
       </div>
       <div class="check-card">
         <div class="check-icon" aria-hidden="true">&#10003;</div>
         <div>
-          <h3>Each Plan Has a Formulary</h3>
-          <p>A formulary is the list of covered drugs. Your medications must be on the plan’s formulary to be covered.</p>
+          <h3>Laid Off or Bought Out</h3>
+          <p>The decision was not yours and the timeline is short. The same eight-month window applies, and it opens whether or not you take COBRA.</p>
         </div>
       </div>
       <div class="check-card">
         <div class="check-icon" aria-hidden="true">&#10003;</div>
         <div>
-          <h3>Costs Vary by Plan and Pharmacy</h3>
-          <p>Premiums, deductibles, and copays differ from plan to plan. The same drug can cost very differently at two pharmacies.</p>
+          <h3>Coming Off a Spouse's Plan</h3>
+          <p>Your husband or wife retired, changed jobs, or moved to Medicare, and the family plan ended. Losing their coverage opens your enrollment window too.</p>
         </div>
       </div>
       <div class="check-card">
         <div class="check-icon" aria-hidden="true">&#10003;</div>
         <div>
-          <h3>$2,100 Cap in 2026</h3>
-          <p>Once your out-of-pocket drug spending hits $2,100, you pay $0 for covered medications for the rest of the year. This is brand-new.</p>
+          <h3>Still Working at 65</h3>
+          <p>You are not leaving yet, but you need to know whether to take Part B now or wait. For most people at a large employer, waiting is fine. At a small one, it is not.</p>
         </div>
       </div>
     </div>
@@ -788,71 +844,127 @@
 
 <section class="content-block alt">
   <div class="section-inner">
+    <h2>Your Eight-Month Window</h2>
+    <p class="lead">When employer coverage ends after 65, you get a Special Enrollment Period for Part B. It is generous, but it starts earlier than most people expect.</p>
+    <div class="cost-table">
+      <div class="cost-row"><span>When it opens</span><span>The month after your employment ends, or the month after the group coverage ends &mdash; whichever comes first</span></div>
+      <div class="cost-row"><span>How long it lasts</span><span>Eight full months for Part B</span></div>
+      <div class="cost-row"><span>Part D is different</span><span>Only 63 days from the end of creditable drug coverage</span></div>
+      <div class="cost-row"><span>Cost to use it</span><span>Nothing. Enrolling inside the window carries no late penalty at all</span></div>
+    </div>
     <div class="callout">
-      <h3>Lifetime penalty for skipping Part D</h3>
-      <p>Every month you go without Part D (or other creditable drug coverage) adds 1% to your future premium. Permanently. Even if you take zero medications today, signing up at 65 is almost always the right call.</p>
+      <p><strong>The part that catches people:</strong> the clock starts at the end of <em>employment</em>, not the end of your last day of coverage or the end of COBRA. If you retire in March and keep COBRA through December, your Part B window has been running since April and closes in November &mdash; while you still have COBRA in hand and no idea anything is wrong.</p>
     </div>
   </div>
 </section>
 
 <section class="content-block">
   <div class="section-inner">
-    <h2>Our Part D Process</h2>
-    <p class="lead">Five steps. Takes about 15 minutes on a free call.</p>
-    <div class="check-grid">
-      <div class="check-card">
-        <div class="check-icon" aria-hidden="true">&#10003;</div>
-        <div>
-          <h3>1. List your medications</h3>
-          <p>We capture your complete drug list — names, dosages, and frequency.</p>
-        </div>
+    <h2>The COBRA Trap</h2>
+    <p class="lead">This is the single most expensive misunderstanding we see, and it is entirely avoidable.</p>
+    <div class="section-narrow">
+    <p>COBRA feels like a continuation of your employer plan, so it is reasonable to assume Medicare treats it that way. It does not. For Part B purposes, COBRA is not active employer coverage. Neither is retiree coverage, and neither is severance that keeps your benefits running.</p>
+    <p>What that means in practice: taking COBRA does not pause your eight-month window, and it does not protect you from the late enrollment penalty. People routinely ride COBRA for its full eighteen months, then apply for Part B and discover they missed their window by ten months, owe a permanent penalty, and cannot enroll until the next General Enrollment Period.</p>
+    <div class="callout">
+      <p><strong>The Part B late penalty is permanent.</strong> It adds 10% to your premium for each full year you could have had Part B and did not, and you pay it for as long as you have Medicare. It does not expire.</p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="content-block alt">
+  <div class="section-inner">
+    <h2>Does Your Employer Plan Pay First?</h2>
+    <p class="lead">The size of the employer decides which coverage is primary, and that changes whether you can safely delay Part B.</p>
+    <div class="compare-grid">
+      <div class="compare-card pro">
+        <h3>20 or More Employees</h3>
+        <p>The group plan pays first and Medicare pays second. You can usually delay Part B without penalty for as long as you keep working and stay on the plan. Many people take premium-free Part A at 65 and leave Part B alone until they retire.</p>
       </div>
-      <div class="check-card">
-        <div class="check-icon" aria-hidden="true">&#10003;</div>
-        <div>
-          <h3>2. Pick your pharmacy</h3>
-          <p>Your pharmacy choice affects price. We factor in the one you actually use.</p>
-        </div>
+      <div class="compare-card con">
+        <h3>Fewer Than 20 Employees</h3>
+        <p>Medicare pays first and the group plan pays second. If you skip Part B, the employer plan can decline to pay the share Medicare would have covered, leaving you responsible for it. At a small employer you generally need Part B at 65.</p>
       </div>
-      <div class="check-card">
-        <div class="check-icon" aria-hidden="true">&#10003;</div>
-        <div>
-          <h3>3. Compare every plan</h3>
-          <p>We compare every Part D plan available in your zip code, ranked by total annual cost.</p>
-        </div>
+    </div>
+    <p class="section-narrow">Employer size is not always obvious, and the count includes part-time staff and affiliated companies. Confirm it with HR in writing before you decide, and check with us if the answer is unclear.</p>
+  </div>
+</section>
+
+<section class="content-block">
+  <div class="section-inner">
+    <h2>Before You Drop the Employer Plan</h2>
+    <p class="lead">Work through these while you still have the plan and can still reach HR easily.</p>
+    <div class="mistake-grid">
+      <div class="mistake-card">
+        <div class="num">1</div>
+        <h3>Get Form CMS-L564 Signed</h3>
+        <p>This is the Request for Employment Information, and your employer completes it. It proves you had creditable coverage and is what unlocks the Special Enrollment Period without a penalty. Chase it down before your last day &mdash; HR gets much harder to reach afterwards.</p>
       </div>
-      <div class="check-card">
-        <div class="check-icon" aria-hidden="true">&#10003;</div>
-        <div>
-          <h3>4. Enroll in the best fit</h3>
-          <p>We help you enroll in the plan that costs you the least over a year.</p>
-        </div>
+      <div class="mistake-card">
+        <div class="num">2</div>
+        <h3>Stop HSA Contributions Early</h3>
+        <p>You cannot contribute to a health savings account once you are on any part of Medicare. Part A can be backdated up to six months when you enroll after 65, so contributions made in that window can become excess and taxable. Stop them at least six months before you apply.</p>
       </div>
-      <div class="check-card">
-        <div class="check-icon" aria-hidden="true">&#10003;</div>
-        <div>
-          <h3>5. Re-evaluate every fall</h3>
-          <p>Open Enrollment is October 15 – December 7. Plans change. We review yours yearly.</p>
-        </div>
+      <div class="mistake-card">
+        <div class="num">3</div>
+        <h3>Check Your Drug Coverage</h3>
+        <p>Ask HR whether the plan's prescription coverage is creditable. If it is not, a Part D penalty may already be accruing. The Part D window is only 63 days, far shorter than the eight months for Part B.</p>
+      </div>
+      <div class="mistake-card">
+        <div class="num">4</div>
+        <h3>Line Up the Start Date</h3>
+        <p>Medicare will not backdate to cover a gap. Aim for Part B to begin the day after the employer plan ends so you are never uninsured, and file the paperwork well ahead of that date.</p>
+      </div>
+      <div class="mistake-card">
+        <div class="num">5</div>
+        <h3>Decide Supplement or Advantage</h3>
+        <p>Part B alone leaves you exposed to 20% of outpatient costs with no annual cap. You need either a Medicare Supplement or a Medicare Advantage plan alongside it, and the choice is easier to make before you are under deadline pressure.</p>
+      </div>
+      <div class="mistake-card">
+        <div class="num">6</div>
+        <h3>Use Your Medigap Guarantee</h3>
+        <p>Losing employer coverage triggers a guaranteed issue right for certain Medicare Supplement plans, meaning no health questions and no denial. It lasts 63 days. Outside it, most states let carriers underwrite and turn you down.</p>
       </div>
     </div>
   </div>
 </section>
 
-
 <section class="content-block alt">
   <div class="section-inner">
-    <div class="callout">
-      <h3>IRMAA also applies to Part D</h3>
-      <p>Higher-income seniors pay a Part D IRMAA surcharge on top of their plan premium (typically $12&ndash;$77/mo depending on income). The same income tiers as Part B apply &mdash; see the <a href="/medicare-part-b" style="color:var(--csb-navy);font-weight:700;">Medicare Part B IRMAA chart</a> for the 2026 thresholds. If your income dropped recently, you can appeal both surcharges by filing SSA Form SSA-44.</p>
+    <h2>Common Questions</h2>
+    <div class="faq-grid">
+      <div class="faq-card">
+        <h3>Do I have to enroll in Medicare at 65 if I am still working?</h3>
+        <p>Not necessarily. If your employer has 20 or more employees and you stay on the group plan, you can usually delay Part B penalty-free until you retire. Most people still take Part A at 65 because it is premium-free, though not if they are contributing to an HSA.</p>
+      </div>
+      <div class="faq-card">
+        <h3>Does COBRA count as employer coverage for Medicare?</h3>
+        <p>No. Medicare does not treat COBRA as active employer coverage for Part B. Your eight-month Special Enrollment Period starts when your employment ends, and it keeps running the entire time you are on COBRA. This is the most common and costly mistake in this whole process.</p>
+      </div>
+      <div class="faq-card">
+        <h3>What happens if I miss the eight-month window?</h3>
+        <p>You would have to wait for the General Enrollment Period, which runs January through March, with coverage starting the first of the month after you sign up. You would also owe the Part B late penalty, which is 10% of the premium for every full year you went without, for life.</p>
+      </div>
+      <div class="faq-card">
+        <h3>Can I keep contributing to my HSA once I am on Medicare?</h3>
+        <p>No. Enrollment in any part of Medicare, including premium-free Part A, ends your eligibility to contribute. Because Part A can be backdated up to six months for people enrolling after 65, stop contributions roughly six months before you apply to avoid excess contributions and a tax penalty.</p>
+      </div>
+      <div class="faq-card">
+        <h3>Should I keep the employer plan and add Medicare?</h3>
+        <p>Sometimes, and it depends on cost, network, and whether the employer plan covers a spouse or dependents who are not yet 65. Running both can make sense at a large employer with a rich plan. Often it does not. It is worth pricing side by side rather than assuming.</p>
+      </div>
+      <div class="faq-card">
+        <h3>What paperwork do I actually need?</h3>
+        <p>Two forms. CMS-40B is your application for Part B, and CMS-L564 is the employment information form your employer signs to prove you had creditable coverage. Submit them together to Social Security. We walk clients through both at no charge.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="cta-final">
   <div class="section-inner">
-    <h2>Not sure which plan is right for you?</h2>
-    <p>Book a free 45-minute call with a licensed Medicare specialist. We'll walk through your situation, compare plans side-by-side, and help you choose &mdash; with zero pressure.</p>
+    <h2>Working out your timing?</h2>
+    <p>Book a free call and we will map your dates, confirm which coverage pays first, and make sure the paperwork is in before the deadline. No cost, no obligation, no pressure.</p>
     <a href="/book-a-call" class="btn btn-primary btn-large">Book a Free Consultation &rarr;</a>
   </div>
 </section>
@@ -1081,22 +1193,22 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Medicare Plans",
-          "item": "https://covenantseniorbenefits.com/products"
+          "name": "Medicare 101",
+          "item": "https://covenantseniorbenefits.com/learn"
         },
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Medicare Part D",
-          "item": "https://covenantseniorbenefits.com/medicare-part-d"
+          "name": "Leaving Employer Coverage",
+          "item": "https://covenantseniorbenefits.com/leaving-employer-coverage"
         }
       ]
     },
     {
       "@type": "WebPage",
-      "@id": "https://covenantseniorbenefits.com/medicare-part-d#webpage",
-      "url": "https://covenantseniorbenefits.com/medicare-part-d",
-      "name": "Medicare Part D",
+      "@id": "https://covenantseniorbenefits.com/leaving-employer-coverage#webpage",
+      "url": "https://covenantseniorbenefits.com/leaving-employer-coverage",
+      "name": "Leaving Employer Coverage",
       "isPartOf": {
         "@id": "https://covenantseniorbenefits.com/#website"
       },
@@ -1107,6 +1219,60 @@
         "@type": "ImageObject",
         "url": "https://assets.cdn.filesafe.space/syjFFgbiNmGuYL7SwVMH/media/69e644decc4d90735ee45f57.png"
       }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://covenantseniorbenefits.com/leaving-employer-coverage#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do I have to enroll in Medicare at 65 if I am still working?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not necessarily. If your employer has 20 or more employees and you stay on the group plan, you can usually delay Part B penalty-free until you retire. Most people still take Part A at 65 because it is premium-free, though not if they are contributing to an HSA."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does COBRA count as employer coverage for Medicare?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Medicare does not treat COBRA as active employer coverage for Part B. Your eight-month Special Enrollment Period starts when your employment ends, and it keeps running the entire time you are on COBRA. This is the most common and costly mistake in this whole process."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens if I miss the eight-month window?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You would have to wait for the General Enrollment Period, which runs January through March, with coverage starting the first of the month after you sign up. You would also owe the Part B late penalty, which is 10% of the premium for every full year you went without, for life."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I keep contributing to my HSA once I am on Medicare?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Enrollment in any part of Medicare, including premium-free Part A, ends your eligibility to contribute. Because Part A can be backdated up to six months for people enrolling after 65, stop contributions roughly six months before you apply to avoid excess contributions and a tax penalty."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I keep the employer plan and add Medicare?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sometimes, and it depends on cost, network, and whether the employer plan covers a spouse or dependents who are not yet 65. Running both can make sense at a large employer with a rich plan. Often it does not. It is worth pricing side by side rather than assuming."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What paperwork do I actually need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Two forms. CMS-40B is your application for Part B, and CMS-L564 is the employment information form your employer signs to prove you had creditable coverage. Submit them together to Social Security. We walk clients through both at no charge."
+          }
+        }
+      ]
     }
   ]
 }
