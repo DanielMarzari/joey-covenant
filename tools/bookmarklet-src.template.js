@@ -31,6 +31,7 @@
       'medicare-part-a.html', 'medicare-part-b.html', 'medicare-advantage.html',
       'medicare-part-d.html', 'medicare-supplement.html'
     ]],
+    ['Under 65 & transitions', ['individual-health-aca.html', 'leaving-employer-coverage.html']],
     ['Added protection', [
       'dental-vision-hearing.html', 'hospital-indemnity.html', 'critical-illness.html',
       'final-expense.html', 'recovery-care.html'
