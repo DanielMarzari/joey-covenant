@@ -2,9 +2,12 @@
   ============================================================
   GoHighLevel Custom-Code block — PRESENTATIONS
   Slug: /presentations
-  Assets served from cdn.jsdelivr.net (public repo). If keeping
-  the repo private, upload assets to GHL Media Library and
-  swap the URLs marked "REPLACE with GHL Media URL".
+  Assets are swapped in from GHL Custom Values at render time:
+    presentation_flyer   — Q&A flyer image URL
+    presentation_slides  — seminar deck PDF URL
+    presentation_pictures — JSON array of event photo URLs
+  Fallbacks (cdn.jsdelivr.net paths) stay wired in if a custom
+  value is empty or unset, so the page never blanks out.
   ============================================================
 -->
 <link rel="preconnect" href="https://images.leadconnectorhq.com" crossorigin>
@@ -860,8 +863,10 @@
     <p class="lead" style="text-align:center;">Helping Lehigh Valley residents understand Medicare with confidence. Joey Guida runs these sessions at senior centers, retirement communities, employer groups, faith communities, and libraries &mdash; at no cost to the venue or attendees.</p>
 
     <div class="qa-hero-flyer" style="margin:2rem auto;">
-      <!-- REPLACE with GHL Media URL if repo is private -->
-      <img src="https://cdn.jsdelivr.net/gh/DanielMarzari/joey-covenant@main/assets/presentations/qa-flyer.png" alt="Free Educational Medicare Q&A flyer — Presented by Joey Guida" width="1000" height="1500" loading="lazy" decoding="async">
+      <img src="https://cdn.jsdelivr.net/gh/DanielMarzari/joey-covenant@main/assets/presentations/qa-flyer.png"
+           data-csb-src-merge='{{ custom_values.presentation_flyer }}'
+           alt="Free Educational Medicare Q&A flyer — Presented by Joey Guida"
+           width="1000" height="1500" loading="lazy" decoding="async">
     </div>
 
     <h3 style="text-align:center;margin-top:2.5rem;">Topics Covered</h3>
@@ -928,8 +933,9 @@
       <div class="meta">
         <h3>Everything You Need to Succeed on Medicare</h3>
         <p>50 slides &middot; ~16 MB PDF &middot; Presented by Joey Guida</p>
-        <!-- REPLACE with GHL Media URL if repo is private -->
-        <a href="https://cdn.jsdelivr.net/gh/DanielMarzari/joey-covenant@main/assets/presentations/seminar-slides.pdf" class="btn btn-primary btn-small" target="_blank" rel="noopener" download>&#8681; Download the presentation</a>
+        <a href="https://cdn.jsdelivr.net/gh/DanielMarzari/joey-covenant@main/assets/presentations/seminar-slides.pdf"
+           data-csb-href-merge='{{ custom_values.presentation_slides }}'
+           class="btn btn-primary btn-small" target="_blank" rel="noopener" download>&#8681; Download the presentation</a>
       </div>
     </div>
   </div>
@@ -940,8 +946,9 @@
   <div class="section-inner">
     <h2 style="text-align:center;">Joey in the Community</h2>
     <p class="lead" style="text-align:center;">A look at recent free Q&amp;A sessions across the Lehigh Valley.</p>
-    <div class="gallery" data-csb-slot="gallery" data-csb-page="presentations" style="margin-top:2rem;">
-      <!-- REPLACE with GHL Media URLs if repo is private -->
+    <div class="gallery" data-csb-slot="gallery" data-csb-page="presentations"
+         data-csb-pictures-merge='{{ custom_values.presentation_pictures }}'
+         style="margin-top:2rem;">
       <img src="https://cdn.jsdelivr.net/gh/DanielMarzari/joey-covenant@main/assets/presentations/event-2300.jpg" alt="Covenant Senior Benefits Q&A session — table setup with informational materials" loading="lazy" decoding="async" width="1200" height="900">
       <img src="https://cdn.jsdelivr.net/gh/DanielMarzari/joey-covenant@main/assets/presentations/event-2301.jpg" alt="Covenant Senior Benefits community event" loading="lazy" decoding="async" width="1200" height="900">
       <img src="https://cdn.jsdelivr.net/gh/DanielMarzari/joey-covenant@main/assets/presentations/event-2302.jpg" alt="Covenant Senior Benefits Medicare Q&A materials" loading="lazy" decoding="async" width="1200" height="900">
@@ -1110,108 +1117,40 @@
 </script>
 
 <script>
-/* Live content from the admin API (/admin).
-
-   Progressive enhancement, deliberately: whatever markup is already in the
-   page is the fallback and is left untouched unless the fetch succeeds AND
-   returns something publishable. If the Worker is down, undeployed, or the
-   collection is empty, the visitor sees the hand-written content instead of
-   an empty section. Nothing here can blank out a page.
-
-   Mark a container with:
-     data-csb-slot="testimonials" | "locations" | "gallery"
-     data-csb-page="home"    (optional — only show items tagged for this page)
-     data-csb-limit="3"      (optional — cap how many render)
+/* Swap in GHL Custom Values where they were provided. Fallbacks left as-is.
+   Attributes handled:
+     data-csb-src-merge   → sets img.src if the merge field resolved
+     data-csb-href-merge  → sets a.href if the merge field resolved
+     data-csb-pictures-merge  → parses a JSON array of URLs and rebuilds
+                                the container's children as <img> tags
 */
 (function () {
-  var slots = document.querySelectorAll('[data-csb-slot]');
-  if (!slots.length) return;
+  function isSet(v) { return v && v.indexOf('{{') === -1; }
 
-  /* Shared across every slot on the page so several sections don't each
-     trigger their own request. */
-  window.__csbContent = window.__csbContent ||
-    fetch('/api/public/v1/content.json', { cache: 'default' })
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .catch(function () { return null; });
-
-  function esc(s) {
-    return String(s == null ? '' : s)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-  }
-
-  var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  function monthYear(iso) {
-    if (!iso) return '';
-    var p = String(iso).split('-');
-    return (MONTHS[parseInt(p[1], 10) - 1] || '') + ' ' + p[0];
-  }
-
-  /* An untagged item shows everywhere; a tagged one only on its pages. */
-  function forPage(items, page) {
-    return items.filter(function (i) {
-      var tags = i.tags || [];
-      return !tags.length || (page && tags.indexOf(page) !== -1);
-    });
-  }
-
-  var render = {
-    testimonials: function (items) {
-      return items.map(function (t) {
-        return '<div class="testimonial">' +
-          '<div class="stars" aria-label="' + t.stars + ' out of 5 stars">' +
-            new Array(t.stars + 1).join('&#9733;') + '</div>' +
-          '<blockquote>' + esc(t.quote) + '</blockquote>' +
-          '<div class="testimonial-author">' +
-            '<div class="author-avatar" aria-hidden="true">' + esc(t.initials) + '</div>' +
-            '<div class="author-info"><strong>' + esc(t.author_name) + '</strong>' +
-              (t.author_meta ? '<span>' + esc(t.author_meta) + '</span>' : '') +
-            '</div>' +
-          '</div></div>';
-      }).join('');
-    },
-
-    locations: function (items) {
-      return items.map(function (l) {
-        var place = [l.city, l.state].filter(Boolean).join(', ');
-        var when = monthYear(l.event_date);
-        return '<div class="presented">' +
-          '<div class="presented-when">' + esc(when || '&mdash;') + '</div>' +
-          '<div class="presented-what">' +
-            '<strong>' + esc(l.venue) + '</strong>' +
-            (place ? '<span>' + esc(place) + '</span>' : '') +
-            (l.description ? '<p>' + esc(l.description) + '</p>' : '') +
-          '</div></div>';
-      }).join('');
-    },
-
-    gallery: function (items) {
-      return items.map(function (p) {
-        return '<img src="' + esc(p.url) + '" alt="' + esc(p.alt) + '"' +
-          (p.width ? ' width="' + p.width + '"' : '') +
-          (p.height ? ' height="' + p.height + '"' : '') +
-          ' loading="lazy" decoding="async">';
-      }).join('');
-    }
-  };
-
-  window.__csbContent.then(function (data) {
-    if (!data) return;                     /* unreachable → keep the fallback */
-
-    Array.prototype.forEach.call(slots, function (el) {
-      var kind = el.getAttribute('data-csb-slot');
-      var items = data[kind === 'gallery' ? 'photos' : kind];
-      if (!items || !render[kind]) return;
-
-      items = forPage(items, el.getAttribute('data-csb-page') || '');
-      var limit = parseInt(el.getAttribute('data-csb-limit'), 10);
-      if (limit > 0) items = items.slice(0, limit);
-      if (!items.length) return;           /* nothing published → keep the fallback */
-
-      var markup = render[kind](items);
-      if (markup) el.innerHTML = markup;
-    });
+  document.querySelectorAll('[data-csb-src-merge]').forEach(function (img) {
+    var v = img.getAttribute('data-csb-src-merge');
+    if (isSet(v)) img.src = v;
+  });
+  document.querySelectorAll('[data-csb-href-merge]').forEach(function (a) {
+    var v = a.getAttribute('data-csb-href-merge');
+    if (isSet(v)) a.href = v;
+  });
+  document.querySelectorAll('[data-csb-pictures-merge]').forEach(function (el) {
+    var v = el.getAttribute('data-csb-pictures-merge');
+    if (!isSet(v)) return;
+    try {
+      var urls = JSON.parse(v);
+      if (!Array.isArray(urls) || !urls.length) return;
+      el.innerHTML = '';
+      urls.forEach(function (u) {
+        var img = document.createElement('img');
+        img.src = u;
+        img.alt = 'Joey Guida presenting a Medicare Q&A session';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        el.appendChild(img);
+      });
+    } catch (e) { /* invalid JSON → keep fallback */ }
   });
 })();
 </script>
